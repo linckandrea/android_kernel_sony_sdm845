@@ -6078,10 +6078,10 @@ static int cyttsp5_setup_irq_gpio(struct cyttsp5_core_data *cd)
 		__func__, cd->irq);
 	if (cd->cpdata->level_irq_udelay > 0)
 		/* use level triggered interrupts */
-		irq_flags = IRQF_TRIGGER_LOW | IRQF_ONESHOT;
+		irq_flags = IRQF_TRIGGER_LOW | IRQF_ONESHOT | IRQF_PERF_CRITICAL;
 	else
 		/* use edge triggered interrupts */
-		irq_flags = IRQF_TRIGGER_FALLING | IRQF_ONESHOT;
+		irq_flags = IRQF_TRIGGER_FALLING | IRQF_ONESHOT | IRQF_PERF_CRITICAL;
 
 	rc = request_threaded_irq(cd->irq, NULL, cyttsp5_irq, irq_flags,
 		dev_name(dev), cd);
