@@ -9132,7 +9132,7 @@ static int mxt_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 	LOGN("request_threaded_irq %s\n", __func__);
 	error = request_threaded_irq(data->irq, touch_irq_handler, mxt_interrupt,
-			IRQF_TRIGGER_LOW | IRQF_ONESHOT, client->name, data);
+			IRQF_TRIGGER_LOW | IRQF_ONESHOT | IRQF_PERF_CRITICAL, client->name, data);
 	if (error) {
 		LOGE("Failed to register interrupt\n");
 		goto err_free_pdata;
