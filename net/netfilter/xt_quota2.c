@@ -298,15 +298,9 @@ quota_mt2(const struct sk_buff *skb, struct xt_action_param *par)
 			e->quota += charge;
 		ret = true; /* note: does not respect inversion (bug??) */
 	} else {
-<<<<<<< HEAD
-		if (e->quota > skb->len) {
-			if (!(q->flags & XT_QUOTA_NO_CHANGE))
-				e->quota -= (q->flags & XT_QUOTA_PACKET) ? 1 : skb->len;
-=======
 		if (e->quota > charge) {
 			if (!no_change)
 				e->quota -= charge;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			ret = !ret;
 		} else if (e->quota) {
 			/* We are transitioning, log that fact. */

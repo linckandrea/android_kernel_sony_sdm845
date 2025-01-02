@@ -282,18 +282,6 @@ DTC ?= $(objtree)/scripts/dtc/dtc
 DTC_FLAGS += -q
 
 # Disable noisy checks by default
-<<<<<<< HEAD
-ifeq ($(KBUILD_ENABLE_EXTRA_GCC_CHECKS),)
-DTC_FLAGS += -Wno-unit_address_vs_reg \
-	-Wno-simple_bus_reg \
-	-Wno-unit_address_format \
-	-Wno-pci_bridge \
-	-Wno-pci_device_bus_num \
-	-Wno-pci_device_reg
-endif
-
-ifeq ($(KBUILD_ENABLE_EXTRA_GCC_CHECKS),2)
-=======
 ifeq ($(findstring 1,$(KBUILD_ENABLE_EXTRA_GCC_CHECKS)),)
 DTC_FLAGS += -Wno-unit_address_vs_reg \
 	-Wno-unit_address_format \
@@ -307,7 +295,6 @@ DTC_FLAGS += -Wno-unit_address_vs_reg \
 endif
 
 ifneq ($(findstring 2,$(KBUILD_ENABLE_EXTRA_GCC_CHECKS)),)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 DTC_FLAGS += -Wnode_name_chars_strict \
 	-Wproperty_name_chars_strict
 endif
@@ -329,6 +316,12 @@ cmd_dt_S_dtb=						\
 
 $(obj)/%.dtb.S: $(obj)/%.dtb
 	$(call cmd,dt_S_dtb)
+
+ifneq ($(DTC_EXT),)
+DTC = $(DTC_EXT)
+else
+DTC = $(objtree)/scripts/dtc/dtc
+endif
 
 quiet_cmd_dtc = DTC     $@
 cmd_dtc = mkdir -p $(dir ${dtc-tmp}) ; \
