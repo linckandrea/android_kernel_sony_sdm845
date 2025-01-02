@@ -2254,12 +2254,9 @@ enum qca_wlan_vendor_attr_ll_stats_results {
 	QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_PPDU_SUCC_CNT = 81,
 	QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_PPDU_FAIL_CNT = 82,
 
-<<<<<<< HEAD
-=======
 	QCA_WLAN_VENDOR_ATTR_LL_STATS_CHANNEL_TX_TIME = 84,
 	QCA_WLAN_VENDOR_ATTR_LL_STATS_CHANNEL_RX_TIME = 85,
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* u8 value representing the time slicing duty cycle percentage.
 	 * Possible values are 0-100.
 	 */
