@@ -6045,8 +6045,7 @@ int dsi_display_prepare(struct dsi_display *display)
 	if (mode->dsi_mode_flags & DSI_MODE_FLAG_DMS) {
 		if (display->is_cont_splash_enabled) {
 			pr_err("DMS is not supposed to be set on first frame\n");
-			rc = -EINVAL;
-			goto error;
+			return -EINVAL;
 		}
 		/* update dsi ctrl for new mode */
 		rc = dsi_display_pre_switch(display);
