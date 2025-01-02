@@ -64,11 +64,8 @@
 #include <linux/page_owner.h>
 #include <linux/kthread.h>
 #include <linux/memcontrol.h>
-<<<<<<< HEAD
 #include <linux/show_mem_notifier.h>
-=======
 #include <linux/khugepaged.h>
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 #include <linux/psi.h>
 
 #include <asm/sections.h>
