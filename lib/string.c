@@ -259,8 +259,6 @@ char *stpcpy(char *__restrict__ dest, const char *__restrict__ src)
 }
 EXPORT_SYMBOL(stpcpy);
 
-<<<<<<< HEAD
-=======
 /**
  * strscpy_pad() - Copy a C-string into a sized buffer
  * @dest: Where to copy the string to
@@ -294,7 +292,6 @@ ssize_t strscpy_pad(char *dest, const char *src, size_t count)
 }
 EXPORT_SYMBOL(strscpy_pad);
 
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 #ifndef __HAVE_ARCH_STRCAT
 /**
  * strcat - Append one %NUL-terminated string to another

@@ -1222,12 +1222,6 @@ again:
 			}
 			continue;
 		}
-<<<<<<< HEAD
-		/* If details->check_mapping, we leave swap entries. */
-		if (unlikely(details))
-			continue;
-=======
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 		entry = pte_to_swp_entry(ptent);
 		if (!non_swap_entry(entry)) {

@@ -3192,14 +3192,7 @@ int mmc_set_signal_voltage(struct mmc_host *host, int signal_voltage, u32 ocr)
 	mmc_host_clk_hold(host);
 	err = mmc_wait_for_cmd(host, &cmd, 0);
 	if (err)
-<<<<<<< HEAD
-		goto err_command;
-=======
 		goto power_cycle;
-
-	if (!mmc_host_is_spi(host) && (cmd.resp[0] & R1_ERROR))
-		return -EIO;
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 	if (!mmc_host_is_spi(host) && (cmd.resp[0] & R1_ERROR)) {
 		err = -EIO;
@@ -4781,8 +4774,8 @@ int mmc_flush_cache(struct mmc_card *card)
 			(card->ext_csd.cache_ctrl & 1) &&
 			(!(card->quirks & MMC_QUIRK_CACHE_DISABLE))) {
 		err = mmc_switch(card, EXT_CSD_CMD_SET_NORMAL,
-<<<<<<< HEAD
-				EXT_CSD_FLUSH_CACHE, 1, 0);
+				EXT_CSD_FLUSH_CACHE, 1,
+				 MMC_CACHE_FLUSH_TIMEOUT_MS);
 		if (err == -ETIMEDOUT) {
 			pr_err("%s: cache flush timeout\n",
 					mmc_hostname(card->host));
@@ -4793,11 +4786,6 @@ int mmc_flush_cache(struct mmc_card *card)
 				err = -ENODEV;
 			}
 		} else if (err) {
-=======
-				EXT_CSD_FLUSH_CACHE, 1,
-				 MMC_CACHE_FLUSH_TIMEOUT_MS);
-		if (err)
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 			pr_err("%s: cache flush error %d\n",
 					mmc_hostname(card->host), err);
 		}

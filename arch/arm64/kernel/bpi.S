@@ -98,9 +98,6 @@ ENTRY(__smccc_workaround_1_smc_end)
 ENTRY(__smccc_workaround_1_hvc_start)
 	smccc_workaround_1	hvc
 ENTRY(__smccc_workaround_1_hvc_end)
-<<<<<<< HEAD
-.#endif
-=======
 
 ENTRY(__smccc_workaround_3_smc_start)
 	sub     sp, sp, #(8 * 4)
@@ -156,4 +153,3 @@ ENTRY(__spectre_bhb_clearbhb_start)
 	hint	#22	/* aka clearbhb */
 	isb
 ENTRY(__spectre_bhb_clearbhb_end)
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941

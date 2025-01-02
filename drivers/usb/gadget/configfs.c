@@ -19,7 +19,7 @@
 #endif
 
 #ifdef CONFIG_USB_CONFIGFS_F_ACC
-extern int acc_ctrlrequest(struct usb_composite_dev *cdev,
+extern int acc_ctrlrequest_composite(struct usb_composite_dev *cdev,
 				const struct usb_ctrlrequest *ctrl);
 void acc_disconnect(void);
 #endif
@@ -147,16 +147,11 @@ struct gadget_config_name {
 	struct list_head list;
 };
 
-<<<<<<< HEAD
-#define MAX_USB_STRING_LEN	126
-#define MAX_USB_STRING_WITH_NULL_LEN	(MAX_USB_STRING_LEN+1)
+#define USB_MAX_STRING_WITH_NULL_LEN	(USB_MAX_STRING_LEN+1)
 
 /* vendor code */
 #define MSOS_VENDOR_CODE	0x08
 #define MSOS_GOOGLE_VENDOR_CODE	0x01
-=======
-#define USB_MAX_STRING_WITH_NULL_LEN	(USB_MAX_STRING_LEN+1)
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 static int usb_string_copy(const char *s, char **s_copy)
 {
@@ -164,29 +159,17 @@ static int usb_string_copy(const char *s, char **s_copy)
 	char *str;
 	char *copy = *s_copy;
 	ret = strlen(s);
-<<<<<<< HEAD
-	if (ret > MAX_USB_STRING_LEN)
-=======
 	if (ret > USB_MAX_STRING_LEN)
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 		return -EOVERFLOW;
 
 	if (copy) {
 		str = copy;
 	} else {
-<<<<<<< HEAD
-		str = kmalloc(MAX_USB_STRING_WITH_NULL_LEN, GFP_KERNEL);
-		if (!str)
-			return -ENOMEM;
-	}
-	strlcpy(str, s, MAX_USB_STRING_WITH_NULL_LEN);
-=======
 		str = kmalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
 		if (!str)
 			return -ENOMEM;
 	}
 	strcpy(str, s);
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	if (str[ret - 1] == '\n')
 		str[ret - 1] = '\0';
 	*s_copy = str;
@@ -1679,7 +1662,7 @@ static int android_setup(struct usb_gadget *gadget,
 
 #ifdef CONFIG_USB_CONFIGFS_F_ACC
 	if (value < 0)
-		value = acc_ctrlrequest(cdev, c);
+		value = acc_ctrlrequest_composite(cdev, c);
 #endif
 
 	if (value < 0)
