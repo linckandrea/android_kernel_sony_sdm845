@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2012-2016 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2012-2016, 2020 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -38,11 +34,8 @@
 #ifndef _HTT_COMMON_H_
 #define _HTT_COMMON_H_
 
-<<<<<<< HEAD
-=======
 #include <htt_deps.h> /* A_UINT32 */
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 enum htt_sec_type {
     htt_sec_type_none,
     htt_sec_type_wep128,
@@ -137,8 +130,6 @@ enum htt_pkt_type {
 #define HTT_TX_IPA_NEW_MSDU_ID_SPACE_BEGIN  8192  /* = 0x2000 = b10,0000,0000,0000 */
 #define TGT_RX2TX_NEW_MSDU_ID_SPACE_BEGIN   12288 /* = 0x3000 = b11,0000,0000,0000 */
 
-<<<<<<< HEAD
-=======
 /* HTT Access Category values */
 enum HTT_AC_WMM {
     /* WMM Access Categories */
@@ -186,5 +177,4 @@ typedef struct {
 
 #define HTT_STATS_MAX_CHAINS 8
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* _HTT_COMMON_H_ */
