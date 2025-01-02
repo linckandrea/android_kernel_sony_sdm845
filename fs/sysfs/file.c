@@ -551,6 +551,7 @@ void sysfs_remove_bin_file(struct kobject *kobj,
 }
 EXPORT_SYMBOL_GPL(sysfs_remove_bin_file);
 
+
 /**
  *	sysfs_emit - scnprintf equivalent, aware of PAGE_SIZE buffer.
  *	@buf:	start of PAGE_SIZE buffer.
