@@ -661,13 +661,9 @@ static ssize_t acc_read(struct file *fp, char __user *buf,
 {
 	struct acc_dev *dev = fp->private_data;
 	struct usb_request *req;
-<<<<<<< HEAD
-	ssize_t r = count, xfer, len;
-=======
 	ssize_t r = count;
 	ssize_t data_length;
 	unsigned xfer;
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	int ret = 0;
 
 	pr_debug("acc_read(%zu)\n", count);
@@ -688,9 +684,6 @@ static ssize_t acc_read(struct file *fp, char __user *buf,
 		goto done;
 	}
 
-<<<<<<< HEAD
-	len = ALIGN(count, dev->ep_out->maxpacket);
-=======
 	/*
 	 * Calculate the data length by considering termination character.
 	 * Then compansite the difference of rounding up to
@@ -699,7 +692,6 @@ static ssize_t acc_read(struct file *fp, char __user *buf,
 	data_length = count;
 	data_length += dev->ep_out->maxpacket - 1;
 	data_length -= data_length % dev->ep_out->maxpacket;
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 	if (dev->rx_done) {
 		// last req cancelled. try to get it.
@@ -710,11 +702,7 @@ static ssize_t acc_read(struct file *fp, char __user *buf,
 requeue_req:
 	/* queue a request */
 	req = dev->rx_req[0];
-<<<<<<< HEAD
-	req->length = len;
-=======
 	req->length = data_length;
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	dev->rx_done = 0;
 	ret = usb_ep_queue(dev->ep_out, req, GFP_KERNEL);
 	if (ret < 0) {
@@ -970,15 +958,6 @@ int acc_ctrlrequest(struct usb_composite_dev *cdev,
 	 */
 	if (!dev)
 		return -ENODEV;
-<<<<<<< HEAD
-/*
-	printk(KERN_INFO "acc_ctrlrequest "
-			"%02x.%02x v%04x i%04x l%u\n",
-			b_requestType, b_request,
-			w_value, w_index, w_length);
-*/
-=======
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 	if (b_requestType == (USB_DIR_OUT | USB_TYPE_VENDOR)) {
 		if (b_request == ACCESSORY_START) {
@@ -1071,6 +1050,26 @@ err:
 	return value;
 }
 EXPORT_SYMBOL_GPL(acc_ctrlrequest);
+
+int acc_ctrlrequest_composite(struct usb_composite_dev *cdev,
+			      const struct usb_ctrlrequest *ctrl)
+{
+	u16 w_length = le16_to_cpu(ctrl->wLength);
+
+	if (w_length > USB_COMP_EP0_BUFSIZ) {
+		if (ctrl->bRequestType & USB_DIR_IN) {
+			/* Cast away the const, we are going to overwrite on purpose. */
+			__le16 *temp = (__le16 *)&ctrl->wLength;
+
+			*temp = cpu_to_le16(USB_COMP_EP0_BUFSIZ);
+			w_length = USB_COMP_EP0_BUFSIZ;
+		} else {
+			return -EINVAL;
+		}
+	}
+	return acc_ctrlrequest(cdev, ctrl);
+}
+EXPORT_SYMBOL_GPL(acc_ctrlrequest_composite);
 
 static int
 __acc_function_bind(struct usb_configuration *c,
@@ -1364,26 +1363,17 @@ static int acc_setup(void)
 	INIT_DELAYED_WORK(&dev->start_work, acc_start_work);
 	INIT_WORK(&dev->hid_work, acc_hid_work);
 
-<<<<<<< HEAD
-=======
 	dev->ref = ref;
 	if (cmpxchg_relaxed(&ref->acc_dev, NULL, dev)) {
 		ret = -EBUSY;
 		goto err_free_dev;
 	}
 
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	ret = misc_register(&acc_device);
 	if (ret)
 		goto err_zap_ptr;
 
-<<<<<<< HEAD
-	/* _acc_dev must be set before calling usb_gadget_register_driver */
-	_acc_dev = dev;
-
-=======
 	kref_init(&ref->kref);
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	return 0;
 
 err_zap_ptr:

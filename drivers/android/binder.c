@@ -3727,12 +3727,8 @@ static int binder_thread_write(struct binder_proc *proc,
 					ret = binder_inc_ref_for_node(
 							proc, ctx_mgr_node,
 							strong, NULL, &rdata);
-<<<<<<< HEAD
-				rt_mutex_unlock(&context->context_mgr_node_lock);
-=======
-				}
-				mutex_unlock(&context->context_mgr_node_lock);
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
+					}
+					mutex_unlock(&context->context_mgr_node_lock);
 			}
 			if (ret)
 				ret = binder_update_ref_for_handle(
@@ -4644,18 +4640,8 @@ static void binder_release_work(struct binder_proc *proc,
 		case BINDER_WORK_NODE:
 			break;
 		default:
-<<<<<<< HEAD
-			if (proc->context)
-				pr_err("unexpected work type, %d, not freed for %d (ctx:%s)\n",
-				       w->type, proc->pid, proc->context->name);
-			else
-				pr_err("unexpected work type, %d, not freed for %d (no context)\n",
-				       w->type, proc->pid);
-
-=======
 			pr_err("unexpected work type, %d, not freed\n",
 			       wtype);
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 			break;
 		}
 	}
