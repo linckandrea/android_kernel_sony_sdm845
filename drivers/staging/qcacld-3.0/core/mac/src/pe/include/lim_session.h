@@ -546,6 +546,10 @@ typedef struct sPESession       /* Added to Support BT-AMP */
 #endif
 	/* previous auth frame's sequence number */
 	uint16_t prev_auth_seq_num;
+<<<<<<< HEAD
+=======
+	tSirMacAddr prev_auth_mac_addr;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	struct obss_detection_cfg obss_offload_cfg;
 	struct obss_detection_cfg current_obss_detection;
 	bool is_session_obss_offload_enabled;

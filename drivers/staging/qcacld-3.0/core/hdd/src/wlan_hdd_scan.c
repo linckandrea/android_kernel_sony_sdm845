@@ -1291,8 +1291,11 @@ static int __wlan_hdd_cfg80211_sched_scan_start(struct wiphy *wiphy,
 	int ret;
 	enum QDF_GLOBAL_MODE curr_mode;
 
+<<<<<<< HEAD
 	hdd_enter();
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	curr_mode = hdd_get_conparam();
 
 	if (QDF_GLOBAL_FTM_MODE == curr_mode ||
@@ -1410,8 +1413,11 @@ static int __wlan_hdd_cfg80211_sched_scan_stop(struct net_device *dev)
 	int errno;
 	enum QDF_GLOBAL_MODE curr_mode;
 
+<<<<<<< HEAD
 	hdd_enter();
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	curr_mode = hdd_get_conparam();
 
 	if (QDF_GLOBAL_FTM_MODE == curr_mode ||
@@ -1458,8 +1464,11 @@ static int __wlan_hdd_cfg80211_sched_scan_stop(struct net_device *dev)
 
 	errno = wlan_hdd_sched_scan_stop(dev);
 
+<<<<<<< HEAD
 	hdd_exit();
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return errno;
 }
 
@@ -1473,7 +1482,20 @@ int wlan_hdd_cfg80211_sched_scan_stop(struct wiphy *wiphy,
 	ret = __wlan_hdd_cfg80211_sched_scan_stop(dev);
 	cds_ssr_unprotect(__func__);
 
+<<<<<<< HEAD
 	return ret;
+=======
+	/* The return 0 is intentional. We observed a crash due to a return of
+	 * failure in sched_scan_stop , especially for a case where the unload
+	 * of the happens at the same time. The function
+	 * __cfg80211_stop_sched_scan was clearing rdev->sched_scan_req only
+	 * when the sched_scan_stop returns success. If it returns a failure ,
+	 * then its next invocation due to the clean up of the second interface
+	 * will have the dev pointer corresponding to the first one leading to
+	 * a crash.
+	 */
+	return 0;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 #else
 int wlan_hdd_cfg80211_sched_scan_stop(struct wiphy *wiphy,
@@ -1486,7 +1508,20 @@ int wlan_hdd_cfg80211_sched_scan_stop(struct wiphy *wiphy,
 	ret = __wlan_hdd_cfg80211_sched_scan_stop(dev);
 	cds_ssr_unprotect(__func__);
 
+<<<<<<< HEAD
 	return ret;
+=======
+	/* The return 0 is intentional. We observed a crash due to a return of
+	 * failure in sched_scan_stop , especially for a case where the unload
+	 * of the happens at the same time. The function
+	 * __cfg80211_stop_sched_scan was clearing rdev->sched_scan_req only
+	 * when the sched_scan_stop returns success. If it returns a failure ,
+	 * then its next invocation due to the clean up of the second interface
+	 * will have the dev pointer corresponding to the first one leading to
+	 * a crash.
+	 */
+	return 0;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 #endif /* KERNEL_VERSION(4, 12, 0) */
 #endif /*FEATURE_WLAN_SCAN_PNO */

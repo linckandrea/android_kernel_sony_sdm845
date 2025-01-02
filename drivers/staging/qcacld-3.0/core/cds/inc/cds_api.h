@@ -453,6 +453,13 @@ void cds_reset_recovery_reason(void);
  */
 #define cds_trigger_recovery(reason) \
 	__cds_trigger_recovery(reason, __func__, __LINE__)
+<<<<<<< HEAD
+=======
+
+void cds_trigger_recovery_psoc(void *psoc, enum qdf_hang_reason reason,
+			       const char *func, const uint32_t line);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 void __cds_trigger_recovery(enum qdf_hang_reason reason, const char *func,
 			    const uint32_t line);
 

@@ -37,7 +37,12 @@
 #include "sme_api.h"
 #include "wlan_nlink_srv.h"
 #include "wlan_hdd_oemdata.h"
+<<<<<<< HEAD
 
+=======
+#include "wlan_osif_request_manager.h"
+#include "wlan_hdd_main.h"
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef FEATURE_OEM_DATA_SUPPORT
 #ifdef CNSS_GENL
 #include <net/cnss_nl.h>
@@ -1136,6 +1141,7 @@ oem_data_attr_policy[QCA_WLAN_VENDOR_ATTR_OEM_DATA_PARAMS_MAX + 1] = {
 						    .type = NLA_BINARY,
 						    .len = OEM_DATA_MAX_SIZE
 	},
+<<<<<<< HEAD
 };
 
 void hdd_oem_event_handler_cb(const struct oem_data *oem_event_data)
@@ -1145,19 +1151,71 @@ void hdd_oem_event_handler_cb(const struct oem_data *oem_event_data)
 	int ret;
 	struct hdd_context *hdd_ctx = cds_get_context(QDF_MODULE_ID_HDD);
 
+=======
+
+	[QCA_WLAN_VENDOR_ATTR_OEM_DATA_RESPONSE_EXPECTED] = {.type = NLA_FLAG},
+};
+
+void hdd_oem_event_handler_cb(const struct oem_data *oem_event_data,
+			      uint8_t vdev_id)
+{
+	struct sk_buff *vendor_event;
+	struct osif_request *request;
+	uint32_t len;
+	int ret;
+	struct oem_data *oem_data;
+	struct hdd_context *hdd_ctx = cds_get_context(QDF_MODULE_ID_HDD);
+	struct hdd_adapter *hdd_adapter = hdd_get_adapter_by_vdev(hdd_ctx,
+								  vdev_id);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	hdd_enter();
 
 	ret = wlan_hdd_validate_context(hdd_ctx);
 	if (ret)
 		return;
 
+<<<<<<< HEAD
 	len = nla_total_size(oem_event_data->data_len) + NLMSG_HDRLEN;
 	vendor_event =
 		cfg80211_vendor_event_alloc(
+=======
+	if (hdd_validate_adapter(hdd_adapter))
+		return;
+
+	if (!oem_event_data || !(oem_event_data->data)) {
+		hdd_err("Invalid oem event data");
+		return;
+	}
+
+	if (hdd_adapter->response_expected) {
+		request = osif_request_get(hdd_adapter->cookie);
+		if (!request) {
+			hdd_err("Invalid request");
+			return;
+		}
+
+		oem_data = osif_request_priv(request);
+		oem_data->data_len = oem_event_data->data_len;
+		oem_data->data = qdf_mem_malloc(oem_data->data_len);
+		if (!oem_data->data) {
+			hdd_err("Memory allocation failure");
+			return;
+		}
+		qdf_mem_copy(oem_data->data, oem_event_data->data,
+			     oem_data->data_len);
+		oem_data->vdev_id = hdd_adapter->session_id;
+		osif_request_complete(request);
+		osif_request_put(request);
+	} else {
+		len = nla_total_size(oem_event_data->data_len) + NLMSG_HDRLEN;
+		vendor_event =
+			cfg80211_vendor_event_alloc(
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 				hdd_ctx->wiphy, NULL, len,
 				QCA_NL80211_VENDOR_SUBCMD_OEM_DATA_INDEX,
 				GFP_KERNEL);
 
+<<<<<<< HEAD
 	if (!vendor_event) {
 		hdd_err("cfg80211_vendor_event_alloc failed");
 		return;
@@ -1173,10 +1231,50 @@ void hdd_oem_event_handler_cb(const struct oem_data *oem_event_data)
 
 	cfg80211_vendor_event(vendor_event, GFP_KERNEL);
 
+=======
+		if (!vendor_event) {
+			hdd_err("cfg80211_vendor_event_alloc failed");
+			return;
+		}
+
+		ret = nla_put(vendor_event,
+			      QCA_WLAN_VENDOR_ATTR_OEM_DATA_CMD_DATA,
+			      oem_event_data->data_len, oem_event_data->data);
+		if (ret) {
+			hdd_err("OEM event put fails status %d", ret);
+			kfree_skb(vendor_event);
+			return;
+		}
+		cfg80211_vendor_event(vendor_event, GFP_KERNEL);
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	hdd_exit();
 }
 
 /**
+<<<<<<< HEAD
+=======
+ *wlan_hdd_free_oem_data: delete data of priv data
+ *@priv: osif request private data
+ *
+ *Return: void
+ */
+static void wlan_hdd_free_oem_data(void *priv)
+{
+	struct oem_data *local_priv = priv;
+
+	if (!local_priv)
+		return;
+
+	if (local_priv->data) {
+		qdf_mem_free(local_priv->data);
+		local_priv->data = NULL;
+	}
+}
+
+/**
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * __wlan_hdd_cfg80211_oem_data_handler() - the handler for oem data
  * @wiphy: wiphy structure pointer
  * @wdev: Wireless device structure pointer
@@ -1191,17 +1289,46 @@ __wlan_hdd_cfg80211_oem_data_handler(struct wiphy *wiphy,
 				     const void *data, int data_len)
 {
 	struct net_device *dev = wdev->netdev;
+<<<<<<< HEAD
 	QDF_STATUS status;
 	int ret;
 	struct oem_data oem_data = {0};
 	struct hdd_adapter *adapter = WLAN_HDD_GET_PRIV_PTR(dev);
 	struct hdd_context *hdd_ctx = WLAN_HDD_GET_CTX(adapter);
 	struct nlattr *tb[QCA_WLAN_VENDOR_ATTR_OEM_DATA_PARAMS_MAX + 1];
+=======
+	QDF_STATUS status = QDF_STATUS_SUCCESS;
+	int ret;
+	struct sk_buff *skb = NULL;
+	struct oem_data oem_data = {0};
+	struct oem_data *get_oem_data = NULL;
+	struct hdd_adapter *adapter = WLAN_HDD_GET_PRIV_PTR(dev);
+	struct hdd_context *hdd_ctx = WLAN_HDD_GET_CTX(adapter);
+	struct nlattr *tb[QCA_WLAN_VENDOR_ATTR_OEM_DATA_PARAMS_MAX + 1];
+	struct osif_request *request = NULL;
+	struct oem_data *priv;
+	static const struct osif_request_params params = {
+		.priv_size = sizeof(*priv),
+		.timeout_ms = WLAN_WAIT_TIME_GET_OEM_DATA,
+		.dealloc = wlan_hdd_free_oem_data,
+	};
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	ret = wlan_hdd_validate_context(hdd_ctx);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+=======
+	if (hdd_validate_adapter(adapter))
+		return -EINVAL;
+
+	if (adapter->oem_data_in_progress) {
+		hdd_err("oem request already in progress");
+		return -EBUSY;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (wlan_cfg80211_nla_parse(tb,
 				    QCA_WLAN_VENDOR_ATTR_OEM_DATA_PARAMS_MAX,
 				    data, data_len, oem_data_attr_policy)) {
@@ -1224,6 +1351,7 @@ __wlan_hdd_cfg80211_oem_data_handler(struct wiphy *wiphy,
 	oem_data.vdev_id = adapter->session_id;
 	oem_data.data = nla_data(tb[QCA_WLAN_VENDOR_ATTR_OEM_DATA_CMD_DATA]);
 
+<<<<<<< HEAD
 	status = sme_oem_data_cmd(hdd_ctx->mac_handle, &oem_data);
 
 	return qdf_status_to_os_return(status);
@@ -1232,12 +1360,94 @@ __wlan_hdd_cfg80211_oem_data_handler(struct wiphy *wiphy,
 int wlan_hdd_cfg80211_oem_data_handler(struct wiphy *wiphy,
 				       struct wireless_dev *wdev,
 				       const void *data, int data_len)
+=======
+	if (tb[QCA_WLAN_VENDOR_ATTR_OEM_DATA_RESPONSE_EXPECTED])
+		adapter->response_expected = nla_get_flag(
+			tb[QCA_WLAN_VENDOR_ATTR_OEM_DATA_RESPONSE_EXPECTED]);
+
+	if (adapter->response_expected) {
+		int skb_len = 0;
+
+		adapter->oem_data_in_progress = true;
+
+		request = osif_request_alloc(&params);
+		if (!request) {
+			hdd_err("request allocation failure");
+			ret = -ENOMEM;
+			goto err;
+		}
+
+		adapter->cookie = osif_request_cookie(request);
+
+		status = sme_oem_data_cmd(hdd_ctx->mac_handle,
+					  hdd_oem_event_handler_cb,
+					  &oem_data, adapter->session_id);
+		if (QDF_IS_STATUS_ERROR(status)) {
+			hdd_err("Failure while sending command to fw");
+			ret = -EAGAIN;
+			goto err;
+		}
+		ret = osif_request_wait_for_response(request);
+		if (ret) {
+			hdd_err("Timedout while retrieving oem get data");
+			goto err;
+		}
+
+		get_oem_data = osif_request_priv(request);
+		if (!get_oem_data || !(get_oem_data->data)) {
+			hdd_err("invalid get_oem_data");
+			ret = -EINVAL;
+			goto err;
+		}
+
+		skb_len = NLMSG_HDRLEN + NLA_HDRLEN + get_oem_data->data_len;
+
+		skb = cfg80211_vendor_cmd_alloc_reply_skb(wiphy, skb_len);
+		if (!skb) {
+			hdd_err("cfg80211_vendor_cmd_alloc_reply_skb failed");
+			ret = -ENOMEM;
+			goto err;
+		}
+
+		if (nla_put(skb, QCA_WLAN_VENDOR_ATTR_OEM_DATA_CMD_DATA,
+			    get_oem_data->data_len, get_oem_data->data)) {
+			hdd_err("nla put failure");
+			kfree_skb(skb);
+			ret =  -EINVAL;
+			goto err;
+		}
+		cfg80211_vendor_cmd_reply(skb);
+
+	} else {
+		status = sme_oem_data_cmd(hdd_ctx->mac_handle,
+					  hdd_oem_event_handler_cb,
+					  &oem_data, adapter->session_id);
+		return qdf_status_to_os_return(status);
+	}
+
+err:
+	if (request)
+		osif_request_put(request);
+	adapter->oem_data_in_progress = false;
+	adapter->response_expected = false;
+
+	return ret;
+}
+
+int wlan_hdd_cfg80211_oem_data_handler(struct wiphy *wiphy,
+		struct wireless_dev *wdev,
+		const void *data, int data_len)
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 {
 	int ret;
 
 	cds_ssr_protect(__func__);
 	ret = __wlan_hdd_cfg80211_oem_data_handler(wiphy, wdev,
+<<<<<<< HEAD
 						   data, data_len);
+=======
+			data, data_len);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	cds_ssr_unprotect(__func__);
 	return ret;
 }

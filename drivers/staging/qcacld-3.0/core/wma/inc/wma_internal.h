@@ -862,6 +862,17 @@ QDF_STATUS wma_set_smps_params(tp_wma_handle wma, uint8_t vdev_id,
 void wma_set_bss_rate_flags(tp_wma_handle wma, uint8_t vdev_id,
 			    tpAddBssParams add_bss);
 
+<<<<<<< HEAD
+=======
+/**
+ * wma_get_vht_rate_flags() - Return the VHT rate flags corresponding to the BW
+ * @ch_width: BW for which rate flags is required
+ *
+ * Return: Rate flags corresponding to ch_width
+ */
+enum tx_rate_info wma_get_vht_rate_flags(enum phy_ch_width ch_width);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 int32_t wmi_unified_send_txbf(tp_wma_handle wma, tpAddStaParams params);
 
 /**
@@ -1246,7 +1257,11 @@ QDF_STATUS wma_process_ch_avoid_update_req(tp_wma_handle wma_handle,
 
 QDF_STATUS wma_update_fw_tdls_state(WMA_HANDLE handle, void *pwmaTdlsparams);
 int wma_update_tdls_peer_state(WMA_HANDLE handle,
+<<<<<<< HEAD
 			       tTdlsPeerStateParams *peerStateParams);
+=======
+			       struct tdls_peer_update_state *peerStateParams);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * wma_set_tdls_offchan_mode() - set tdls off channel mode
  * @handle: wma handle
@@ -1308,6 +1323,29 @@ int wma_unified_beacon_debug_stats_event_handler(void *handle,
 						 uint8_t *cmd_param_info,
 						 uint32_t len);
 
+<<<<<<< HEAD
+=======
+#if defined(CLD_PM_QOS) && defined(WLAN_FEATURE_LL_MODE)
+/**
+ * wma_vdev_bcn_latency_event_handler() - Get the latency info received in bcn
+ * @handle: WMA handle
+ * @event: data in event
+ * @len: length
+ *
+ * Return: 0 for success or error code
+ */
+int wma_vdev_bcn_latency_event_handler(void *handle, uint8_t *event,
+				       uint32_t len);
+#else
+static inline int wma_vdev_bcn_latency_event_handler(void *handle,
+						     uint8_t *event,
+						     uint32_t len)
+{
+	return 0;
+}
+#endif
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef FEATURE_WLAN_DIAG_SUPPORT
 /**
  * wma_sta_kickout_event()- send sta kickout event
@@ -1618,4 +1656,18 @@ QDF_STATUS wma_set_roam_triggers(tp_wma_handle wma_handle,
  */
 int wma_get_ani_level_evt_handler(void *handle, uint8_t *event_buf,
 				  uint32_t len);
+<<<<<<< HEAD
+=======
+
+/**
+ * wma_delete_sta_req() - process delete sta request from UMAC
+ * @wma: wma handle
+ * @del_sta: delete sta params
+ * @wait_for_response: Wait for response from firmware
+ *
+ * Return: none
+ */
+void wma_delete_sta_req(tp_wma_handle wma, tpDeleteStaParams del_sta,
+			bool wait_for_response);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif

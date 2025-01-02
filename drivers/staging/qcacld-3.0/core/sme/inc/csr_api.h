@@ -359,6 +359,10 @@ typedef struct tagCsrScanResultFilter {
 	bool realm_check;
 	uint8_t fils_realm[2];
 	bool force_rsne_override;
+<<<<<<< HEAD
+=======
+	qdf_time_t age_threshold;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tCsrScanResultFilter;
 
 typedef struct sCsrChnPower_ {
@@ -771,6 +775,10 @@ typedef struct tagPmkidCacheInfo {
 	uint8_t ssid_len;
 	uint8_t ssid[SIR_MAC_MAX_SSID_LENGTH];
 	uint8_t cache_id[CACHE_ID_LEN];
+<<<<<<< HEAD
+=======
+	tCsrMobilityDomainInfo MDID;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tPmkidCacheInfo;
 
 #ifdef FEATURE_WLAN_WAPI
@@ -817,6 +825,7 @@ struct csr_roam_profile {
 	eCsrRoamBssType BSSType;
 	tCsrAuthList AuthType;
 	eCsrAuthType negotiatedAuthType;
+	tCsrAuthList akm_list;
 	tCsrEncryptionList EncryptionType;
 	/* This field is for output only, not for input */
 	eCsrEncryptionType negotiatedUCEncryptionType;
@@ -932,6 +941,7 @@ typedef struct tagCsrRoamConnectedProfile {
 	eCsrRoamBssType BSSType;
 	eCsrAuthType AuthType;
 	tCsrAuthList AuthInfo;
+	tCsrAuthList akm_list;
 	eCsrEncryptionType EncryptionType;
 	tCsrEncryptionList EncryptionInfo;
 	eCsrEncryptionType mcEncryptionType;
@@ -1257,6 +1267,12 @@ typedef struct tagCsrConfigParam {
 	int8_t roam_bg_scan_bad_rssi_thresh;
 	uint8_t roam_bad_rssi_thresh_offset_2g;
 	uint32_t roam_bg_scan_client_bitmap;
+<<<<<<< HEAD
+=======
+	uint32_t roam_data_rssi_threshold_triggers;
+	int32_t roam_data_rssi_threshold;
+	uint32_t rx_data_inactivity_time;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint32_t obss_width_interval;
 	uint32_t obss_active_dwelltime;
 	uint32_t obss_passive_dwelltime;
@@ -1351,7 +1367,11 @@ typedef struct tagCsrConfigParam {
 #endif
 	bool enable_pending_list_req;
 	bool disable_4way_hs_offload;
+<<<<<<< HEAD
 	bool p2p_disable_roam;
+=======
+	uint32_t sta_disable_roam;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tCsrConfigParam;
 
 /* Tush */
@@ -1511,6 +1531,10 @@ struct csr_roam_info {
 #endif
 	uint16_t roam_reason;
 	struct wlan_ies *disconnect_ies;
+<<<<<<< HEAD
+=======
+	tSirSmeAssocInd *owe_pending_assoc_ind;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 typedef struct tagCsrFreqScanInfo {
@@ -1794,6 +1818,12 @@ typedef QDF_STATUS (*csr_session_close_cb)(uint8_t session_id);
 #define CSR_IS_FW_FT_FILS_SUPPORTED(fw_akm_bitmap) \
 	(((fw_akm_bitmap) & (1 << AKM_FT_FILS))  ? true : false)
 
+<<<<<<< HEAD
+=======
+#define CSR_IS_FW_SUITEB_ROAM_SUPPORTED(fw_akm_bitmap) \
+	(((fw_akm_bitmap) & (1 << AKM_SUITEB))  ? true : false)
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 QDF_STATUS csr_set_channels(tpAniSirGlobal pMac, tCsrConfigParam *pParam);
 
 /* enum to string conversion for debug output */
@@ -1811,6 +1841,10 @@ typedef void (*tCsrTsmStatsCallback)(tAniTrafStrmMetrics tsmMetrics,
 #endif /* FEATURE_WLAN_ESE */
 typedef void (*tCsrSnrCallback)(int8_t snr, uint32_t staId, void *pContext);
 
+<<<<<<< HEAD
+=======
+void csr_assoc_rej_free_rssi_disallow_list(struct sAniSirGlobal *mac);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * csr_roam_issue_ft_preauth_req() - Initiate Preauthentication request
  * @max_ctx: Global MAC context
@@ -1849,6 +1883,7 @@ static inline void csr_roam_fill_tdls_info(tpAniSirGlobal mac_ctx,
 					   struct csr_roam_info *roam_info,
 					   tpSirSmeJoinRsp join_rsp)
 {}
+<<<<<<< HEAD
 #endif
 void csr_packetdump_timer_stop(void);
 
@@ -1889,4 +1924,56 @@ csr_update_pmf_cap_from_connected_profile(tCsrRoamConnectedProfile *profile,
 					  struct scan_filter *filter)
 {}
 #endif
+=======
+#endif
+void csr_packetdump_timer_stop(void);
+
+/**
+ * csr_get_channel_status() - get chan info via channel number
+ * @mac: Pointer to Global MAC structure
+ * @channel_id: channel id
+ *
+ * Return: chan status info
+ */
+struct lim_channel_status *
+csr_get_channel_status(tpAniSirGlobal mac, uint32_t channel_id);
+
+/**
+ * csr_clear_channel_status() - clear chan info
+ * @mac: Pointer to Global MAC structure
+ *
+ * Return: none
+ */
+void csr_clear_channel_status(tpAniSirGlobal mac);
+
+typedef void (*csr_ani_callback)(int8_t *ani, void *context);
+
+#ifdef WLAN_FEATURE_11W
+/**
+ * csr_update_pmf_cap_from_connected_profile() - Update pmf cap from profile
+ * @profile: connected profile
+ * @filter: scan filter
+ *
+ * Return: None
+ */
+void
+csr_update_pmf_cap_from_connected_profile(tCsrRoamConnectedProfile *profile,
+					  struct scan_filter *filter);
+#else
+static inline void
+csr_update_pmf_cap_from_connected_profile(tCsrRoamConnectedProfile *profile,
+					  struct scan_filter *filter)
+{}
+#endif
+
+/**
+ * csr_update_owe_info() - Update OWE info
+ * @mac: mac context
+ * @assoc_ind: assoc ind
+ *
+ * Return: QDF_STATUS
+ */
+QDF_STATUS csr_update_owe_info(tpAniSirGlobal mac,
+			       tSirSmeAssocInd *assoc_ind);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif

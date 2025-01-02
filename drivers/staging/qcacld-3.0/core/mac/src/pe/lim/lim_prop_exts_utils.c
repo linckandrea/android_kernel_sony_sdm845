@@ -311,6 +311,12 @@ lim_extract_ap_capability(tpAniSirGlobal mac_ctx, uint8_t *p_ie,
 			else if (center_freq_diff > 16)
 				ap_bcon_ch_width =
 					WNI_CFG_VHT_CHANNEL_WIDTH_80_PLUS_80MHZ;
+<<<<<<< HEAD
+=======
+			else
+				ap_bcon_ch_width =
+					WNI_CFG_VHT_CHANNEL_WIDTH_80MHZ;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		}
 
 		fw_vht_ch_wd = wma_get_vht_ch_width();
@@ -363,6 +369,7 @@ lim_extract_ap_capability(tpAniSirGlobal mac_ctx, uint8_t *p_ie,
 				 */
 				vht_ch_wd = WNI_CFG_VHT_CHANNEL_WIDTH_80MHZ;
 				session->ch_center_freq_seg1 = 0;
+<<<<<<< HEAD
 			}
 		} else if (vht_ch_wd == WNI_CFG_VHT_CHANNEL_WIDTH_80MHZ) {
 			/* DUT or AP supports only 80MHz */
@@ -375,6 +382,17 @@ lim_extract_ap_capability(tpAniSirGlobal mac_ctx, uint8_t *p_ie,
 						beacon_struct->channelNumber);
 			else
 				session->ch_center_freq_seg1 = 0;
+=======
+				session->ch_center_freq_seg0 =
+					lim_get_80Mhz_center_channel(
+						beacon_struct->channelNumber);
+			}
+		} else if (vht_ch_wd == WNI_CFG_VHT_CHANNEL_WIDTH_80MHZ) {
+			session->ch_center_freq_seg0 =
+					lim_get_80Mhz_center_channel(
+						beacon_struct->channelNumber);
+			session->ch_center_freq_seg1 = 0;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		}
 		session->ch_width = vht_ch_wd + 1;
 		if (CH_WIDTH_80MHZ < session->ch_width) {
@@ -396,6 +414,10 @@ lim_extract_ap_capability(tpAniSirGlobal mac_ctx, uint8_t *p_ie,
 			else
 				session->gLimOperatingMode.chanWidth =
 					CH_WIDTH_160MHZ;
+<<<<<<< HEAD
+=======
+			session->gLimOperatingMode.rxNSS = session->nss - 1;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		} else {
 			pe_err("AP does not support op_mode rx");
 		}

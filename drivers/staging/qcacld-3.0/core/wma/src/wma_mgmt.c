@@ -1911,11 +1911,23 @@ static QDF_STATUS wma_setup_install_key_cmd(tp_wma_handle wma_handle,
 			key_params->vdev_id);
 		return QDF_STATUS_E_INVAL;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (key_params->vdev_id >= wma_handle->max_bssid) {
 		WMA_LOGE(FL("Invalid vdev_id: %d"), key_params->vdev_id);
 		return QDF_STATUS_E_INVAL;
 	}
 
+<<<<<<< HEAD
+=======
+	if (!wma_is_vdev_up(key_params->vdev_id)) {
+		WMA_LOGE(FL("vdev : %d not up"), key_params->vdev_id);
+		return QDF_STATUS_E_INVAL;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	txrx_vdev = wma_find_vdev_by_id(wma_handle,
 					key_params->vdev_id);
 	peer = cdp_peer_find_by_addr(soc, txrx_pdev,
@@ -2721,8 +2733,27 @@ static QDF_STATUS wma_unified_bcn_tmpl_send(tp_wma_handle wma,
 		tmpl_len = *(uint32_t *) &bcn_info->beacon[0];
 	else
 		tmpl_len = bcn_info->beaconLength;
+<<<<<<< HEAD
 	if (p2p_ie_len)
 		tmpl_len -= (uint32_t) p2p_ie_len;
+=======
+
+	if (tmpl_len > WMI_BEACON_TX_BUFFER_SIZE) {
+		wma_err("tmpl_len: %d > %d. Invalid tmpl len", tmpl_len,
+			WMI_BEACON_TX_BUFFER_SIZE);
+		return -EINVAL;
+	}
+
+	if (p2p_ie_len) {
+		if (tmpl_len <= p2p_ie_len) {
+			wma_err("tmpl_len %d <= p2p_ie_len %d, Invalid",
+				tmpl_len, p2p_ie_len);
+			return -EINVAL;
+		}
+		tmpl_len -= (uint32_t) p2p_ie_len;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	frm = bcn_info->beacon + bytes_to_strip;
 	tmpl_len_aligned = roundup(tmpl_len, sizeof(A_UINT32));
 	/*

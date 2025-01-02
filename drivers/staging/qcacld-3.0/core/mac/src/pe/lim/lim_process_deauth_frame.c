@@ -324,6 +324,10 @@ void lim_perform_deauth(tpAniSirGlobal mac_ctx, tpPESession pe_session,
 	tLimMlmAssocCnf mlmAssocCnf;
 	uint16_t aid;
 	tpDphHashNode sta_ds;
+<<<<<<< HEAD
+=======
+	tpSirAssocRsp assoc_rsp;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	sta_ds = dph_lookup_hash_entry(mac_ctx, addr, &aid,
 				       &pe_session->dph.dphHashTable);
@@ -539,6 +543,13 @@ void lim_perform_deauth(tpAniSirGlobal mac_ctx, tpPESession pe_session,
 			lim_delete_pre_auth_node(mac_ctx, addr);
 
 		if (pe_session->limAssocResponseData) {
+<<<<<<< HEAD
+=======
+			assoc_rsp = (tpSirAssocRsp) pe_session->
+					limAssocResponseData;
+			qdf_mem_free(assoc_rsp->sha384_ft_subelem.gtk);
+			qdf_mem_free(assoc_rsp->sha384_ft_subelem.igtk);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			qdf_mem_free(pe_session->limAssocResponseData);
 			pe_session->limAssocResponseData = NULL;
 		}

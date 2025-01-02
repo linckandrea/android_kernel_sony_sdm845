@@ -72,6 +72,21 @@
 #include <wlan_p2p_ucfg_api.h>
 #include "wlan_utility.h"
 #include "wlan_mlme_main.h"
+<<<<<<< HEAD
+=======
+#include <qdf_hang_event_notifier.h>
+#include <qdf_notifier.h>
+#include "wlan_pkt_capture_ucfg_api.h"
+
+struct pe_hang_event_fixed_param {
+	uint32_t tlv_header;
+	uint8_t vdev_id;
+	uint8_t limmlmstate;
+	uint8_t limprevmlmstate;
+	uint8_t limsmestate;
+	uint8_t limprevsmestate;
+} qdf_packed;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 static void __lim_init_bss_vars(tpAniSirGlobal pMac)
 {
@@ -622,7 +637,12 @@ void lim_cleanup(tpAniSirGlobal pMac)
 	/* Now, finally reset the deferred message queue pointers */
 	lim_reset_deferred_msg_q(pMac);
 
+<<<<<<< HEAD
 	rrm_cleanup(pMac);
+=======
+	for (i = 0; i < MAX_MEASUREMENT_REQUEST; i++)
+		rrm_cleanup(pMac, i);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	lim_ft_cleanup_all_ft_sessions(pMac);
 
@@ -848,6 +868,54 @@ static QDF_STATUS lim_unregister_sap_bcn_callback(tpAniSirGlobal mac_ctx)
 	return status;
 }
 
+<<<<<<< HEAD
+=======
+static int pe_hang_event_notifier_call(struct notifier_block *block,
+				       unsigned long state,
+				       void *data)
+{
+	qdf_notif_block *notif_block = qdf_container_of(block, qdf_notif_block,
+							notif_block);
+	tpAniSirGlobal mac;
+	tpPESession session;
+	struct qdf_notifer_data *pe_hang_data = data;
+	uint8_t *pe_data;
+	uint8_t i;
+	struct pe_hang_event_fixed_param *cmd;
+
+	if (!data)
+		return NOTIFY_STOP_MASK;
+
+	mac = notif_block->priv_data;
+	if (!mac)
+		return NOTIFY_STOP_MASK;
+
+	if (pe_hang_data->offset >= QDF_WLAN_MAX_HOST_OFFSET)
+		return NOTIFY_STOP_MASK;
+
+	for (i = 0; i < mac->lim.maxBssId; i++) {
+		session = &mac->lim.gpSession[i];
+		if (!session->valid)
+			continue;
+
+		pe_data = (pe_hang_data->hang_data + pe_hang_data->offset);
+		cmd = (struct pe_hang_event_fixed_param *)pe_data;
+		cmd->vdev_id = session->peSessionId;
+		cmd->limmlmstate = session->limMlmState;
+		cmd->limprevmlmstate = session->limPrevMlmState;
+		cmd->limsmestate = session->limSmeState;
+		cmd->limprevsmestate = session->limPrevSmeState;
+		pe_hang_data->offset += sizeof(*cmd);
+	}
+
+	return NOTIFY_OK;
+}
+
+static qdf_notif_block pe_hang_event_notifier = {
+	.notif_block.notifier_call = pe_hang_event_notifier_call,
+};
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /** -------------------------------------------------------------
    \fn pe_open
    \brief will be called in Open sequence from mac_open
@@ -914,6 +982,12 @@ QDF_STATUS pe_open(tpAniSirGlobal pMac, struct cds_config_info *cds_cfg)
 		pe_err("%s: Shutdown notifier register failed", __func__);
 	}
 
+<<<<<<< HEAD
+=======
+	pe_hang_event_notifier.priv_data = pMac;
+	qdf_hang_event_register_notifier(&pe_hang_event_notifier);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return status; /* status here will be QDF_STATUS_SUCCESS */
 
 pe_open_lock_fail:
@@ -940,6 +1014,11 @@ QDF_STATUS pe_close(tpAniSirGlobal pMac)
 	if (ANI_DRIVER_TYPE(pMac) == QDF_DRIVER_TYPE_MFG)
 		return QDF_STATUS_SUCCESS;
 
+<<<<<<< HEAD
+=======
+	qdf_hang_event_unregister_notifier(&pe_hang_event_notifier);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	lim_cleanup(pMac);
 	lim_unregister_sap_bcn_callback(pMac);
 
@@ -1229,12 +1308,22 @@ static bool pe_filter_bcn_probe_frame(tpAniSirGlobal mac_ctx,
 
 		ssid_ie = wlan_get_ie_ptr_from_eid(SIR_MAC_SSID_EID,
 				body + SIR_MAC_B_PR_SSID_OFFSET,
+<<<<<<< HEAD
 				frame_len);
+=======
+				frame_len - SIR_MAC_B_PR_SSID_OFFSET);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		if (!ssid_ie)
 			return false;
 
 		bcn_ssid.length = ssid_ie[1];
+<<<<<<< HEAD
+=======
+		if (bcn_ssid.length > WLAN_SSID_MAX_LEN)
+			return false;
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_copy(&bcn_ssid.ssId,
 			     &ssid_ie[2],
 			     bcn_ssid.length);
@@ -1312,6 +1401,16 @@ static QDF_STATUS pe_handle_mgmt_frame(struct wlan_objmgr_psoc *psoc,
 	uint8_t *pRxPacketInfo;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	/* skip offload packets */
+	if (ucfg_pkt_capture_get_mode(psoc) &&
+	    mgmt_rx_params->status & WMI_RX_OFFLOAD_MON_MODE) {
+		qdf_nbuf_free(buf);
+		return QDF_STATUS_SUCCESS;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	pMac = cds_get_context(QDF_MODULE_ID_PE);
 	if (NULL == pMac) {
 		/* cannot log a failure without a valid pMac */
@@ -2916,3 +3015,62 @@ QDF_STATUS lim_update_ext_cap_ie(tpAniSirGlobal mac_ctx,
 	(*local_ie_len) += driver_ext_cap.num_bytes;
 	return QDF_STATUS_SUCCESS;
 }
+<<<<<<< HEAD
+=======
+
+#define LIM_RSN_OUI_SIZE 4
+
+struct rsn_oui_akm_type_map {
+	enum ani_akm_type akm_type;
+	uint8_t rsn_oui[LIM_RSN_OUI_SIZE];
+};
+
+static const struct rsn_oui_akm_type_map rsn_oui_akm_type_mapping_table[] = {
+	{ANI_AKM_TYPE_RSN,                  {0x00, 0x0F, 0xAC, 0x01} },
+	{ANI_AKM_TYPE_RSN_PSK,              {0x00, 0x0F, 0xAC, 0x02} },
+	{ANI_AKM_TYPE_FT_RSN,               {0x00, 0x0F, 0xAC, 0x03} },
+	{ANI_AKM_TYPE_FT_RSN_PSK,           {0x00, 0x0F, 0xAC, 0x04} },
+	{ANI_AKM_TYPE_RSN_8021X_SHA256,     {0x00, 0x0F, 0xAC, 0x05} },
+	{ANI_AKM_TYPE_RSN_PSK_SHA256,       {0x00, 0x0F, 0xAC, 0x06} },
+#ifdef WLAN_FEATURE_SAE
+	{ANI_AKM_TYPE_SAE,                  {0x00, 0x0F, 0xAC, 0x08} },
+	{ANI_AKM_TYPE_FT_SAE,               {0x00, 0x0F, 0xAC, 0x09} },
+#endif
+	{ANI_AKM_TYPE_SUITEB_EAP_SHA256,    {0x00, 0x0F, 0xAC, 0x0B} },
+	{ANI_AKM_TYPE_SUITEB_EAP_SHA384,    {0x00, 0x0F, 0xAC, 0x0C} },
+	{ANI_AKM_TYPE_FT_SUITEB_EAP_SHA384, {0x00, 0x0F, 0xAC, 0x0D} },
+	{ANI_AKM_TYPE_FILS_SHA256,          {0x00, 0x0F, 0xAC, 0x0E} },
+	{ANI_AKM_TYPE_FILS_SHA384,          {0x00, 0x0F, 0xAC, 0x0F} },
+	{ANI_AKM_TYPE_FT_FILS_SHA256,       {0x00, 0x0F, 0xAC, 0x10} },
+	{ANI_AKM_TYPE_FT_FILS_SHA384,       {0x00, 0x0F, 0xAC, 0x11} },
+	{ANI_AKM_TYPE_OWE,                  {0x00, 0x0F, 0xAC, 0x12} },
+#ifdef FEATURE_WLAN_ESE
+	{ANI_AKM_TYPE_CCKM,                 {0x00, 0x40, 0x96, 0x00} },
+#endif
+	{ANI_AKM_TYPE_OSEN,                 {0x50, 0x6F, 0x9A, 0x01} },
+	{ANI_AKM_TYPE_DPP_RSN,              {0x50, 0x6F, 0x9A, 0x02} },
+	{ANI_AKM_TYPE_WPA,                  {0x00, 0x50, 0xF2, 0x01} },
+	{ANI_AKM_TYPE_WPA_PSK,              {0x00, 0x50, 0xF2, 0x02} },
+	/* Add akm type above here */
+	{ANI_AKM_TYPE_UNKNOWN, {0} },
+};
+
+enum ani_akm_type lim_translate_rsn_oui_to_akm_type(uint8_t auth_suite[4])
+{
+	const struct rsn_oui_akm_type_map *map;
+	enum ani_akm_type akm_type;
+
+	map = rsn_oui_akm_type_mapping_table;
+	while (true) {
+		akm_type = map->akm_type;
+		if ((akm_type == ANI_AKM_TYPE_UNKNOWN) ||
+		    (qdf_mem_cmp(auth_suite, map->rsn_oui, 4) == 0))
+			break;
+		map++;
+	}
+
+	pe_debug("akm_type: %d", akm_type);
+
+	return akm_type;
+}
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af

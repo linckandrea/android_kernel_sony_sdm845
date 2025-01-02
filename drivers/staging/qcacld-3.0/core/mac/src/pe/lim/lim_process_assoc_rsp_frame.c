@@ -453,6 +453,38 @@ static void lim_update_stads_ext_cap(tpAniSirGlobal mac_ctx,
 		ext_cap->tdls_chan_swit_prohibited);
 #endif
 	lim_set_peer_twt_cap(session_entry, ext_cap);
+<<<<<<< HEAD
+=======
+}
+
+/**
+ * lim_stop_reassoc_retry_timer() - Cleanup after reassoc response is received
+ *  @mac_ctx: Global MAC context
+ *
+ *  Stop the reassoc retry timer and release the stored reassoc request.
+ *
+ *  Return: None
+ */
+static void lim_stop_reassoc_retry_timer(tpAniSirGlobal mac_ctx)
+{
+	mac_ctx->lim.reAssocRetryAttempt = 0;
+	if ((NULL != mac_ctx->lim.pSessionEntry)
+		&& (NULL !=
+			mac_ctx->lim.pSessionEntry->pLimMlmReassocRetryReq)) {
+		qdf_mem_free(
+			mac_ctx->lim.pSessionEntry->pLimMlmReassocRetryReq);
+		mac_ctx->lim.pSessionEntry->pLimMlmReassocRetryReq = NULL;
+	}
+	lim_deactivate_and_change_timer(mac_ctx, eLIM_REASSOC_FAIL_TIMER);
+}
+
+static void clean_up_ft_sha384(tpSirAssocRsp assoc_rsp, bool sha384_akm)
+{
+	if (sha384_akm) {
+		qdf_mem_free(assoc_rsp->sha384_ft_subelem.gtk);
+		qdf_mem_free(assoc_rsp->sha384_ft_subelem.igtk);
+	}
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 
 /**
@@ -550,6 +582,11 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 #endif
 	tSirMacEdcaParamRecord mu_edca_set[MAX_NUM_AC];
 	int8_t rssi;
+<<<<<<< HEAD
+=======
+	enum ani_akm_type auth_type;
+	bool sha384_akm;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 #ifdef WLAN_FEATURE_ROAM_OFFLOAD
 	sme_sessionid = session_entry->smeSessionId;
@@ -729,6 +766,9 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 	lim_update_ese_tspec(mac_ctx, session_entry, assoc_rsp);
 #endif
 
+	auth_type = session_entry->connected_akm;
+	sha384_akm = lim_is_sha384_akm(auth_type);
+
 	if (assoc_rsp->capabilityInfo.ibss) {
 		/*
 		 * Received Re/Association Response from peer
@@ -737,6 +777,10 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 		 * failure timeout.
 		 */
 		pe_err("received Re/AssocRsp frame with IBSS capability");
+<<<<<<< HEAD
+=======
+		clean_up_ft_sha384(assoc_rsp, sha384_akm);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(assoc_rsp);
 		qdf_mem_free(beacon);
 		return;
@@ -744,6 +788,10 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 
 	if (cfg_get_capability_info(mac_ctx, &caps, session_entry)
 		!= QDF_STATUS_SUCCESS) {
+<<<<<<< HEAD
+=======
+		clean_up_ft_sha384(assoc_rsp, sha384_akm);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(assoc_rsp);
 		qdf_mem_free(beacon);
 		pe_err("could not retrieve Capabilities");
@@ -757,9 +805,12 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 	else
 		lim_stop_reassoc_retry_timer(mac_ctx);
 
+<<<<<<< HEAD
 	lim_handle_assoc_reject_status(mac_ctx, session_entry, assoc_rsp,
 				       hdr->sa);
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (eSIR_MAC_XS_FRAME_LOSS_POOR_CHANNEL_RSSI_STATUS ==
 	   assoc_rsp->statusCode &&
 	    assoc_rsp->rssi_assoc_rej.present) {
@@ -837,6 +888,10 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 			NULL) != QDF_STATUS_SUCCESS) {
 			pe_err("Set link state to POSTASSOC failed");
 			qdf_mem_free(beacon);
+<<<<<<< HEAD
+=======
+			clean_up_ft_sha384(assoc_rsp, sha384_akm);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			qdf_mem_free(assoc_rsp);
 			return;
 		}
@@ -969,6 +1024,10 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 		assoc_cnf.protStatusCode = eSIR_SME_SUCCESS;
 		lim_post_sme_message(mac_ctx, LIM_MLM_ASSOC_CNF,
 			(uint32_t *) &assoc_cnf);
+<<<<<<< HEAD
+=======
+		clean_up_ft_sha384(assoc_rsp, sha384_akm);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(assoc_rsp);
 		qdf_mem_free(beacon);
 		return;
@@ -1034,6 +1093,10 @@ lim_process_assoc_rsp_frame(tpAniSirGlobal mac_ctx,
 			beacon,
 			&session_entry->pLimJoinReq->bssDescription, true,
 			 session_entry)) {
+<<<<<<< HEAD
+=======
+		clean_up_ft_sha384(assoc_rsp, sha384_akm);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(assoc_rsp);
 		qdf_mem_free(beacon);
 		return;

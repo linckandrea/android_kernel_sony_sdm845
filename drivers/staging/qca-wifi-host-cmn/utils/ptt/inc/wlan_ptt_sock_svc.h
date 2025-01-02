@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2012-2018 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2012-2018,2020 The Linux Foundation. All rights reserved.
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -87,7 +91,11 @@
  * Length      : 4 bytes [LEN_PAYLOAD]
  * Payload     : LEN_PAYLOAD bytes
  */
+<<<<<<< HEAD
 #ifdef PTT_SOCK_SVC_ENABLE
+=======
+#if defined(PTT_SOCK_SVC_ENABLE) && defined(CNSS_GENL)
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * ptt_sock_activate_svc() - API to register PTT/PUMAC command handlers
  *
@@ -96,6 +104,7 @@
  * Return: None
  */
 void ptt_sock_activate_svc(void);
+<<<<<<< HEAD
 
 /**
  * ptt_sock_deactivate_svc() - API to deregister PTT/PUMAC command handlers
@@ -121,7 +130,28 @@ static inline int ptt_sock_send_msg_to_app(tAniHdr *wmsg, int radio,
 	return 0;
 }
 #endif
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
+/**
+ * ptt_sock_deactivate_svc() - API to deregister PTT/PUMAC command handlers
+ *
+ * API to deregister the handler for PTT/PUMAC NL messages.
+ *
+ * Return: None
+ */
+void ptt_sock_deactivate_svc(void);
+
+#else
+static inline void ptt_sock_activate_svc(void)
+{
+}
+static inline void ptt_sock_deactivate_svc(void)
+{
+}
+#endif
+
+int ptt_sock_send_msg_to_app(tAniHdr *wmsg, int radio, int src_mod, int pid);
 /*
  * Format of message exchanged between the PTT Socket App in userspace and the
  * WLAN Driver, in either direction. Each msg will begin with this header and

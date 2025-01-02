@@ -23,7 +23,6 @@
 #include "sir_api.h"
 #include "sir_params.h"
 
-
 /*
  * Validate the OS Type being built
  */
@@ -1264,6 +1263,7 @@ struct set_dtim_params {
 
 #ifdef FEATURE_WLAN_TDLS
 
+<<<<<<< HEAD
 #define HAL_TDLS_MAX_SUPP_CHANNELS       128
 #define HAL_TDLS_MAX_SUPP_OPER_CLASSES   32
 
@@ -1315,6 +1315,8 @@ typedef struct sTdlsPeerStateParams {
 	bool resp_reqd;
 } tTdlsPeerStateParams;
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * struct tdls_chan_switch_params - channel switch parameter structure
  * @vdev_id: vdev ID
@@ -1335,7 +1337,6 @@ typedef struct tdls_chan_switch_params_struct {
 } tdls_chan_switch_params;
 
 #endif /* FEATURE_WLAN_TDLS */
-
 /**
  * struct tAbortScanParams - Abort scan parameters
  * @SessionId: PE session id

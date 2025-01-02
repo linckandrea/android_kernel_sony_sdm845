@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2012-2018 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2012-2020 The Linux Foundation. All rights reserved.
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -443,6 +447,11 @@ uint32_t tx_timer_delete(TX_TIMER *timer_ptr)
 	}
 
 	qdf_mc_timer_destroy(&timer_ptr->qdf_timer);
+<<<<<<< HEAD
+=======
+	timer_ptr->tmrSignature = 0;
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return TX_SUCCESS;
 } /*** tx_timer_delete() ***/
 

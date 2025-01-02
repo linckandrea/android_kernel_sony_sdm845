@@ -33,10 +33,22 @@
 #define _HTT_DEPS_H_
 
 #include <a_types.h>    /* A_UINT32 */
+<<<<<<< HEAD
 #include <a_osapi.h>    /* PREPACK, POSTPACK */
 #ifdef ATHR_WIN_NWF
 #pragma warning(disable:4214) /* bit field types other than int */
 #endif
+=======
+
+#ifndef QCA_WIFI_WIFISTATS_EXTBUILD
+#include <a_osapi.h>    /* PREPACK, POSTPACK */
+#endif
+
+#ifdef ATHR_WIN_NWF
+#pragma warning(disable:4214) /* bit field types other than int */
+#endif
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #include "wlan_defs.h"
 
 #endif /* _HTT_DEPS_H_ */

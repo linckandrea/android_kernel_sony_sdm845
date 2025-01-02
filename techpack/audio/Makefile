@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+=======
+# auto-detect subdirs
+ifeq ($(CONFIG_ARCH_SDM845), y)
+include $(srctree)/techpack/audio/config/sdm845auto.conf
+export $(shell sed 's/=.*//' $(srctree)/techpack/audio/config/sdm845auto.conf)
+endif
+ifeq ($(CONFIG_ARCH_SDM670), y)
+include $(srctree)/techpack/audio/config/sdm670auto.conf
+export $(shell sed 's/=.*//' $(srctree)/techpack/audio/config/sdm670auto.conf)
+endif
+ifeq ($(CONFIG_ARCH_SDXPOORWILLS), y)
+include $(srctree)/techpack/audio/config/sdxpoorwillsauto.conf
+export $(shell sed 's/=.*//' $(srctree)/techpack/audio/config/sdxpoorwillsauto.conf)
+endif
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 # Use USERINCLUDE when you must reference the UAPI directories only.
 USERINCLUDE     += \
                 -I$(srctree)/techpack/audio/include/uapi \
@@ -8,6 +25,22 @@ LINUXINCLUDE    += \
                 -I$(srctree)/techpack/audio/include/uapi \
                 -I$(srctree)/techpack/audio/include
 
+<<<<<<< HEAD
+=======
+ifeq ($(CONFIG_ARCH_SDM845), y)
+LINUXINCLUDE    += \
+                -include $(srctree)/techpack/audio/config/sdm845autoconf.h
+endif
+ifeq ($(CONFIG_ARCH_SDM670), y)
+LINUXINCLUDE    += \
+                -include $(srctree)/techpack/audio/config/sdm670autoconf.h
+endif
+ifeq ($(CONFIG_ARCH_SDXPOORWILLS), y)
+LINUXINCLUDE    += \
+                -include $(srctree)/techpack/audio/config/sdxpoorwillsautoconf.h
+endif
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 obj-y += asoc/
 obj-y += dsp/
 obj-y += ipc/

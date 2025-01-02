@@ -751,7 +751,12 @@ static void csr_get_channel_power_info(tpAniSirGlobal pMac, tDblLinkList *list,
 	struct csr_channel_powerinfo *ch_set;
 
 	/* Get 2.4Ghz first */
+<<<<<<< HEAD
 	entry = csr_ll_peek_head(list, LL_ACCESS_LOCK);
+=======
+	csr_ll_lock(list);
+	entry = csr_ll_peek_head(list, LL_ACCESS_NOLOCK);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	while (entry && (chn_idx < *num_ch)) {
 		ch_set = GET_BASE_ADDR(entry,
 				struct csr_channel_powerinfo, link);
@@ -762,8 +767,14 @@ static void csr_get_channel_power_info(tpAniSirGlobal pMac, tDblLinkList *list,
 				 + (idx * ch_set->interChannelOffset));
 			chn_pwr_info[chn_idx++].tx_power = ch_set->txPower;
 		}
+<<<<<<< HEAD
 		entry = csr_ll_next(list, entry, LL_ACCESS_LOCK);
 	}
+=======
+		entry = csr_ll_next(list, entry, LL_ACCESS_NOLOCK);
+	}
+	csr_ll_unlock(list);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	*num_ch = chn_idx;
 
 }
@@ -1616,7 +1627,12 @@ static void csr_save_tx_power_to_cfg(tpAniSirGlobal pMac, tDblLinkList *pList,
 		return;
 
 	ch_pwr_set = (tSirMacChanInfo *) (pBuf);
+<<<<<<< HEAD
 	pEntry = csr_ll_peek_head(pList, LL_ACCESS_LOCK);
+=======
+	csr_ll_lock(pList);
+	pEntry = csr_ll_peek_head(pList, LL_ACCESS_NOLOCK);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/*
 	 * write the tuples (startChan, numChan, txPower) for each channel found
 	 * in the channel power list.
@@ -1674,8 +1690,14 @@ static void csr_save_tx_power_to_cfg(tpAniSirGlobal pMac, tDblLinkList *pList,
 			cbLen += sizeof(tSirMacChanInfo);
 			ch_pwr_set++;
 		}
+<<<<<<< HEAD
 		pEntry = csr_ll_next(pList, pEntry, LL_ACCESS_LOCK);
 	}
+=======
+		pEntry = csr_ll_next(pList, pEntry, LL_ACCESS_NOLOCK);
+	}
+	csr_ll_unlock(pList);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (cbLen)
 		cfg_set_str(pMac, cfgId, (uint8_t *) pBuf, cbLen);
 
@@ -2543,6 +2565,10 @@ static QDF_STATUS csr_prepare_scan_filter(tpAniSirGlobal mac_ctx,
 		filter->ignore_auth_enc_type = true;
 
 	filter->rrm_measurement_filter = pFilter->fMeasurement;
+<<<<<<< HEAD
+=======
+	filter->age_threshold = pFilter->age_threshold;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	filter->mobility_domain = pFilter->MDID.mobilityDomain;
 
@@ -2762,6 +2788,13 @@ static QDF_STATUS csr_fill_bss_from_scan_entry(tpAniSirGlobal mac_ctx,
 	bss_desc->seq_ctrl = hdr->seqControl;
 	bss_desc->tsf_delta = scan_entry->tsf_delta;
 	bss_desc->adaptive_11r_ap = scan_entry->adaptive_11r_ap;
+<<<<<<< HEAD
+=======
+
+	bss_desc->mbo_oce_enabled_ap =
+			util_scan_entry_mbo_oce(scan_entry) ? true : false;
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	csr_fill_single_pmk_ap_cap_from_scan_entry(bss_desc, scan_entry);
 
 	qdf_mem_copy((uint8_t *) &bss_desc->ieFields,

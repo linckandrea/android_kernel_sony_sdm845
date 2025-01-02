@@ -823,9 +823,15 @@ wma_fill_tx_stats(struct sir_wifi_ll_ext_stats *ll_stats,
 	struct sir_wifi_tx *tx_stats;
 	struct sir_wifi_ll_ext_peer_stats *peer_stats;
 	uint32_t *tx_mpdu_aggr, *tx_succ_mcs, *tx_fail_mcs, *tx_delay;
+<<<<<<< HEAD
 	uint32_t len, dst_len, param_len, tx_mpdu_aggr_array_len,
 		 tx_succ_mcs_array_len, tx_fail_mcs_array_len,
 		 tx_delay_array_len;
+=======
+	uint32_t len, dst_len, param_len, num_entries,
+		 tx_mpdu_aggr_array_len, tx_succ_mcs_array_len,
+		 tx_fail_mcs_array_len, tx_delay_array_len;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	result = *buf;
 	dst_len = *buf_length;
@@ -904,6 +910,15 @@ wma_fill_tx_stats(struct sir_wifi_ll_ext_stats *ll_stats,
 		return QDF_STATUS_E_FAILURE;
 	}
 
+<<<<<<< HEAD
+=======
+	num_entries = fix_param->num_peer_ac_tx_stats * WLAN_MAX_AC;
+	if (num_entries > param_buf->num_tx_stats) {
+		wma_err("tx stats invalid arg, %d", num_entries);
+		return QDF_STATUS_E_FAILURE;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	for (i = 0; i < fix_param->num_peer_ac_tx_stats; i++) {
 		uint32_t peer_id = wmi_peer_tx[i].peer_id;
 		struct sir_wifi_tx *ac;
@@ -1834,6 +1849,7 @@ static int wma_unified_link_radio_stats_event_handler(void *handle,
 		next_chan_offset = WMI_TLV_HDR_SIZE;
 		WMA_LOGD("Channel Stats Info");
 		for (count = 0; count < radio_stats->num_channels; count++) {
+<<<<<<< HEAD
 			WMA_LOGD("freq %u width %u freq0 %u freq1 %u awake time %u cca busy time %u",
 				 channel_stats->center_freq,
 				 channel_stats->channel_width,
@@ -1841,6 +1857,25 @@ static int wma_unified_link_radio_stats_event_handler(void *handle,
 				 channel_stats->center_freq1,
 				 channel_stats->radio_awake_time,
 				 channel_stats->cca_busy_time);
+=======
+			wma_nofl_debug("freq %u width %u freq0 %u freq1 %u awake time %u cca busy time %u",
+				       channel_stats->center_freq,
+				       channel_stats->channel_width,
+				       channel_stats->center_freq0,
+				       channel_stats->center_freq1,
+				       channel_stats->radio_awake_time,
+				       channel_stats->cca_busy_time);
+			if (wmi_service_enabled(
+			      wma_handle->wmi_handle,
+			      wmi_service_ll_stats_per_chan_rx_tx_time)) {
+				wma_nofl_debug(" tx time %u rx time %u",
+					       channel_stats->tx_time,
+					       channel_stats->rx_time);
+			} else {
+				wma_nofl_debug("LL Stats per channel tx time and rx time are not supported.");
+			}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			channel_stats++;
 
 			qdf_mem_copy(chn_results,
@@ -2922,6 +2957,14 @@ int wma_link_status_event_handler(void *handle, uint8_t *cmd_param_info,
 						param_buf->fixed_param;
 	ht_info = (wmi_vdev_rate_ht_info *) param_buf->ht_info;
 
+<<<<<<< HEAD
+=======
+	if (!ht_info) {
+		wma_err("Invalid ht_info");
+		return -EINVAL;
+	}
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	WMA_LOGD("num_vdev_stats: %d", event->num_vdev_stats);
 
 	if (event->num_vdev_stats > ((WMI_SVC_MSG_MAX_SIZE -
@@ -4653,6 +4696,7 @@ static void wma_set_roam_offload_flag(tp_wma_handle wma, uint8_t vdev_id,
 	if (is_set) {
 		flag = WMI_ROAM_FW_OFFLOAD_ENABLE_FLAG |
 		       WMI_ROAM_BMISS_FINAL_SCAN_ENABLE_FLAG;
+<<<<<<< HEAD
 	/*
 	 * If WMI_ROAM_BMISS_FINAL_SCAN_ENABLE_FLAG is set, then
 	 * WMI_ROAM_BMISS_FINAL_SCAN_TYPE_FLAG decides whether firmware
@@ -4661,6 +4705,16 @@ static void wma_set_roam_offload_flag(tp_wma_handle wma, uint8_t vdev_id,
 	 */
 	if (wma->bmiss_skip_full_scan)
 		flag |= WMI_ROAM_BMISS_FINAL_SCAN_TYPE_FLAG;
+=======
+		/*
+		 * If WMI_ROAM_BMISS_FINAL_SCAN_ENABLE_FLAG is set, then
+		 * WMI_ROAM_BMISS_FINAL_SCAN_TYPE_FLAG decides whether firmware
+		 * does channel map based partial scan or partial scan followed
+		 * by full scan in case no candidate is found in partial scan.
+		 */
+		if (wma->bmiss_skip_full_scan)
+			flag |= WMI_ROAM_BMISS_FINAL_SCAN_TYPE_FLAG;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		/*
 		 * If 4-way HS offload is disabled then let supplicant handle
@@ -4714,7 +4768,12 @@ static void wma_update_roam_offload_flag(tp_wma_handle wma, uint8_t vdev_id,
 	}
 
 	for (id = 0; id < wma->max_bssid; id++) {
+<<<<<<< HEAD
 		if (wma->interfaces[id].roam_offload_enabled)
+=======
+		if (wma_is_vdev_valid(id) &&
+		    wma->interfaces[id].roam_offload_enabled)
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			roam_offload_vdev_id = id;
 	}
 
@@ -5138,9 +5197,30 @@ int wma_oem_event_handler(void *wma_ctx, uint8_t *event_buff, uint32_t len)
 
 	oem_event_data.data_len = event->data_len;
 	oem_event_data.data = param_buf->data;
+<<<<<<< HEAD
 
 	pmac->sme.oem_data_event_handler_cb(&oem_event_data);
 
 	return QDF_STATUS_SUCCESS;
 }
+=======
+	pmac->sme.oem_data_event_handler_cb(&oem_event_data,
+					    pmac->sme.oem_data_vdev_id);
+
+	return QDF_STATUS_SUCCESS;
+}
+
+uint8_t wma_get_vdev_chan_roam_enabled(WMA_HANDLE wma_handle)
+{
+	uint8_t id;
+	tp_wma_handle wma = (tp_wma_handle)wma_handle;
+
+	for (id = 0; id < wma->max_bssid; id++) {
+		if (wma->interfaces[id].roam_offload_enabled)
+			return wma->interfaces[id].channel;
+	}
+
+	return 0;
+}
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif

@@ -2258,8 +2258,7 @@ lim_tdls_populate_matching_rate_set(tpAniSirGlobal mac_ctx, tpDphHashNode stads,
 				    tDot11fIEVHTCaps *vht_caps)
 {
 	tSirMacRateSet temp_rate_set;
-	uint32_t i, j, val, min, is_a_rate;
-	tSirMacRateSet temp_rate_set2;
+	uint32_t i, j, val, is_a_rate;
 	uint32_t phymode;
 	uint8_t mcsSet[SIZE_OF_SUPPORTED_MCS_SET];
 	tpSirSupportedRates rates;
@@ -2268,10 +2267,10 @@ lim_tdls_populate_matching_rate_set(tpAniSirGlobal mac_ctx, tpDphHashNode stads,
 	uint8_t nss;
 
 	is_a_rate = 0;
-	temp_rate_set2.numRates = 0;
 
 	lim_get_phy_mode(mac_ctx, &phymode, NULL);
 
+<<<<<<< HEAD
 	/* get own rate set */
 	val = WNI_CFG_OPERATIONAL_RATE_SET_LEN;
 	if (wlan_cfg_get_str(mac_ctx, WNI_CFG_OPERATIONAL_RATE_SET,
@@ -2332,6 +2331,8 @@ lim_tdls_populate_matching_rate_set(tpAniSirGlobal mac_ctx, tpDphHashNode stads,
 		temp_rate_set.rate[min] = 0xff;
 	}
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/**
 	 * Copy received rates in temp_rate_set, the parser has ensured
 	 * unicity of the rates so there cannot be more than 12 .
@@ -2350,6 +2351,7 @@ lim_tdls_populate_matching_rate_set(tpAniSirGlobal mac_ctx, tpDphHashNode stads,
 	rates = &stads->supportedRates;
 	qdf_mem_zero((uint8_t *) rates, sizeof(tSirSupportedRates));
 
+<<<<<<< HEAD
 	for (i = 0; i < temp_rate_set2.numRates; i++) {
 		for (j = 0; j < temp_rate_set.numRates; j++) {
 			if ((temp_rate_set2.rate[i] & 0x7F) !=
@@ -2371,6 +2373,24 @@ lim_tdls_populate_matching_rate_set(tpAniSirGlobal mac_ctx, tpDphHashNode stads,
 					rates->llbRates[b_rateindex++] = temp_rate_set2.rate[i];
 			}
 			break;
+=======
+	for (j = 0; j < temp_rate_set.numRates; j++) {
+		if ((b_rateindex > SIR_NUM_11B_RATES) ||
+		    (a_rateindex > SIR_NUM_11A_RATES)) {
+			pe_warn("Invalid number of rates (11b->%d, 11a->%d)",
+					b_rateindex, a_rateindex);
+			return QDF_STATUS_E_FAILURE;
+		}
+		if (sirIsArate(temp_rate_set.rate[j] & 0x7f)) {
+			is_a_rate = 1;
+			if (a_rateindex < SIR_NUM_11A_RATES)
+				rates->llaRates[a_rateindex++] =
+						temp_rate_set.rate[j];
+		} else {
+			if (b_rateindex < SIR_NUM_11B_RATES)
+				rates->llbRates[b_rateindex++] =
+						temp_rate_set.rate[j];
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		}
 	}
 

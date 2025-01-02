@@ -65,6 +65,13 @@
 #include <asm/dma-iommu.h>
 #include <linux/iommu.h>
 #endif
+<<<<<<< HEAD
+=======
+#include <qdf_hang_event_notifier.h>
+#include <qdf_notifier.h>
+#include <qwlan_version.h>
+#include <qdf_trace.h>
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /* Preprocessor Definitions and Constants */
 
 /* Preprocessor Definitions and Constants */
@@ -86,6 +93,16 @@ static struct ol_if_ops  dp_ol_if_ops = {
     /* TODO: Add any other control path calls required to OL_IF/WMA layer */
 };
 
+<<<<<<< HEAD
+=======
+struct cds_hang_event_fixed_param {
+	uint32_t tlv_header;
+	uint32_t recovery_reason;
+	char driver_version[11];
+	char hang_event_version[3];
+} qdf_packed;
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 static void cds_trigger_recovery_work(void *param);
 
 /**
@@ -177,7 +194,11 @@ QDF_STATUS cds_init(void)
 	qdf_mc_timer_manager_init();
 	qdf_event_list_init();
 	qdf_cpuhp_init();
+<<<<<<< HEAD
 	qdf_register_self_recovery_callback(__cds_trigger_recovery);
+=======
+	qdf_register_self_recovery_callback(cds_trigger_recovery_psoc);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_register_fw_down_callback(cds_is_fw_down);
 	qdf_register_ssr_protect_callbacks(cds_ssr_protect,
 					   cds_ssr_unprotect);
@@ -446,6 +467,50 @@ cds_set_ac_specs_params(struct cds_config_info *cds_cfg)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static int cds_hang_event_notifier_call(struct notifier_block *block,
+					unsigned long state,
+					void *data)
+{
+	struct qdf_notifer_data *cds_hang_data = data;
+	uint32_t total_len;
+	struct cds_hang_event_fixed_param *cmd;
+	uint8_t *cds_hang_evt_buff;
+
+	if (!cds_hang_data)
+		return NOTIFY_STOP_MASK;
+
+	cds_hang_evt_buff = cds_hang_data->hang_data;
+
+	if (!cds_hang_evt_buff)
+		return NOTIFY_STOP_MASK;
+
+	if (cds_hang_data->offset >= QDF_WLAN_MAX_HOST_OFFSET)
+		return NOTIFY_STOP_MASK;
+
+	total_len = sizeof(*cmd);
+
+	cds_hang_evt_buff = cds_hang_data->hang_data + cds_hang_data->offset;
+	cmd = (struct cds_hang_event_fixed_param *)cds_hang_evt_buff;
+	QDF_HANG_EVT_SET_HDR(&cmd->tlv_header, HANG_EVT_TAG_CDS,
+			     QDF_HANG_GET_STRUCT_TLVLEN(*cmd));
+
+	cmd->recovery_reason = gp_cds_context->recovery_reason;
+
+	qdf_mem_copy(&cmd->driver_version, QWLAN_VERSIONSTR, 11);
+
+	qdf_mem_copy(&cmd->hang_event_version, QDF_HANG_EVENT_VERSION, 3);
+
+	cds_hang_data->offset += total_len;
+	return NOTIFY_OK;
+}
+
+static qdf_notif_block cds_hang_event_notifier = {
+	.notif_block.notifier_call = cds_hang_event_notifier_call,
+};
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * cds_open() - open the CDS Module
  *
@@ -660,6 +725,11 @@ QDF_STATUS cds_open(struct wlan_objmgr_psoc *psoc)
 		goto deregister_modules;
 	}
 
+<<<<<<< HEAD
+=======
+	qdf_hang_event_register_notifier(&cds_hang_event_notifier);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return QDF_STATUS_SUCCESS;
 
 deregister_modules:
@@ -1091,6 +1161,10 @@ QDF_STATUS cds_close(struct wlan_objmgr_psoc *psoc)
 {
 	QDF_STATUS qdf_status;
 
+<<<<<<< HEAD
+=======
+	qdf_hang_event_unregister_notifier(&cds_hang_event_notifier);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_status = cds_sched_close();
 	QDF_ASSERT(QDF_IS_STATUS_SUCCESS(qdf_status));
 	if (QDF_IS_STATUS_ERROR(qdf_status))
@@ -1898,6 +1972,16 @@ void __cds_trigger_recovery(enum qdf_hang_reason reason, const char *func,
 	cds_trigger_recovery_handler(func, line);
 }
 
+<<<<<<< HEAD
+=======
+void cds_trigger_recovery_psoc(void *psoc, enum qdf_hang_reason reason,
+			       const char *func, const uint32_t line)
+{
+	__cds_trigger_recovery(reason, func, line);
+}
+
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * cds_get_recovery_reason() - get self recovery reason
  * @reason: recovery reason

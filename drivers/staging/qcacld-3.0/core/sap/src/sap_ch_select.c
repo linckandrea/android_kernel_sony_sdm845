@@ -548,10 +548,13 @@ static bool sap_chan_sel_init(tHalHandle halHandle,
 		if (wlan_reg_is_dsrc_chan(pMac->pdev, *pChans))
 			continue;
 
+<<<<<<< HEAD
 		if (!pMac->sap.enable_etsi13_srd_chan_support &&
 		    wlan_reg_is_etsi13_srd_chan(pMac->pdev, *pChans))
 			continue;
 
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		if (true == chSafe) {
 			pSpectCh->valid = true;
 			for (chan_num = 0; chan_num < sap_ctx->num_of_channel;

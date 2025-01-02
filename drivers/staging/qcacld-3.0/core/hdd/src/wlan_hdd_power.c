@@ -547,7 +547,12 @@ void hdd_enable_host_offloads(struct hdd_adapter *adapter,
 	hdd_enable_arp_offload(adapter, trigger);
 	hdd_enable_ns_offload(adapter, trigger);
 	hdd_enable_mc_addr_filtering(adapter, trigger);
+<<<<<<< HEAD
 	hdd_enable_hw_filter(adapter);
+=======
+	if (adapter->device_mode != QDF_NDI_MODE)
+		hdd_enable_hw_filter(adapter);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 out:
 	hdd_exit();
 
@@ -2331,6 +2336,10 @@ static int __wlan_hdd_cfg80211_get_txpower(struct wiphy *wiphy,
 	struct hdd_adapter *adapter = WLAN_HDD_GET_PRIV_PTR(ndev);
 	int status;
 	struct hdd_station_ctx *sta_ctx = WLAN_HDD_GET_STATION_CTX_PTR(adapter);
+<<<<<<< HEAD
+=======
+	static bool is_rate_limited;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	hdd_enter_dev(ndev);
 
@@ -2355,10 +2364,21 @@ static int __wlan_hdd_cfg80211_get_txpower(struct wiphy *wiphy,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	mutex_lock(&hdd_ctx->iface_change_lock);
 	if (hdd_ctx->driver_status != DRIVER_MODULES_ENABLED) {
 		mutex_unlock(&hdd_ctx->iface_change_lock);
 		hdd_debug("Driver Module not enabled return success");
+=======
+	HDD_IS_RATE_LIMIT_REQ(is_rate_limited,
+			      hdd_ctx->config->nb_commands_interval);
+
+	mutex_lock(&hdd_ctx->iface_change_lock);
+	if (hdd_ctx->driver_status != DRIVER_MODULES_ENABLED ||
+	    is_rate_limited) {
+		mutex_unlock(&hdd_ctx->iface_change_lock);
+		hdd_debug("Modules not enabled/rate limited, use cached stats");
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		/* Send cached data to upperlayer*/
 		*dbm = adapter->hdd_stats.class_a_stat.max_pwr;
 		return 0;

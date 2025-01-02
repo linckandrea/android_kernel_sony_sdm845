@@ -3062,7 +3062,11 @@ void __lim_process_sme_assoc_cnf_new(tpAniSirGlobal mac_ctx, uint32_t msg_type,
 
 	if (msg_buf == NULL) {
 		pe_err("msg_buf is NULL");
+<<<<<<< HEAD
 		goto end;
+=======
+		return;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 
 	qdf_mem_copy(&assoc_cnf, msg_buf, sizeof(struct sSirSmeAssocCnf));
@@ -3142,29 +3146,54 @@ void __lim_process_sme_assoc_cnf_new(tpAniSirGlobal mac_ctx, uint32_t msg_type,
 		 */
 		sta_ds->mlmStaContext.mlmState =
 			eLIM_MLM_LINK_ESTABLISHED_STATE;
+<<<<<<< HEAD
+=======
+		sta_ds->mlmStaContext.owe_ie = assoc_cnf.owe_ie;
+		sta_ds->mlmStaContext.owe_ie_len = assoc_cnf.owe_ie_len;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		pe_debug("sending Assoc Rsp frame to STA (assoc id=%d)",
 			sta_ds->assocId);
 		lim_send_assoc_rsp_mgmt_frame(mac_ctx, QDF_STATUS_SUCCESS,
 					sta_ds->assocId, sta_ds->staAddr,
 					sta_ds->mlmStaContext.subType, sta_ds,
 					session_entry);
+		sta_ds->mlmStaContext.owe_ie = NULL;
+		sta_ds->mlmStaContext.owe_ie_len = 0;
 		goto end;
 	} else {
+		uint8_t add_pre_auth_context = true;
 		/*
 		 * SME_ASSOC_CNF status is non-success, so STA is not allowed
 		 * to be associated since the HAL sta entry is created for
 		 * denied STA we need to remove this HAL entry.
 		 * So to do that set updateContext to 1
 		 */
+		tSirMacStatusCodes mac_status_code =
+					eSIR_MAC_UNSPEC_FAILURE_STATUS;
+
 		if (!sta_ds->mlmStaContext.updateContext)
 			sta_ds->mlmStaContext.updateContext = 1;
+<<<<<<< HEAD
 		pe_debug("Recv Assoc Cnf, status Code : %d(assoc id=%d)",
 			assoc_cnf.statusCode, sta_ds->assocId);
+=======
+		pe_debug("Recv Assoc Cnf, status Code : %d(assoc id=%d) Reason code: %d",
+			 assoc_cnf.statusCode, sta_ds->assocId,
+			 assoc_cnf.mac_status_code);
+		if (assoc_cnf.mac_status_code)
+			mac_status_code = assoc_cnf.mac_status_code;
+		if (assoc_cnf.mac_status_code == eSIR_MAC_INVALID_PMKID ||
+		    assoc_cnf.mac_status_code ==
+			eSIR_MAC_AUTH_ALGO_NOT_SUPPORTED_STATUS)
+			add_pre_auth_context = false;
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		lim_reject_association(mac_ctx, sta_ds->staAddr,
 				       sta_ds->mlmStaContext.subType,
-				       true, sta_ds->mlmStaContext.authType,
+				       add_pre_auth_context,
+				       sta_ds->mlmStaContext.authType,
 				       sta_ds->assocId, true,
-				       eSIR_MAC_UNSPEC_FAILURE_STATUS,
+				       mac_status_code,
 				       session_entry);
 	}
 end:
@@ -3179,6 +3208,7 @@ end:
 		qdf_mem_free(session_entry->parsedAssocReq[sta_ds->assocId]);
 		session_entry->parsedAssocReq[sta_ds->assocId] = NULL;
 	}
+	qdf_mem_free(assoc_cnf.owe_ie);
 }
 
 static void __lim_process_sme_addts_req(tpAniSirGlobal pMac, uint32_t *pMsgBuf)
@@ -3723,6 +3753,40 @@ static void __lim_process_roam_scan_offload_req(tpAniSirGlobal mac_ctx,
 	}
 }
 
+<<<<<<< HEAD
+=======
+#if defined(WLAN_FEATURE_HOST_ROAM) || defined(WLAN_FEATURE_ROAM_OFFLOAD)
+/**
+ * lim_send_roam_per_command() - Process roam send PER command from csr
+ * @mac_ctx: Pointer to Global MAC structure
+ * @msg_buf: Pointer to SME message buffer
+ *
+ * Return: None
+ */
+static void lim_send_roam_per_command(tpAniSirGlobal mac_ctx,
+				      uint32_t *msg_buf)
+{
+	struct scheduler_msg wma_msg = {0};
+	QDF_STATUS status;
+
+	wma_msg.type = WMA_SET_PER_ROAM_CONFIG_CMD;
+	wma_msg.bodyptr = msg_buf;
+
+	status = wma_post_ctrl_msg(mac_ctx, &wma_msg);
+	if (QDF_STATUS_SUCCESS != status) {
+		pe_err("Posting WMA_ROAM_INIT_PARAM failed");
+		qdf_mem_free(msg_buf);
+	}
+}
+#else
+static void lim_send_roam_per_command(tpAniSirGlobal mac_ctx,
+				      uint32_t *msg_buf)
+{
+	qdf_mem_free(msg_buf);
+}
+#endif
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef WLAN_FEATURE_ROAM_OFFLOAD
 /**
  * lim_process_roam_invoke() - process the Roam Invoke req
@@ -4665,10 +4729,21 @@ bool lim_process_sme_req_messages(tpAniSirGlobal pMac,
 		__lim_process_roam_scan_offload_req(pMac, pMsgBuf);
 		bufConsumed = false;
 		break;
+<<<<<<< HEAD
 	case eWNI_SME_ROAM_INVOKE:
 		lim_process_roam_invoke(pMac, pMsgBuf);
 		bufConsumed = false;
 		break;
+=======
+	case eWNI_SME_ROAM_SEND_PER_REQ:
+		lim_send_roam_per_command(pMac, pMsgBuf);
+		bufConsumed = false;
+		break;
+	case eWNI_SME_ROAM_INVOKE:
+		lim_process_roam_invoke(pMac, pMsgBuf);
+		bufConsumed = false;
+		break;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	case eWNI_SME_CHNG_MCC_BEACON_INTERVAL:
 		/* Update the beaconInterval */
 		__lim_process_sme_change_bi(pMac, pMsgBuf);
@@ -6172,6 +6247,11 @@ void lim_remove_duplicate_bssid_node(struct sir_rssi_disallow_lst *entry,
 	}
 }
 
+<<<<<<< HEAD
+=======
+#define BLACKLIST_MAX_TIME_TO_HONOR      255000
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 void lim_add_roam_blacklist_ap(tpAniSirGlobal mac_ctx,
 			       struct roam_blacklist_event *src_lst)
 {
@@ -6182,6 +6262,16 @@ void lim_add_roam_blacklist_ap(tpAniSirGlobal mac_ctx,
 
 	blacklist = &src_lst->roam_blacklist[0];
 	for (i = 0; i < src_lst->num_entries; i++) {
+<<<<<<< HEAD
+=======
+		if (blacklist->timeout > BLACKLIST_MAX_TIME_TO_HONOR) {
+			pe_info("%pM timeout %u greater than %d ignoring entry",
+				blacklist->bssid.bytes, blacklist->timeout,
+				BLACKLIST_MAX_TIME_TO_HONOR);
+			blacklist++;
+			continue;
+		}
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		entry = qdf_mem_malloc(sizeof(struct sir_rssi_disallow_lst));
 		if (!entry)
 			return;

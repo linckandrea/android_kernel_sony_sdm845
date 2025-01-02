@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2013-2020 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2013-2021 The Linux Foundation. All rights reserved.
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -235,6 +239,13 @@ QDF_STATUS wma_update_channel_list(WMA_HANDLE handle,
 			WMI_SET_CHANNEL_FLAG(tchan_info,
 				WMI_CHAN_FLAG_QUARTER_RATE);
 
+<<<<<<< HEAD
+=======
+		if (chan_list->chanParam[i].nan_disabled)
+			WMI_SET_CHANNEL_FLAG(tchan_info,
+					     WMI_CHAN_FLAG_NAN_DISABLED);
+
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		WMI_SET_CHANNEL_MAX_TX_POWER(tchan_info,
 					     chan_list->chanParam[i].pwr);
 
@@ -398,6 +409,10 @@ static void wma_roam_scan_offload_set_params(
 				roam_req->RoamKeyMgmtOffloadEnabled;
 	wma_roam_scan_fill_self_caps(wma_handle,
 				     &params->roam_offload_params, roam_req);
+<<<<<<< HEAD
+=======
+	params->rct_validity_timer = roam_req->rct_validity_timer;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	params->is_adaptive_11r = roam_req->is_adaptive_11r_connection;
 	params->fw_okc = roam_req->pmkid_modes.fw_okc;
 	params->fw_pmksa_cache = roam_req->pmkid_modes.fw_pmksa_cache;
@@ -541,6 +556,15 @@ QDF_STATUS wma_roam_scan_offload_rssi_thresh(tp_wma_handle wma_handle,
 				roam_params->roam_bad_rssi_thresh_offset_2g;
 	if (params.roam_bad_rssi_thresh_offset_2g)
 		params.flags |= WMI_ROAM_BG_SCAN_FLAGS_2G_TO_5G_ONLY;
+<<<<<<< HEAD
+=======
+	params.roam_data_rssi_threshold_triggers =
+		roam_params->roam_data_rssi_threshold_triggers;
+	params.roam_data_rssi_threshold =
+		roam_params->roam_data_rssi_threshold -
+		WMA_NOISE_FLOOR_DBM_DEFAULT;
+	params.rx_data_inactivity_time = roam_params->rx_data_inactivity_time;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/*
 	 * The current Noise floor in firmware is -96dBm. Penalty/Boost
@@ -1808,6 +1832,7 @@ QDF_STATUS wma_process_roaming_config(tp_wma_handle wma_handle,
 				break;
 
 			mode = WMI_ROAM_SCAN_MODE_PERIODIC;
+<<<<<<< HEAD
 			/* Don't use rssi triggered roam scans if external app
 			 * is in control of channel list.
 			 */
@@ -1816,6 +1841,12 @@ QDF_STATUS wma_process_roaming_config(tp_wma_handle wma_handle,
 				mode |= WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
 
 		} else {
+=======
+			if (roam_req->roam_force_rssi_trigger)
+				mode |= WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
+
+		} else if (roam_req->roam_force_rssi_trigger) {
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			mode = WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
 		}
 
@@ -2116,6 +2147,7 @@ QDF_STATUS wma_process_roaming_config(tp_wma_handle wma_handle,
 				break;
 
 			mode = WMI_ROAM_SCAN_MODE_PERIODIC;
+<<<<<<< HEAD
 			/* Don't use rssi triggered roam scans if external app
 			 * is in control of channel list.
 			 */
@@ -2124,6 +2156,12 @@ QDF_STATUS wma_process_roaming_config(tp_wma_handle wma_handle,
 				mode |= WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
 
 		} else {
+=======
+			if (roam_req->roam_force_rssi_trigger)
+				mode |= WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
+
+		} else if (roam_req->roam_force_rssi_trigger) {
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			mode = WMI_ROAM_SCAN_MODE_RSSI_CHANGE;
 		}
 
@@ -2419,6 +2457,10 @@ static int wma_fill_roam_synch_buffer(tp_wma_handle wma,
 	wmi_key_material_ext *key_ft;
 	struct wma_txrx_node *iface = NULL;
 	wmi_roam_fils_synch_tlv_param *fils_info;
+<<<<<<< HEAD
+=======
+	wmi_roam_pmk_cache_synch_tlv_param *pmk_cache_info;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	int status = -EINVAL;
 	uint8_t kck_len;
 	uint8_t kek_len;
@@ -2503,6 +2545,7 @@ static int wma_fill_roam_synch_buffer(tp_wma_handle wma,
 		kck_len = KCK_192BIT_KEY_LEN;
 		kek_len = KEK_256BIT_KEY_LEN;
 
+<<<<<<< HEAD
 		roam_synch_ind_ptr->kek_len = kek_len;
 		qdf_mem_copy(roam_synch_ind_ptr->kek,
 			     key_ft->key_buffer, kek_len);
@@ -2511,6 +2554,16 @@ static int wma_fill_roam_synch_buffer(tp_wma_handle wma,
 		qdf_mem_copy(roam_synch_ind_ptr->kck,
 			     (key_ft->key_buffer + kek_len),
 			     kck_len);
+=======
+		roam_synch_ind_ptr->kck_len = kck_len;
+		qdf_mem_copy(roam_synch_ind_ptr->kck,
+			     key_ft->key_buffer, kck_len);
+
+		roam_synch_ind_ptr->kek_len = kek_len;
+		qdf_mem_copy(roam_synch_ind_ptr->kek,
+			     (key_ft->key_buffer + kck_len),
+			     kek_len);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		qdf_mem_copy(roam_synch_ind_ptr->replay_ctr,
 			     (key_ft->key_buffer + kek_len + kck_len),
@@ -2558,6 +2611,26 @@ static int wma_fill_roam_synch_buffer(tp_wma_handle wma,
 			 roam_synch_ind_ptr->update_erp_next_seq_num,
 			 roam_synch_ind_ptr->next_erp_seq_num);
 	}
+<<<<<<< HEAD
+=======
+
+	pmk_cache_info = param_buf->roam_pmk_cache_synch_info;
+	if (pmk_cache_info && (pmk_cache_info->pmk_len)) {
+		if (pmk_cache_info->pmk_len > SIR_PMK_LEN) {
+			WMA_LOGE("%s: Invalid pmk_len %d", __func__,
+				 pmk_cache_info->pmk_len);
+			wma_free_roam_synch_frame_ind(iface);
+			return status;
+		}
+
+		roam_synch_ind_ptr->pmk_len = pmk_cache_info->pmk_len;
+		qdf_mem_copy(roam_synch_ind_ptr->pmk, pmk_cache_info->pmk,
+			     pmk_cache_info->pmk_len);
+
+		qdf_mem_copy(roam_synch_ind_ptr->pmkid, pmk_cache_info->pmkid,
+			     SIR_PMKID_LEN);
+	}
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	wma_free_roam_synch_frame_ind(iface);
 	return 0;
 }
@@ -3209,6 +3282,11 @@ static char *wma_get_roam_trigger_str(uint32_t roam_scan_trigger)
                 return "DEAUTH RECEIVED";
         case WMI_ROAM_TRIGGER_REASON_IDLE:
                 return "IDLE STATE SCAN";
+<<<<<<< HEAD
+=======
+	case WMI_ROAM_TRIGGER_REASON_STA_KICKOUT:
+		return "STA KICKOUT";
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
         case WMI_ROAM_TRIGGER_REASON_NONE:
                 return "NONE";
         default:
@@ -3281,6 +3359,23 @@ static char *wma_get_roam_fail_reason_str(uint32_t result)
 		return "M4 frame dropped internally";
 	case WMI_ROAM_FAIL_REASON_EAPOL_M4_NO_ACK:
 		return "No ACK for M4 frame";
+<<<<<<< HEAD
+=======
+	case WMI_ROAM_FAIL_REASON_NO_SCAN_FOR_FINAL_BMISS:
+		return "No scan on final BMISS";
+	case WMI_ROAM_FAIL_REASON_DISCONNECT:
+		return "Disconnect received during handoff";
+	case WMI_ROAM_FAIL_REASON_SYNC:
+		return "Previous roam sync pending";
+	case WMI_ROAM_FAIL_REASON_SAE_INVALID_PMKID:
+		return "Reason assoc reject - invalid PMKID";
+	case WMI_ROAM_FAIL_REASON_SAE_PREAUTH_TIMEOUT:
+		return "SAE preauth timed out";
+	case WMI_ROAM_FAIL_REASON_SAE_PREAUTH_FAIL:
+		return "SAE preauth failed";
+	case WMI_ROAM_FAIL_REASON_UNABLE_TO_START_ROAM_HO:
+		return "Start handoff failed- internal error";
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	default:
 		return "Unknown";
 	}
@@ -3291,6 +3386,7 @@ static char *wma_get_sub_reason_str(uint32_t sub_reason)
 	switch (sub_reason) {
 	case WMI_ROAM_TRIGGER_SUB_REASON_PERIODIC_TIMER:
 		return "PERIODIC TIMER";
+<<<<<<< HEAD
 	case WMI_ROAM_TRIGGER_SUB_REASON_INACTIVITY_TIMER:
 		return "INACTIVITY TIMER";
 	case WMI_ROAM_TRIGGER_SUB_REASON_BTM_DI_TIMER:
@@ -3301,6 +3397,24 @@ static char *wma_get_sub_reason_str(uint32_t sub_reason)
 		return "LOW RSSI PERIODIC SCAN";
 	case WMI_ROAM_TRIGGER_SUB_REASON_CU_PERIODIC:
 		return "CU PERIODIC SCAN";
+=======
+	case WMI_ROAM_TRIGGER_SUB_REASON_LOW_RSSI_PERIODIC:
+		return "LOW RSSI PERIODIC TIMER1";
+	case WMI_ROAM_TRIGGER_SUB_REASON_BTM_DI_TIMER:
+		return "BTM DISASSOC IMMINENT TIMER";
+	case WMI_ROAM_TRIGGER_SUB_REASON_FULL_SCAN:
+		return "FULL SCAN";
+	case WMI_ROAM_TRIGGER_SUB_REASON_CU_PERIODIC:
+		return "CU PERIODIC Timer1";
+	case WMI_ROAM_TRIGGER_SUB_REASON_INACTIVITY_TIMER_LOW_RSSI:
+		return "LOW RSSI INACTIVE TIMER";
+	case WMI_ROAM_TRIGGER_SUB_REASON_PERIODIC_TIMER_AFTER_INACTIVITY_CU:
+		return "CU PERIODIC TIMER2";
+	case WMI_ROAM_TRIGGER_SUB_REASON_PERIODIC_TIMER_AFTER_INACTIVITY_LOW_RSSI:
+		return "LOW RSSI PERIODIC TIMER2";
+	case WMI_ROAM_TRIGGER_SUB_REASON_INACTIVITY_TIMER_CU:
+		return "CU INACTIVITY TIMER";
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	default:
 		return "NONE";
 	}
@@ -3337,7 +3451,10 @@ wma_get_trigger_detail_str(struct wmi_roam_trigger_info *roam_info, char *buf)
 	case WMI_ROAM_TRIGGER_REASON_PER:
 	case WMI_ROAM_TRIGGER_REASON_BMISS:
 	case WMI_ROAM_TRIGGER_REASON_HIGH_RSSI:
+<<<<<<< HEAD
 	case WMI_ROAM_TRIGGER_REASON_PERIODIC:
+=======
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	case WMI_ROAM_TRIGGER_REASON_MAWC:
 	case WMI_ROAM_TRIGGER_REASON_DENSE:
 	case WMI_ROAM_TRIGGER_REASON_BACKGROUND:
@@ -3375,8 +3492,23 @@ wma_get_trigger_detail_str(struct wmi_roam_trigger_info *roam_info, char *buf)
 		buf_left -= buf_cons;
 		return;
 	case WMI_ROAM_TRIGGER_REASON_LOW_RSSI:
+<<<<<<< HEAD
 		buf_cons = qdf_snprint(temp, buf_left, "Low_rssi_threshold: %d",
 				       roam_info->rssi_trig_data.threshold);
+=======
+	case WMI_ROAM_TRIGGER_REASON_PERIODIC:
+		/*
+		 * Use roam_info->current_rssi get the RSSI of current AP after
+		 * roam scan is triggered. This avoids discrepency with the
+		 * next rssi threshold value printed in roam scan details.
+		 * roam_info->rssi_trig_data.threshold gives the rssi threshold
+		 * for the Low Rssi/Periodic scan trigger.
+		 */
+		buf_cons = qdf_snprint(temp, buf_left,
+				       " Cur_Rssi threshold:%d Current AP RSSI: %d",
+				       roam_info->rssi_trig_data.threshold,
+				       roam_info->current_rssi);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		temp += buf_cons;
 		buf_left -= buf_cons;
 		return;
@@ -3502,11 +3634,19 @@ wma_rso_print_scan_info(struct wmi_roam_scan_data *scan, uint8_t vdev_id,
 		return;
 	}
 
+<<<<<<< HEAD
 	if (WMI_ROAM_TRIGGER_REASON_LOW_RSSI == trigger) {
 		qdf_snprint(buf1, ROAM_FAILURE_BUF_SIZE,
 			    "next_rssi_threshold: %d dBm",
 			    scan->next_rssi_threshold);
 	}
+=======
+	if (WMI_ROAM_TRIGGER_REASON_LOW_RSSI == trigger ||
+	    WMI_ROAM_TRIGGER_REASON_PERIODIC == trigger)
+		qdf_snprint(buf1, ROAM_FAILURE_BUF_SIZE,
+			    "next_rssi_threshold: %d dBm",
+			    scan->next_rssi_threshold);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	wma_get_converted_timestamp(timestamp, time);
 	WMA_LOGI("%s [ROAM_SCAN]: VDEV[%d] Scan_type: %s %s %s",
@@ -3704,7 +3844,11 @@ int wma_roam_stats_event_handler(WMA_HANDLE handle, uint8_t *event,
 		num_tlv = MAX_ROAM_SCAN_STATS_TLV;
 	}
 
+<<<<<<< HEAD
 	rem_len = WMI_SVC_MSG_MAX_SIZE - sizeof(*fixed_param);
+=======
+	rem_len = len - sizeof(*fixed_param);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (rem_len < num_tlv * sizeof(wmi_roam_trigger_reason)) {
 		wma_err_rl("Invalid roam trigger data");
 		goto err;
@@ -3950,7 +4094,11 @@ QDF_STATUS wma_roam_scan_fill_self_caps(tp_wma_handle wma_handle,
 	if (val)
 		selfCaps.apsd = 1;
 
+<<<<<<< HEAD
 	selfCaps.rrm = pMac->rrm.rrmSmeContext.rrmConfig.rrm_enabled;
+=======
+	selfCaps.rrm = pMac->rrm.rrmConfig.rrm_enabled;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	if (wlan_cfg_get_int(pMac, WNI_CFG_BLOCK_ACK_ENABLED, &val) !=
 	    QDF_STATUS_SUCCESS) {
@@ -5070,7 +5218,11 @@ int wma_extscan_hotlist_match_event_handler(void *handle,
 		return -ENOMEM;
 	}
 	dest_ap = &dest_hotlist->ap[0];
+<<<<<<< HEAD
 	dest_hotlist->numOfAps = event->total_entries;
+=======
+	dest_hotlist->numOfAps = numap;
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	dest_hotlist->requestId = event->config_request_id;
 
 	if (event->first_entry_index +
@@ -6483,6 +6635,18 @@ int wma_roam_event_callback(WMA_HANDLE handle, uint8_t *event_buf,
 					     wmi_event->vdev_id,
 					     frame, wmi_event->notif_params1,
 					     wmi_event->notif_params);
+<<<<<<< HEAD
+=======
+		roam_synch_data = qdf_mem_malloc(sizeof(*roam_synch_data));
+		if (!roam_synch_data)
+			return -ENOMEM;
+
+		roam_synch_data->roamedVdevId = wmi_event->vdev_id;
+		wma_handle->csr_roam_synch_cb(
+				wma_handle->mac_context,
+				roam_synch_data, NULL, SIR_ROAMING_DEAUTH);
+		qdf_mem_free(roam_synch_data);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		break;
 	default:
 		WMA_LOGD("%s:Unhandled Roam Event %x for vdevid %x", __func__,

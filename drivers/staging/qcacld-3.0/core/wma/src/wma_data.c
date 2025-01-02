@@ -766,6 +766,7 @@ static void wma_cp_stats_set_rate_flag(tp_wma_handle wma, uint8_t vdev_id) {}
  *
  * Return: none
  */
+<<<<<<< HEAD
 void wma_set_bss_rate_flags(tp_wma_handle wma, uint8_t vdev_id,
 			    tpAddBssParams add_bss)
 {
@@ -783,6 +784,38 @@ void wma_set_bss_rate_flags(tp_wma_handle wma, uint8_t vdev_id,
 			iface->rate_flags |= TX_RATE_VHT40;
 		else
 			iface->rate_flags |= TX_RATE_VHT20;
+=======
+
+
+enum tx_rate_info wma_get_vht_rate_flags(enum phy_ch_width ch_width)
+{
+	enum tx_rate_info rate_flags = 0;
+
+	if (ch_width == CH_WIDTH_80P80MHZ)
+		rate_flags |= TX_RATE_VHT80 | TX_RATE_VHT40 | TX_RATE_VHT20;
+	if (ch_width == CH_WIDTH_160MHZ)
+		rate_flags |= TX_RATE_VHT80 | TX_RATE_VHT40 | TX_RATE_VHT20;
+	if (ch_width == CH_WIDTH_80MHZ)
+		rate_flags |= TX_RATE_VHT80 | TX_RATE_VHT40 | TX_RATE_VHT20;
+	else if (ch_width)
+		rate_flags |= TX_RATE_VHT40 | TX_RATE_VHT20;
+	else
+		rate_flags |= TX_RATE_VHT20;
+
+	return rate_flags;
+}
+
+
+
+void wma_set_bss_rate_flags(tp_wma_handle wma, uint8_t vdev_id,
+			    tpAddBssParams add_bss)
+{
+	struct wma_txrx_node *iface = &wma->interfaces[vdev_id];
+
+	iface->rate_flags = 0;
+	if (add_bss->vhtCapable) {
+		iface->rate_flags = wma_get_vht_rate_flags(add_bss->ch_width);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 	/* avoid to conflict with htCapable flag */
 	else if (add_bss->htCapable) {
@@ -2800,7 +2833,11 @@ QDF_STATUS wma_tx_packet(void *wma_context, void *tx_frame, uint16_t frmLen,
 					WLAN_MGMT_NB_ID);
 	}
 
+<<<<<<< HEAD
 	if (ucfg_pkt_capture_get_pktcap_mode()) {
+=======
+	if (ucfg_pkt_capture_get_pktcap_mode() & PKT_CAPTURE_MODE_MGMT_ONLY) {
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		ucfg_pkt_capture_mgmt_tx(wma_handle->pdev,
 					 tx_frame,
 					 wma_handle->interfaces[vdev_id].mhz,

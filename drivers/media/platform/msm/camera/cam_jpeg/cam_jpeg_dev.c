@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017-2018, 2021 The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -37,7 +37,11 @@ static const struct of_device_id cam_jpeg_dt_match[] = {
 static int cam_jpeg_subdev_close(struct v4l2_subdev *sd,
 	struct v4l2_subdev_fh *fh)
 {
+<<<<<<< HEAD
 	struct cam_node *node = v4l2_get_subdevdata(sd);
+=======
+	cam_req_mgr_rwsem_read_op(CAM_SUBDEV_LOCK);
+>>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	if (!node) {
 		CAM_ERR(CAM_JPEG, "Node ptr is NULL");
@@ -45,6 +49,8 @@ static int cam_jpeg_subdev_close(struct v4l2_subdev *sd,
 	}
 
 	cam_node_shutdown(node);
+
+	cam_req_mgr_rwsem_read_op(CAM_SUBDEV_UNLOCK);
 
 	return 0;
 }
