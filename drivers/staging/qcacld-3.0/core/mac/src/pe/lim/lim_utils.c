@@ -2008,24 +2008,6 @@ void lim_process_channel_switch_timeout(tpAniSirGlobal pMac)
 		}
 
 		/*
-<<<<<<< HEAD
-		 * If the channel-list that AP is asking us to switch is invalid
-		 * then we cannot switch the channel. Just disassociate from AP.
-		 * We will find a better AP !!!
-		 */
-		if ((psessionEntry->limMlmState ==
-		   eLIM_MLM_LINK_ESTABLISHED_STATE) &&
-		   (psessionEntry->limSmeState != eLIM_SME_WT_DISASSOC_STATE) &&
-		   (psessionEntry->limSmeState != eLIM_SME_WT_DEAUTH_STATE)) {
-			pe_err("Invalid channel! Disconnect");
-			lim_tear_down_link_with_ap(pMac,
-					   pMac->lim.limTimers.
-					   gLimChannelSwitchTimer.sessionId,
-					   eSIR_MAC_UNSUPPORTED_CHANNEL_CSA,
-					   eLIM_LINK_MONITORING_DISASSOC);
-			return;
-		}
-=======
 		 * The channel switch request received from AP is carrying
 		 * invalid channel. It's ok to ignore this channel switch
 		 * request as it might be from spoof AP. If it's from genuine
@@ -2036,7 +2018,6 @@ void lim_process_channel_switch_timeout(tpAniSirGlobal pMac)
 		pe_err("Invalid channel freq %u Ignore CSA request",
 		       channel);
 		return;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 	switch (psessionEntry->gLimChannelSwitch.state) {
 	case eLIM_CHANNEL_SWITCH_PRIMARY_ONLY:
@@ -6496,34 +6477,6 @@ end:
 }
 
 /**
-<<<<<<< HEAD
- * lim_send_ies_per_band() - gets ht and vht capability and send to firmware via
- * wma
- * @mac_ctx: global mac context
- * @session: pe session. This can be NULL. In that case self cap will be sent
- * @vdev_id: vdev for which IE is targeted
- *
- * This funciton gets ht and vht capability and send to firmware via wma
- *
- * Return: status of operation
- */
-QDF_STATUS lim_send_ies_per_band(tpAniSirGlobal mac_ctx,
-				 tpPESession session,
-				 uint8_t vdev_id)
-{
-	uint8_t ht_caps[DOT11F_IE_HTCAPS_MIN_LEN + 2] = {0};
-	uint8_t vht_caps[DOT11F_IE_VHTCAPS_MAX_LEN + 2] = {0};
-	tHtCaps *p_ht_cap = (tHtCaps *)(&ht_caps[2]);
-	tSirMacVHTCapabilityInfo *p_vht_cap =
-			(tSirMacVHTCapabilityInfo *)(&vht_caps[2]);
-	QDF_STATUS status;
-
-	/*
-	 * Note: Do not use Dot11f VHT structure, since 1 byte present flag in
-	 * it is causing weird padding errors. Instead use Sir Mac VHT struct
-	 * to send IE to wma.
-	 */
-=======
  * is_dot11mode_support_ht_cap() - Check dot11mode supports HT capability
  * @dot11mode: dot11mode
  *
@@ -6606,18 +6559,13 @@ static QDF_STATUS lim_send_ht_caps_ie(tpAniSirGlobal mac_ctx,
 	tHtCaps *p_ht_cap = (tHtCaps *)(&ht_caps[2]);
 	QDF_STATUS status_5g, status_2g;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	ht_caps[0] = DOT11F_EID_HTCAPS;
 	ht_caps[1] = DOT11F_IE_HTCAPS_MIN_LEN;
 	lim_set_ht_caps(mac_ctx, session, ht_caps,
 			DOT11F_IE_HTCAPS_MIN_LEN + 2);
 	/* Get LDPC and over write for 2G */
-<<<<<<< HEAD
-	p_ht_cap->advCodingCap = lim_get_rx_ldpc(mac_ctx, CHAN_ENUM_6);
-=======
 	p_ht_cap->advCodingCap = lim_get_rx_ldpc(mac_ctx,
 						 CHAN_ENUM_6);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* Get self cap for HT40 support in 2G */
 	if (mac_ctx->roam.configParam.channelBondingMode24GHz) {
 		p_ht_cap->supportedChannelWidthSet = 1;
@@ -6626,13 +6574,6 @@ static QDF_STATUS lim_send_ht_caps_ie(tpAniSirGlobal mac_ctx,
 		p_ht_cap->supportedChannelWidthSet = 0;
 		p_ht_cap->shortGI40MHz = 0;
 	}
-<<<<<<< HEAD
-	lim_populate_mcs_set_ht_per_vdev(mac_ctx, p_ht_cap, vdev_id,
-					 NSS_CHAINS_BAND_2GHZ);
-
-	lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_HTCAPS,
-		CDS_BAND_2GHZ, &ht_caps[2], DOT11F_IE_HTCAPS_MIN_LEN);
-=======
 
 	lim_populate_mcs_set_ht_per_vdev(mac_ctx, p_ht_cap, vdev_id,
 					 NSS_CHAINS_BAND_2GHZ);
@@ -6645,7 +6586,6 @@ static QDF_STATUS lim_send_ht_caps_ie(tpAniSirGlobal mac_ctx,
 	status_2g = lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_HTCAPS,
 				CDS_BAND_2GHZ, &ht_caps[2],
 				DOT11F_IE_HTCAPS_MIN_LEN);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/*
 	 * Get LDPC and over write for 5G - using channel 64 because it
 	 * is available in all reg domains.
@@ -6661,11 +6601,6 @@ static QDF_STATUS lim_send_ht_caps_ie(tpAniSirGlobal mac_ctx,
 	}
 	lim_populate_mcs_set_ht_per_vdev(mac_ctx, p_ht_cap, vdev_id,
 					 NSS_CHAINS_BAND_5GHZ);
-<<<<<<< HEAD
-
-	lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_HTCAPS,
-		CDS_BAND_5GHZ, &ht_caps[2], DOT11F_IE_HTCAPS_MIN_LEN);
-=======
 	status_5g = lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_HTCAPS,
 				CDS_BAND_5GHZ, &ht_caps[2],
 				DOT11F_IE_HTCAPS_MIN_LEN);
@@ -6697,29 +6632,16 @@ static QDF_STATUS lim_send_vht_caps_ie(tpAniSirGlobal mac_ctx,
 	tSirMacVHTCapabilityInfo *p_vht_cap =
 			(tSirMacVHTCapabilityInfo *)(&vht_caps[2]);
 	QDF_STATUS status_5g, status_2g;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	vht_caps[0] = DOT11F_EID_VHTCAPS;
 	vht_caps[1] = DOT11F_IE_VHTCAPS_MAX_LEN;
 	lim_set_vht_caps(mac_ctx, session, vht_caps,
-<<<<<<< HEAD
-			 DOT11F_IE_VHTCAPS_MIN_LEN + 2);
-=======
 			DOT11F_IE_VHTCAPS_MIN_LEN + 2);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/*
 	 * Get LDPC and over write for 5G - using channel 64 because it
 	 * is available in all reg domains.
 	 */
 	p_vht_cap->ldpcCodingCap = lim_get_rx_ldpc(mac_ctx, CHAN_ENUM_64);
-<<<<<<< HEAD
-	/* Self VHT channel width for 5G is already negotiated with FW */
-	lim_populate_mcs_set_vht_per_vdev(mac_ctx, vht_caps,
-					  vdev_id, NSS_CHAINS_BAND_5GHZ);
-
-	lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_VHTCAPS,
-			CDS_BAND_5GHZ, &vht_caps[2], DOT11F_IE_VHTCAPS_MIN_LEN);
-=======
 	lim_populate_mcs_set_vht_per_vdev(mac_ctx, vht_caps, vdev_id,
 					  NSS_CHAINS_BAND_5GHZ);
 
@@ -6736,7 +6658,6 @@ static QDF_STATUS lim_send_vht_caps_ie(tpAniSirGlobal mac_ctx,
 	status_5g = lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_VHTCAPS,
 				CDS_BAND_5GHZ, &vht_caps[2],
 				DOT11F_IE_VHTCAPS_MIN_LEN);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Get LDPC and over write for 2G */
 	p_vht_cap->ldpcCodingCap = lim_get_rx_ldpc(mac_ctx, CHAN_ENUM_6);
@@ -6744,17 +6665,6 @@ static QDF_STATUS lim_send_vht_caps_ie(tpAniSirGlobal mac_ctx,
 	p_vht_cap->supportedChannelWidthSet = 0;
 	p_vht_cap->shortGI80MHz = 0;
 	p_vht_cap->shortGI160and80plus80MHz = 0;
-<<<<<<< HEAD
-	lim_populate_mcs_set_vht_per_vdev(mac_ctx, vht_caps,
-					  vdev_id, NSS_CHAINS_BAND_2GHZ);
-
-	lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_VHTCAPS,
-			CDS_BAND_2GHZ, &vht_caps[2], DOT11F_IE_VHTCAPS_MIN_LEN);
-
-	status = lim_send_he_caps_ie(mac_ctx, session, vdev_id);
-
-	return status;
-=======
 	lim_populate_mcs_set_vht_per_vdev(mac_ctx, vht_caps, vdev_id,
 					  NSS_CHAINS_BAND_2GHZ);
 	status_2g = lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_VHTCAPS,
@@ -6825,7 +6735,6 @@ QDF_STATUS lim_send_ies_per_band(tpAniSirGlobal mac_ctx,
 		return QDF_STATUS_SUCCESS;
 
 	return QDF_STATUS_E_FAILURE;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 
 /**
@@ -8100,24 +8009,17 @@ void lim_set_he_caps(tpAniSirGlobal mac, tpPESession session, uint8_t *ie_start,
 	}
 }
 
-<<<<<<< HEAD
-QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx, tpPESession session,
-=======
 QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx,
 			       tpPESession session,
 			       enum QDF_OPMODE device_mode,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			       uint8_t vdev_id)
 {
 	uint8_t he_caps[SIR_MAC_HE_CAP_MIN_LEN + 3];
 	struct he_capability_info *he_cap;
 	QDF_STATUS status_5g, status_2g;
-<<<<<<< HEAD
-=======
 	uint8_t he_cap_total_len = SIR_MAC_HE_CAP_MIN_LEN + HE_CAP_OUI_LEN +
 				   HE_CAP_160M_MCS_MAP_LEN +
 				   HE_CAP_80P80_MCS_MAP_LEN;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Sending only minimal info(no PPET) to FW now, update if required */
 	qdf_mem_zero(he_caps, SIR_MAC_HE_CAP_MIN_LEN + 3);
@@ -8128,9 +8030,6 @@ QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx,
 			SIR_MAC_HE_CAP_MIN_LEN + 3);
 	he_cap = (struct he_capability_info *) (&he_caps[2 + HE_CAP_OUI_SIZE]);
 	he_cap->ppet_present = 0;
-<<<<<<< HEAD
-
-=======
 	if (device_mode == QDF_NDI_MODE) {
 		he_cap->su_beamformee = 0;
 		he_cap->su_beamformer = 0;
@@ -8142,7 +8041,6 @@ QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx,
 		he_cap->su_feedback_tone16 = 0;
 		he_cap->mu_feedback_tone16 = 0;
 	}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	status_5g = lim_send_ie(mac_ctx, vdev_id, DOT11F_EID_HE_CAP,
 			CDS_BAND_5GHZ, &he_caps[2],
 			SIR_MAC_HE_CAP_MIN_LEN + 1);
@@ -8544,12 +8442,8 @@ enum rateid lim_get_min_session_txrate(tpPESession session)
 void lim_send_sme_mgmt_frame_ind(tpAniSirGlobal mac_ctx, uint8_t frame_type,
 				 uint8_t *frame, uint32_t frame_len,
 				 uint16_t session_id, uint32_t rx_channel,
-<<<<<<< HEAD
-				 tpPESession psession_entry, int8_t rx_rssi)
-=======
 				 tpPESession psession_entry, int8_t rx_rssi,
 				 enum rxmgmt_flags rx_flags)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 {
 	tpSirSmeMgmtFrameInd sme_mgmt_frame = NULL;
 	uint16_t length;
@@ -8574,10 +8468,7 @@ void lim_send_sme_mgmt_frame_ind(tpAniSirGlobal mac_ctx, uint8_t frame_type,
 	sme_mgmt_frame->frameType = frame_type;
 	sme_mgmt_frame->rxRssi = rx_rssi;
 	sme_mgmt_frame->rxChan = rx_channel;
-<<<<<<< HEAD
-=======
 	sme_mgmt_frame->rx_flags = rx_flags;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	qdf_mem_zero(sme_mgmt_frame->frameBuf, frame_len);
 	qdf_mem_copy(sme_mgmt_frame->frameBuf, frame, frame_len);

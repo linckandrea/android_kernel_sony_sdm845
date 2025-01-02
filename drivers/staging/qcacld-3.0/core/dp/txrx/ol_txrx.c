@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011-2018 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011-2018, 2020-2021 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -84,13 +80,10 @@
 #include <htt_internal.h>
 #include <ol_txrx_ipa.h>
 #include "wlan_roam_debug.h"
-<<<<<<< HEAD
-=======
 #ifdef DP_SUPPORT_RECOVERY_NOTIFY
 #include <qdf_notifier.h>
 #include <qdf_hang_event_notifier.h>
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 #define DPT_DEBUGFS_PERMS	(QDF_FILE_USR_READ |	\
 				QDF_FILE_USR_WRITE |	\
@@ -137,8 +130,6 @@ extern void ol_txrx_get_pn_info(void *ppeer, uint8_t **last_pn_valid,
 /* thresh for peer's cached buf queue beyond which the elements are dropped */
 #define OL_TXRX_CACHED_BUFQ_THRESH 128
 
-<<<<<<< HEAD
-=======
 #ifdef DP_SUPPORT_RECOVERY_NOTIFY
 static
 int ol_peer_recovery_notifier_cb(struct notifier_block *block,
@@ -211,7 +202,6 @@ QDF_STATUS ol_unregister_peer_recovery_notifier(void)
 }
 #endif
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #if defined(CONFIG_HL_SUPPORT) && defined(FEATURE_WLAN_TDLS)
 
 /**
@@ -2103,8 +2093,6 @@ ol_txrx_pdev_post_attach(struct cdp_pdev *ppdev)
 	 */
 	qdf_mem_zero(&pdev->rx_pn[0], sizeof(pdev->rx_pn));
 
-<<<<<<< HEAD
-=======
 	/* WEP: 24-bit PN */
 	pdev->rx_pn[htt_sec_type_wep40].len =
 		pdev->rx_pn[htt_sec_type_wep104].len =
@@ -2114,30 +2102,23 @@ ol_txrx_pdev_post_attach(struct cdp_pdev *ppdev)
 		pdev->rx_pn[htt_sec_type_wep104].cmp =
 			pdev->rx_pn[htt_sec_type_wep128].cmp = ol_rx_pn_cmp24;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* TKIP: 48-bit TSC, CCMP: 48-bit PN */
 	pdev->rx_pn[htt_sec_type_tkip].len =
 		pdev->rx_pn[htt_sec_type_tkip_nomic].len =
 			pdev->rx_pn[htt_sec_type_aes_ccmp].len = 48;
-<<<<<<< HEAD
-=======
 
 	pdev->rx_pn[htt_sec_type_aes_ccmp_256].len =
 		pdev->rx_pn[htt_sec_type_aes_gcmp].len =
 			pdev->rx_pn[htt_sec_type_aes_gcmp_256].len = 48;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	pdev->rx_pn[htt_sec_type_tkip].cmp =
 		pdev->rx_pn[htt_sec_type_tkip_nomic].cmp =
 			pdev->rx_pn[htt_sec_type_aes_ccmp].cmp = ol_rx_pn_cmp48;
 
-<<<<<<< HEAD
-=======
 	pdev->rx_pn[htt_sec_type_aes_ccmp_256].cmp =
 		pdev->rx_pn[htt_sec_type_aes_gcmp].cmp =
 		    pdev->rx_pn[htt_sec_type_aes_gcmp_256].cmp = ol_rx_pn_cmp48;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* WAPI: 128-bit PN */
 	pdev->rx_pn[htt_sec_type_wapi].len = 128;
 	pdev->rx_pn[htt_sec_type_wapi].cmp = ol_rx_pn_wapi_cmp;
@@ -2502,10 +2483,7 @@ static void ol_txrx_pdev_detach(struct cdp_pdev *ppdev, int force)
 	ol_txrx_pdev_grp_stat_destroy(pdev);
 
 	ol_txrx_debugfs_exit(pdev);
-<<<<<<< HEAD
-=======
 	ol_unregister_peer_recovery_notifier();
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	qdf_mem_free(pdev);
 }
@@ -3195,12 +3173,7 @@ ol_txrx_peer_attach(struct cdp_vdev *pvdev, uint8_t *peer_mac_addr)
 #ifdef QCA_SUPPORT_PEER_DATA_RX_RSSI
 	peer->rssi_dbm = HTT_RSSI_INVALID;
 #endif
-<<<<<<< HEAD
-	if ((QDF_GLOBAL_MONITOR_MODE == cds_get_conparam()) &&
-	    !pdev->self_peer) {
-=======
 	if (QDF_GLOBAL_MONITOR_MODE == cds_get_conparam()) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		pdev->self_peer = peer;
 		/*
 		 * No Tx in monitor mode, otherwise results in target assert.
@@ -3806,8 +3779,6 @@ static inline void ol_txrx_peer_free_tids(ol_txrx_peer_handle peer)
 }
 
 /**
-<<<<<<< HEAD
-=======
  * ol_txrx_peer_drop_pending_frames() - drop pending frames in the RX queue
  * @peer: peer handle
  *
@@ -3824,7 +3795,6 @@ static void ol_txrx_peer_drop_pending_frames(struct ol_txrx_peer_t *peer)
 }
 
 /**
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * ol_txrx_peer_release_ref() - release peer reference
  * @peer: peer handle
  *
@@ -3926,13 +3896,10 @@ int ol_txrx_peer_release_ref(ol_txrx_peer_handle peer,
 				    &peer->mac_addr.raw, peer, 0,
 				    qdf_atomic_read(&peer->ref_cnt));
 		peer_id = peer->local_id;
-<<<<<<< HEAD
-=======
 
 		/* Drop all pending frames in the rx thread queue */
 		ol_txrx_peer_drop_pending_frames(peer);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		/* remove the reference to the peer from the hash table */
 		ol_txrx_peer_find_hash_remove(pdev, peer);
 
@@ -4131,10 +4098,7 @@ void peer_unmap_timer_handler(void *data)
 		    peer->mac_addr.raw[0], peer->mac_addr.raw[1],
 		    peer->mac_addr.raw[2], peer->mac_addr.raw[3],
 		    peer->mac_addr.raw[4], peer->mac_addr.raw[5]);
-<<<<<<< HEAD
-=======
 	ol_register_peer_recovery_notifier(peer);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	cds_trigger_recovery(QDF_PEER_UNMAP_TIMEDOUT);
 }
@@ -4280,8 +4244,6 @@ static void ol_txrx_peer_unmap_sync_cb_set(
 }
 
 /**
-<<<<<<< HEAD
-=======
  * ol_txrx_peer_flush_frags() - Flush fragments for a particular peer
  * @soc_hdl - datapath soc handle
  * @vdev_id - virtual device id
@@ -4310,7 +4272,6 @@ ol_txrx_peer_flush_frags(struct cdp_pdev *ppdev, uint8_t vdev_id,
 }
 
 /**
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * ol_txrx_dump_tx_desc() - dump tx desc total and free count
  * @txrx_pdev: Pointer to txrx pdev
  *
@@ -6287,15 +6248,10 @@ static void ol_txrx_post_data_stall_event(
 	data_stall_info->recovery_type = recovery_type;
 
 	if (data_stall_info->data_stall_type ==
-<<<<<<< HEAD
-				DATA_STALL_LOG_FW_RX_REFILL_FAILED)
-		htt_log_rx_ring_info(pdev->htt_pdev);
-=======
 				DATA_STALL_LOG_FW_RX_REFILL_FAILED) {
 		htt_log_rx_ring_info(pdev->htt_pdev);
 		htt_rx_refill_failure(pdev->htt_pdev);
 	}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	sys_build_message_header(SYS_MSG_ID_DATA_STALL_MSG, &msg);
 	/* Save callback and data */
@@ -6812,10 +6768,7 @@ static struct cdp_peer_ops ol_ops_peer = {
 	.update_last_real_peer = ol_txrx_update_last_real_peer,
 #endif /* CONFIG_HL_SUPPORT */
 	.peer_detach_force_delete = ol_txrx_peer_detach_force_delete,
-<<<<<<< HEAD
-=======
 	.peer_flush_frags = ol_txrx_peer_flush_frags,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 static struct cdp_tx_delay_ops ol_ops_delay = {

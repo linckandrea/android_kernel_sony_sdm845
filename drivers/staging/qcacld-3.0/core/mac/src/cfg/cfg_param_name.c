@@ -327,10 +327,7 @@ const char *cfg_get_string(uint16_t cfg_id)
 	CASE_RETURN_STRING(WNI_CFG_TWT_REQUESTOR);
 	CASE_RETURN_STRING(WNI_CFG_TWT_RESPONDER);
 	CASE_RETURN_STRING(WNI_CFG_BCAST_TWT);
-<<<<<<< HEAD
-=======
 	CASE_RETURN_STRING(WNI_CFG_SAP_SAE_ENABLED);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 
 	return "invalid";

@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011, 2013-2017 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011, 2013-2017, 2021 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -88,11 +84,7 @@ int ol_rx_pn_wapi_cmp(union htt_rx_pn_t *new_pn,
 qdf_nbuf_t
 ol_rx_pn_check_base(struct ol_txrx_vdev_t *vdev,
 		    struct ol_txrx_peer_t *peer,
-<<<<<<< HEAD
-		    unsigned int tid, qdf_nbuf_t msdu_list)
-=======
 		    unsigned int tid, qdf_nbuf_t msdu_list, bool strict_chk)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 {
 	struct ol_txrx_pdev_t *pdev = vdev->pdev;
 	union htt_rx_pn_t *last_pn;

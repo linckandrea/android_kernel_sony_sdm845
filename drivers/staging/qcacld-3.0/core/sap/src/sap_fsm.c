@@ -839,13 +839,6 @@ sap_validate_chan(struct sap_context *sap_context,
 {
 	QDF_STATUS qdf_status = QDF_STATUS_SUCCESS;
 	tpAniSirGlobal mac_ctx;
-<<<<<<< HEAD
-	bool is_dfs;
-	bool is_safe;
-	tHalHandle h_hal;
-	uint8_t con_ch;
-	bool sta_sap_scc_on_dfs_chan;
-=======
 	tHalHandle h_hal;
 	uint8_t con_ch;
 	bool sta_sap_scc_on_dfs_chan;
@@ -854,7 +847,6 @@ sap_validate_chan(struct sap_context *sap_context,
 	uint32_t concurrent_state;
 	bool go_force_scc;
 	struct wlan_objmgr_vdev *vdev;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	h_hal = cds_get_context(QDF_MODULE_ID_SME);
 	if (NULL == h_hal) {
@@ -871,81 +863,6 @@ sap_validate_chan(struct sap_context *sap_context,
 		return QDF_STATUS_E_FAILURE;
 	}
 
-<<<<<<< HEAD
-	if (policy_mgr_concurrent_beaconing_sessions_running(mac_ctx->psoc) ||
-	   ((sap_context->cc_switch_mode ==
-		QDF_MCC_TO_SCC_SWITCH_FORCE_PREFERRED_WITHOUT_DISCONNECTION) &&
-	   (policy_mgr_mode_specific_connection_count(mac_ctx->psoc,
-		PM_SAP_MODE, NULL) ||
-	     policy_mgr_mode_specific_connection_count(mac_ctx->psoc,
-		PM_P2P_GO_MODE, NULL)))) {
-		con_ch =
-			sme_get_beaconing_concurrent_operation_channel(
-				h_hal, sap_context->sessionId);
-#ifdef FEATURE_WLAN_STA_AP_MODE_DFS_DISABLE
-		if (con_ch && sap_context->channel != con_ch &&
-		    wlan_reg_is_dfs_ch(mac_ctx->pdev,
-				       sap_context->channel)) {
-			QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_WARN,
-				  FL("MCC DFS not supported in AP_AP Mode"));
-			return QDF_STATUS_E_ABORTED;
-		}
-#endif
-#ifdef FEATURE_WLAN_MCC_TO_SCC_SWITCH
-		if (con_ch && (sap_context->cc_switch_mode !=
-			       QDF_MCC_TO_SCC_SWITCH_DISABLE)) {
-			/*
-			 * For ACS request ,the sapContext->channel is 0,
-			 * we skip below overlap checking. When the ACS
-			 * finish and SAPBSS start, the sapContext->channel
-			 * will not be 0. Then the overlap checking will be
-			 * reactivated.If we use sapContext->channel = 0
-			 * to perform the overlap checking, an invalid overlap
-			 * channel con_ch could becreated. That may cause
-			 * SAP start failed.
-			 */
-			con_ch = sme_check_concurrent_channel_overlap(h_hal,
-					sap_context->channel,
-					sap_context->csr_roamProfile.phyMode,
-					sap_context->cc_switch_mode);
-
-			sta_sap_scc_on_dfs_chan =
-				policy_mgr_is_sta_sap_scc_allowed_on_dfs_chan(
-								mac_ctx->psoc);
-
-			if (sap_context->cc_switch_mode ==
-		QDF_MCC_TO_SCC_SWITCH_FORCE_PREFERRED_WITHOUT_DISCONNECTION)
-				sta_sap_scc_on_dfs_chan = false;
-
-			is_dfs = wlan_reg_is_dfs_ch(mac_ctx->pdev, con_ch);
-			is_safe = policy_mgr_is_safe_channel(
-							mac_ctx->psoc, con_ch);
-
-			if (con_ch && is_safe &&
-			    (!is_dfs || (is_dfs && sta_sap_scc_on_dfs_chan))) {
-				QDF_TRACE(QDF_MODULE_ID_SAP,
-					QDF_TRACE_LEVEL_ERROR,
-					"%s: Override ch %d to %d due to CC Intf",
-					__func__, sap_context->channel, con_ch);
-				sap_context->channel = con_ch;
-				if (WLAN_REG_IS_24GHZ_CH(con_ch))
-					sap_context->ch_params.ch_width =
-							CH_WIDTH_20MHZ;
-				wlan_reg_set_channel_params(mac_ctx->pdev,
-						sap_context->channel, 0,
-						&sap_context->ch_params);
-			}
-		}
-#endif
-	}
-
-	if ((policy_mgr_get_concurrency_mode(mac_ctx->psoc) ==
-		(QDF_STA_MASK | QDF_SAP_MASK)) ||
-		((sap_context->cc_switch_mode ==
-		QDF_MCC_TO_SCC_SWITCH_FORCE_PREFERRED_WITHOUT_DISCONNECTION) &&
-		(policy_mgr_get_concurrency_mode(mac_ctx->psoc) ==
-		(QDF_STA_MASK | QDF_P2P_GO_MASK)))) {
-=======
 	vdev = wlan_objmgr_get_vdev_by_id_from_psoc(mac_ctx->psoc,
 						    sap_context->sessionId,
 						    WLAN_LEGACY_SME_ID);
@@ -968,7 +885,6 @@ sap_validate_chan(struct sap_context *sap_context,
 	if (policy_mgr_concurrent_beaconing_sessions_running(mac_ctx->psoc) ||
 	    ((concurrent_state & sta_sap_bit_mask) == sta_sap_bit_mask) ||
 	    ((concurrent_state & sta_go_bit_mask) == sta_go_bit_mask)) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef FEATURE_WLAN_STA_AP_MODE_DFS_DISABLE
 		if (wlan_reg_is_dfs_ch(mac_ctx->pdev,
 				       sap_context->channel)) {
@@ -1027,11 +943,7 @@ sap_validate_chan(struct sap_context *sap_context,
 		}
 #endif
 	}
-<<<<<<< HEAD
-
-=======
 validation_done:
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_INFO_HIGH,
 		  FL("for configured channel, Ch= %d"),
 		  sap_context->channel);
@@ -1070,20 +982,12 @@ QDF_STATUS sap_channel_sel(struct sap_context *sap_context)
 	struct scan_start_request *req;
 	struct wlan_objmgr_vdev *vdev = NULL;
 	uint8_t i;
-<<<<<<< HEAD
-	uint8_t pdev_id;
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint8_t *channel_list = NULL;
 	uint8_t num_of_channels = 0;
 	tHalHandle h_hal;
 	uint8_t con_ch;
 	uint8_t vdev_id;
 	uint32_t scan_id;
-<<<<<<< HEAD
-	uint8_t *self_mac;
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	h_hal = cds_get_context(QDF_MODULE_ID_SME);
 	if (!h_hal) {
@@ -1157,19 +1061,10 @@ QDF_STATUS sap_channel_sel(struct sap_context *sap_context)
 		return QDF_STATUS_E_NOMEM;
 	}
 
-<<<<<<< HEAD
-	pdev_id = wlan_objmgr_pdev_get_pdev_id(mac_ctx->pdev);
-	self_mac = sap_context->self_mac_addr;
-	vdev = wlan_objmgr_get_vdev_by_macaddr_from_psoc(mac_ctx->psoc,
-							 pdev_id,
-							 self_mac,
-							 WLAN_LEGACY_SME_ID);
-=======
 	vdev_id = sap_context->sessionId;
 	vdev = wlan_objmgr_get_vdev_by_id_from_psoc(mac_ctx->psoc,
 						    vdev_id,
 						    WLAN_LEGACY_SME_ID);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (!vdev) {
 		QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_ERROR,
 			  FL("Invalid vdev objmgr"));
@@ -1182,10 +1077,6 @@ QDF_STATUS sap_channel_sel(struct sap_context *sap_context)
 	ucfg_scan_init_default_params(vdev, req);
 	scan_id = ucfg_scan_get_scan_id(mac_ctx->psoc);
 	req->scan_req.scan_id = scan_id;
-<<<<<<< HEAD
-	vdev_id = wlan_vdev_get_id(vdev);
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	req->scan_req.vdev_id = vdev_id;
 	req->scan_req.scan_f_passive = false;
 	req->scan_req.scan_req_id = sap_context->req_id;
@@ -1451,8 +1342,6 @@ static void sap_handle_acs_scan_event(struct sap_context *sap_context,
 }
 #endif
 
-<<<<<<< HEAD
-=======
 #define DH_OUI_TYPE      "\x20"
 #define DH_OUI_TYPE_SIZE (1)
 /**
@@ -1553,7 +1442,6 @@ static bool sap_save_owe_pending_assoc_ind(struct sap_context *sap_ctx,
 	return true;
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * sap_signal_hdd_event() - send event notification
  * @sap_ctx: Sap Context
@@ -1626,8 +1514,6 @@ QDF_STATUS sap_signal_hdd_event(struct sap_context *sap_ctx,
 			    csr_roaminfo->u.pConnectedProfile->mcEncryptionType;
 			assoc_ind->fAuthRequired = csr_roaminfo->fAuthRequired;
 		}
-<<<<<<< HEAD
-=======
 		if (csr_roaminfo->owe_pending_assoc_ind) {
 			if (!sap_fill_owe_ie_in_assoc_ind(assoc_ind,
 					 csr_roaminfo->owe_pending_assoc_ind)) {
@@ -1651,7 +1537,6 @@ QDF_STATUS sap_signal_hdd_event(struct sap_context *sap_ctx,
 			}
 			csr_roaminfo->owe_pending_assoc_ind = NULL;
 		}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		break;
 	case eSAP_START_BSS_EVENT:
 		sap_ap_event.sapHddEventCode = eSAP_START_BSS_EVENT;
@@ -1749,15 +1634,12 @@ QDF_STATUS sap_signal_hdd_event(struct sap_context *sap_ctx,
 		reassoc_complete->ies = (csr_roaminfo->assocReqPtr +
 					 ASSOC_REQ_IE_OFFSET);
 
-<<<<<<< HEAD
-=======
 		/* skip current AP address in reassoc frame */
 		if (csr_roaminfo->fReassocReq) {
 			reassoc_complete->ies_len -= QDF_MAC_ADDR_SIZE;
 			reassoc_complete->ies += QDF_MAC_ADDR_SIZE;
 		}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		if (csr_roaminfo->addIELen) {
 			if (wlan_get_vendor_ie_ptr_from_oui(
 			    SIR_MAC_P2P_OUI, SIR_MAC_P2P_OUI_SIZE,
@@ -2462,25 +2344,10 @@ sap_fsm_state_init(struct sap_context *sap_ctx,
 			goto exit;
 		}
 
-<<<<<<< HEAD
-		/* Transition from SAP_INIT to SAP_STARTING */
-		QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_INFO_HIGH,
-			  FL("new from state %s => %s: session:%d"),
-			  "SAP_INIT", "SAP_STARTING",
-			  sap_ctx->sessionId);
-
-		qdf_status = sap_goto_starting(sap_ctx, sap_event,
-					       mac_ctx, hal);
-		if (!QDF_IS_STATUS_SUCCESS(qdf_status))
-			QDF_TRACE(QDF_MODULE_ID_SAP,
-				  QDF_TRACE_LEVEL_ERROR,
-				  FL("sap_goto_starting failed"));
-=======
 		qdf_status = sap_goto_starting(sap_ctx, sap_event,
 					       mac_ctx, hal);
 		if (!QDF_IS_STATUS_ERROR(qdf_status))
 			sap_err("sap_goto_starting failed");
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	} else if (msg == eSAP_DFS_CHANNEL_CAC_START) {
 		/*
 		 * No need of state check here, caller is expected to perform
@@ -2499,13 +2366,7 @@ sap_fsm_state_init(struct sap_context *sap_ctx,
 
 		qdf_status = sap_cac_start_notify(hal);
 	} else {
-<<<<<<< HEAD
-		QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_ERROR,
-			  FL("in state %s, event msg %d"),
-			  "SAP_INIT", msg);
-=======
 		sap_err("in state %s, event msg %d", "SAP_INIT", msg);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 
 exit:
@@ -3017,11 +2878,8 @@ sapconvert_to_csr_profile(tsap_config_t *pconfig_params, eCsrRoamBssType bssType
 	profile->AuthType.numEntries = 1;
 	profile->AuthType.authType[0] = eCSR_AUTH_TYPE_OPEN_SYSTEM;
 
-<<<<<<< HEAD
-=======
 	profile->akm_list = pconfig_params->akm_list;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* Always set the Encryption Type */
 	profile->EncryptionType.numEntries = 1;
 	profile->EncryptionType.encryptionType[0] =
@@ -3051,12 +2909,7 @@ sapconvert_to_csr_profile(tsap_config_t *pconfig_params, eCsrRoamBssType bssType
 	profile->nWPAReqIELength = 0;
 
 	if (profile->pRSNReqIE) {
-<<<<<<< HEAD
-		QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_DEBUG,
-			  FL("pRSNReqIE already allocated."));
-=======
 		sap_debug("pRSNReqIE already allocated.");
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(profile->pRSNReqIE);
 		profile->pRSNReqIE = NULL;
 	}
@@ -3529,37 +3382,11 @@ static QDF_STATUS sap_get_channel_list(struct sap_context *sap_ctx,
 		 * are not enabled in master mode
 		 */
 		if (!wlan_reg_is_etsi13_srd_chan_allowed_master_mode(mac_ctx->
-<<<<<<< HEAD
-								     pdev) &&
-		    wlan_reg_is_etsi13_srd_chan(mac_ctx->pdev,
-						WLAN_REG_CH_NUM(loop_count)))
-			continue;
-		/*
-		 * If we have any 5Ghz channel in the channel list
-		 * and bw is 40/80/160 Mhz then we don't want SAP to
-		 * come up in 2.4Ghz as for 40Mhz, 2.4Ghz channel is
-		 * not preferred and 80/160Mhz is not allowed for 2.4Ghz
-		 * band. So, don't even scan on 2.4Ghz channels if bw is
-		 * 40/80/160Mhz and channel list has any 5Ghz channel.
-		 */
-		if (end_ch_num >= WLAN_REG_CH_NUM(CHAN_ENUM_36) &&
-		    ((ch_width == CH_WIDTH_40MHZ) ||
-		     (ch_width == CH_WIDTH_80MHZ) ||
-		     (ch_width == CH_WIDTH_80P80MHZ) ||
-		     (ch_width == CH_WIDTH_160MHZ))) {
-			if (WLAN_REG_CH_NUM(loop_count) >=
-			    WLAN_REG_CH_NUM(CHAN_ENUM_1) &&
-			    WLAN_REG_CH_NUM(loop_count) <=
-			    WLAN_REG_CH_NUM(CHAN_ENUM_14))
-				continue;
-		}
-=======
 								     pdev,
 		    QDF_SAP_MODE) &&
 		    wlan_reg_is_etsi13_srd_chan(mac_ctx->pdev,
 						WLAN_REG_CH_NUM(loop_count)))
 			continue;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 #ifdef FEATURE_WLAN_AP_AP_ACS_OPTIMIZE
 		uint8_t ch;

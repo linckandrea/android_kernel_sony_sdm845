@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011, 2014-2018 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011, 2014-2018, 2020 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -811,12 +807,6 @@ void htt_log_rx_ring_info(htt_pdev_handle pdev)
 		  "%s: Data Stall Detected with reason 4 (=FW_RX_REFILL_FAILED)."
 		  "src htt rx ring:  space for %d elements, filled with %d buffers, buffers in the ring %d, refill debt %d",
 		  __func__, pdev->rx_ring.size, pdev->rx_ring.fill_level,
-<<<<<<< HEAD
-		  pdev->rx_ring.fill_cnt,
-		  qdf_atomic_read(&pdev->rx_ring.refill_debt));
-}
-
-=======
 		  qdf_atomic_read(&pdev->rx_ring.fill_cnt),
 		  qdf_atomic_read(&pdev->rx_ring.refill_debt));
 }
@@ -826,7 +816,6 @@ void htt_rx_refill_failure(htt_pdev_handle pdev)
 	QDF_BUG(qdf_atomic_read(&pdev->rx_ring.refill_debt));
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #if HTT_DEBUG_LEVEL > 5
 void htt_display(htt_pdev_handle pdev, int indent)
 {

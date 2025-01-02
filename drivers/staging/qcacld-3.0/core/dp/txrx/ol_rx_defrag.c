@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011-2020 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011-2021 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -698,9 +694,6 @@ ol_rx_defrag(ol_txrx_pdev_handle pdev,
 	while (cur) {
 		tmp_next = qdf_nbuf_next(cur);
 		qdf_nbuf_set_next(cur, NULL);
-<<<<<<< HEAD
-		if (!ol_rx_pn_check_base(vdev, peer, tid, cur)) {
-=======
 		/*
 		 * Strict PN check between the first fragment of the current
 		 * frame and the last fragment of the previous frame is not
@@ -708,7 +701,6 @@ ol_rx_defrag(ol_txrx_pdev_handle pdev,
 		 */
 		if (!ol_rx_pn_check_base(vdev, peer, tid, cur,
 					 (cur == frag_list) ? false : true)) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			/* PN check failed,discard frags */
 			if (prev) {
 				qdf_nbuf_set_next(prev, NULL);
@@ -935,11 +927,7 @@ ol_rx_frag_tkip_demic(ol_txrx_pdev_handle pdev, const uint8_t *key,
 
 	ol_rx_defrag_copydata(msdu, pktlen - f_tkip.ic_miclen + rx_desc_len,
 			      f_tkip.ic_miclen, (caddr_t) mic0);
-<<<<<<< HEAD
-	if (!qdf_mem_cmp(mic, mic0, f_tkip.ic_miclen))
-=======
 	if (qdf_mem_cmp(mic, mic0, f_tkip.ic_miclen))
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		return OL_RX_DEFRAG_ERR;
 
 	qdf_nbuf_trim_tail(msdu, f_tkip.ic_miclen);

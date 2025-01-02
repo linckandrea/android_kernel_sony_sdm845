@@ -1183,13 +1183,8 @@ static void __hdd_tx_timeout(struct net_device *dev)
 
 	hdd_info("carrier state: %d", netif_carrier_ok(dev));
 
-<<<<<<< HEAD
-	wlan_hdd_display_netif_queue_history(hdd_ctx,
-					     QDF_STATS_VERBOSITY_LEVEL_HIGH);
-=======
 	wlan_hdd_display_adapter_netif_queue_history(adapter);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	cdp_dump_flow_pool_info(cds_get_context(QDF_MODULE_ID_SOC));
 
 	++adapter->hdd_stats.tx_rx_stats.tx_timeout_cnt;
@@ -1498,22 +1493,16 @@ static QDF_STATUS hdd_gro_rx(struct hdd_adapter *adapter, struct sk_buff *skb)
 	struct qca_napi_data *napid;
 	struct napi_struct *napi_to_use;
 	QDF_STATUS status = QDF_STATUS_E_FAILURE;
-<<<<<<< HEAD
-=======
 	struct hdd_context *hdd_ctx = adapter->hdd_ctx;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Only enabling it for STA mode like LRO today */
 	if (QDF_STA_MODE != adapter->device_mode)
 		return QDF_STATUS_E_NOSUPPORT;
 
-<<<<<<< HEAD
-=======
 	if (qdf_atomic_read(&hdd_ctx->disable_lro_in_low_tput) ||
 	    qdf_atomic_read(&hdd_ctx->disable_lro_in_concurrency))
 		return QDF_STATUS_E_NOSUPPORT;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	napid = hdd_napi_get_all();
 	if (unlikely(napid == NULL))
 		goto out;
@@ -2367,8 +2356,6 @@ int hdd_set_mon_rx_cb(struct net_device *dev)
 	struct ol_txrx_ops txrx_ops;
 	void *soc = cds_get_context(QDF_MODULE_ID_SOC);
 	void *pdev = cds_get_context(QDF_MODULE_ID_TXRX);
-<<<<<<< HEAD
-=======
 	struct cdp_peer *peer;
 	uint8_t peer_id;
 
@@ -2380,7 +2367,6 @@ int hdd_set_mon_rx_cb(struct net_device *dev)
 	}
 
 	sta_desc.sta_id = peer_id;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	qdf_mem_zero(&txrx_ops, sizeof(txrx_ops));
 	txrx_ops.rx.rx = hdd_mon_rx_packet_cbk;
@@ -2573,8 +2559,6 @@ void hdd_reset_tcp_delack(struct hdd_context *hdd_ctx)
 	wlan_hdd_update_tcp_rx_param(hdd_ctx, &rx_tp_data);
 }
 
-<<<<<<< HEAD
-=======
 void hdd_reset_tcp_adv_win_scale(struct hdd_context *hdd_ctx)
 {
 	enum wlan_tp_level next_level = WLAN_SVC_TP_NONE;
@@ -2586,7 +2570,6 @@ void hdd_reset_tcp_adv_win_scale(struct hdd_context *hdd_ctx)
 	wlan_hdd_update_tcp_rx_param(hdd_ctx, &rx_tp_data);
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * hdd_is_current_high_throughput() - Check if vote level is high
  * @hdd_ctx: Handle to hdd context

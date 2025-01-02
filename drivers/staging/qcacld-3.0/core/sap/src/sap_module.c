@@ -50,10 +50,7 @@
 #include "wlan_reg_services_api.h"
 #include <wlan_dfs_utils_api.h>
 #include <wlan_reg_ucfg_api.h>
-<<<<<<< HEAD
-=======
 #include "sap_ch_select.h"
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*----------------------------------------------------------------------------
  * Preprocessor Definitions and Constants
@@ -266,8 +263,6 @@ struct sap_context *sap_create_ctx(void)
 	return sap_ctx;
 } /* sap_create_ctx */
 
-<<<<<<< HEAD
-=======
 static QDF_STATUS wlansap_owe_init(struct sap_context *sap_ctx)
 {
 	qdf_list_create(&sap_ctx->owe_pending_assoc_ind_list, 0);
@@ -334,7 +329,6 @@ static void wlansap_owe_deinit(struct sap_context *sap_ctx)
 	qdf_list_destroy(&sap_ctx->owe_pending_assoc_ind_list);
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 QDF_STATUS sap_init_ctx(struct sap_context *sap_ctx,
 			 enum QDF_OPMODE mode,
 			 uint8_t *addr, uint32_t session_id, bool reinit)
@@ -408,8 +402,6 @@ QDF_STATUS sap_init_ctx(struct sap_context *sap_ctx,
 			ucfg_scan_register_requester(pmac->psoc, "SAP",
 					sap_scan_event_callback, sap_ctx);
 
-<<<<<<< HEAD
-=======
 	qdf_ret_status = wlansap_owe_init(sap_ctx);
 	if (QDF_STATUS_SUCCESS != qdf_ret_status) {
 		QDF_TRACE_ERROR(QDF_MODULE_ID_SAP,
@@ -417,7 +409,6 @@ QDF_STATUS sap_init_ctx(struct sap_context *sap_ctx,
 		return QDF_STATUS_E_FAILURE;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return QDF_STATUS_SUCCESS;
 }
 
@@ -433,13 +424,10 @@ QDF_STATUS sap_deinit_ctx(struct sap_context *sap_ctx)
 		sap_err("Invalid SAP pointer");
 		return QDF_STATUS_E_FAULT;
 	}
-<<<<<<< HEAD
-=======
 
 	wlansap_owe_cleanup(sap_ctx);
 	wlansap_owe_deinit(sap_ctx);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	hal = CDS_GET_HAL_CB();
 	pmac = (tpAniSirGlobal) hal;
 	if (NULL == pmac) {
@@ -714,23 +702,11 @@ QDF_STATUS wlansap_start_bss(struct sap_context *sap_ctx,
 	tHalHandle hHal;
 	tpAniSirGlobal pmac = NULL;
 
-<<<<<<< HEAD
-	QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_INFO_HIGH,
-		  "wlansap_start_bss: sapContext=%pK", sap_ctx);
-
-	if (NULL == sap_ctx) {
-		QDF_TRACE(QDF_MODULE_ID_SAP, QDF_TRACE_LEVEL_INFO_HIGH,
-			  "%s: Invalid SAP pointer",
-			  __func__);
-		return QDF_STATUS_E_FAULT;
-	}
-=======
 	if (!sap_ctx) {
 		sap_info("Invalid SAP context");
 		return QDF_STATUS_E_FAULT;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	sap_ctx->fsm_state = SAP_INIT;
 
 	/* Channel selection is auto or configured */
@@ -809,14 +785,11 @@ QDF_STATUS wlansap_start_bss(struct sap_context *sap_ctx,
 		pConfig->dfs_beacon_tx_enhanced;
 	pmac->sap.SapDfsInfo.reduced_beacon_interval =
 				pConfig->reduced_beacon_interval;
-<<<<<<< HEAD
-=======
 	sap_debug("SAP: auth ch select weight:%d chswitch bcn cnt:%d chswitch mode:%d reduced bcn intv:%d",
 		  sap_ctx->auto_channel_select_weight,
 		  pConfig->sap_chanswitch_beacon_cnt,
 		  pmac->sap.SapDfsInfo.sap_ch_switch_mode,
 		  pmac->sap.SapDfsInfo.reduced_beacon_interval);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Copy MAC filtering settings to sap context */
 	sap_ctx->eSapMacAddrAclMode = pConfig->SapMacaddr_acl;
@@ -1369,11 +1342,8 @@ static char *sap_get_csa_reason_str(enum sap_csa_reason_code reason)
 		return "LTE_COEX";
 	case CSA_REASON_CONCURRENT_NAN_EVENT:
 		return "CONCURRENT_NAN_EVENT";
-<<<<<<< HEAD
-=======
 	case CSA_REASON_BAND_RESTRICTED:
 		return "BAND_RESTRICTED";
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	default:
 		return "UNKNOWN";
 	}
@@ -2895,8 +2865,6 @@ wlansap_get_safe_channel_from_pcl_and_acs_range(struct sap_context *sap_ctx)
 	 */
 	return wlansap_get_safe_channel(sap_ctx);
 }
-<<<<<<< HEAD
-=======
 
 static uint8_t wlansap_get_2g_first_safe_chan(struct sap_context *sap_ctx)
 {
@@ -3213,4 +3181,3 @@ QDF_STATUS wlansap_update_owe_info(struct sap_context *sap_ctx,
 
 	return status;
 }
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af

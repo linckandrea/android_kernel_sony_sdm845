@@ -1374,12 +1374,9 @@ lim_send_assoc_rsp_mgmt_frame(tpAniSirGlobal mac_ctx,
 
 	bytes += sizeof(tSirMacMgmtHdr) + payload;
 
-<<<<<<< HEAD
-=======
 	if (sta)
 		bytes += sta->mlmStaContext.owe_ie_len;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_status = cds_packet_alloc((uint16_t) bytes, (void **)&frame,
 				      (void **)&packet);
 	if (!QDF_IS_STATUS_SUCCESS(qdf_status)) {
@@ -1420,15 +1417,12 @@ lim_send_assoc_rsp_mgmt_frame(tpAniSirGlobal mac_ctx,
 		qdf_mem_copy(frame + sizeof(tSirMacMgmtHdr) + payload,
 			     &add_ie[0], addn_ie_len);
 
-<<<<<<< HEAD
-=======
 	if (sta && sta->mlmStaContext.owe_ie_len)
 		qdf_mem_copy(frame + sizeof(tSirMacMgmtHdr) + payload
 			     + addn_ie_len,
 			     sta->mlmStaContext.owe_ie,
 			     sta->mlmStaContext.owe_ie_len);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if ((BAND_5G ==
 		lim_get_rf_band(pe_session->currentOperChannel)) ||
 			(pe_session->pePersona == QDF_P2P_CLIENT_MODE) ||
@@ -1939,14 +1933,8 @@ lim_send_assoc_req_mgmt_frame(tpAniSirGlobal mac_ctx,
 		pe_debug("Populate VHT IEs in Assoc Request");
 		populate_dot11f_vht_caps(mac_ctx, pe_session, &frm->VHTCaps);
 		vht_enabled = true;
-<<<<<<< HEAD
-		if (pe_session->enableHtSmps &&
-				!pe_session->supported_nss_1x1) {
-			pe_err("VHT OP mode IE in Assoc Req");
-=======
 		if (pe_session->gLimOperatingMode.present) {
 			pe_debug("VHT OP mode IE in Assoc Req");
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			populate_dot11f_operating_mode(mac_ctx,
 					&frm->OperatingMode, pe_session);
 		}
@@ -5000,15 +4988,12 @@ QDF_STATUS lim_send_addba_response_frame(tpAniSirGlobal mac_ctx,
 	frm.addba_param_set.buff_size = SIR_MAC_BA_DEFAULT_BUFF_SIZE;
 	if (mac_ctx->usr_cfg_ba_buff_size)
 		frm.addba_param_set.buff_size = mac_ctx->usr_cfg_ba_buff_size;
-<<<<<<< HEAD
-=======
 	if (frm.addba_param_set.buff_size > buff_size) {
 		pe_debug("buff size: %d larger than peer's capability: %d",
 			 frm.addba_param_set.buff_size, buff_size);
 		frm.addba_param_set.buff_size = buff_size;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (mac_ctx->is_usr_cfg_amsdu_enabled)
 		frm.addba_param_set.amsdu_supp = amsdu_support;
 	else
@@ -5137,12 +5122,6 @@ static void lim_tx_mgmt_frame(tpAniSirGlobal mac_ctx,
 	struct sir_mgmt_msg *mb_msg, uint32_t msg_len,
 	void *packet, uint8_t *frame)
 {
-<<<<<<< HEAD
-#ifdef WLAN_DEBUG
-	tpSirMacFrameCtl fc = (tpSirMacFrameCtl) mb_msg->data;
-#endif
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	QDF_STATUS qdf_status;
 	uint8_t sme_session_id = 0;
 	tpPESession session;
@@ -5173,12 +5152,7 @@ static void lim_tx_mgmt_frame(tpAniSirGlobal mac_ctx,
 	MTRACE(qdf_trace(QDF_MODULE_ID_PE, TRACE_CODE_TX_COMPLETE,
 		session->peSessionId, qdf_status));
 	if (!QDF_IS_STATUS_SUCCESS(qdf_status)) {
-<<<<<<< HEAD
-		pe_err("*** Could not send Auth frame (subType: %d), retCode=%X ***",
-			fc->subType, qdf_status);
-=======
 		pe_err("Could not send Auth frame, retCode=%X", qdf_status);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		mac_ctx->auth_ack_status = LIM_AUTH_ACK_RCD_FAILURE;
 		auth_ack_status = SENT_FAIL;
 		lim_diag_event_report(mac_ctx, WLAN_PE_DIAG_AUTH_ACK_EVENT,
@@ -5199,22 +5173,16 @@ void lim_send_mgmt_frame_tx(tpAniSirGlobal mac_ctx,
 	QDF_STATUS qdf_status;
 	uint8_t *frame;
 	void *packet;
-<<<<<<< HEAD
-=======
 	tpSirMacMgmtHdr mac_hdr;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	msg_len = mb_msg->msg_len - sizeof(*mb_msg);
 	pe_debug("sending fc->type: %d fc->subType: %d",
 		fc->type, fc->subType);
 
 	sme_session_id = mb_msg->session_id;
-<<<<<<< HEAD
-=======
 	mac_hdr = (tpSirMacMgmtHdr)mb_msg->data;
 
 	lim_add_mgmt_seq_num(mac_ctx, mac_hdr);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	qdf_status = cds_packet_alloc((uint16_t) msg_len, (void **)&frame,
 				 (void **)&packet);

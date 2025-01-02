@@ -4380,20 +4380,12 @@ end:
 /**
  * wma_update_tdls_peer_state() - update TDLS peer state
  * @handle: wma handle
-<<<<<<< HEAD
- * @peerStateParams: TDLS peer state params
-=======
  * @peer_state: TDLS peer state params
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Return: 0 for success or error code
  */
 int wma_update_tdls_peer_state(WMA_HANDLE handle,
-<<<<<<< HEAD
-			       tTdlsPeerStateParams *peerStateParams)
-=======
 			       struct tdls_peer_update_state *peer_state)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 {
 	tp_wma_handle wma_handle = (tp_wma_handle) handle;
 	uint32_t i;
@@ -4401,18 +4393,12 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 	uint8_t peer_id;
 	void *peer;
 	void *soc = cds_get_context(QDF_MODULE_ID_SOC);
-<<<<<<< HEAD
-	uint8_t *peer_mac_addr;
-	int ret = 0;
-	uint32_t *ch_mhz = NULL;
-=======
 	struct tdls_peer_params *peer_cap;
 	uint8_t *peer_mac_addr;
 	int ret = 0;
 	uint32_t *ch_mhz = NULL;
 	size_t ch_mhz_len;
 	uint8_t chan_id;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	bool restore_last_peer = false;
 	QDF_STATUS qdf_status;
 
@@ -4429,28 +4415,13 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 	}
 
 	if (wma_is_roam_synch_in_progress(wma_handle,
-<<<<<<< HEAD
-					  peerStateParams->vdevId)) {
-=======
 					  peer_state->vdev_id)) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		WMA_LOGE("%s: roaming in progress, reject peer update cmd!",
 			 __func__);
 		ret = -EPERM;
 		goto end_tdls_peer_state;
 	}
 
-<<<<<<< HEAD
-	/* peer capability info is valid only when peer state is connected */
-	if (WMA_TDLS_PEER_STATE_CONNECTED != peerStateParams->peerState) {
-		qdf_mem_zero(&peerStateParams->peerCap,
-			     sizeof(tTdlsPeerCapParams));
-	}
-
-	if (peerStateParams->peerCap.peerChanLen) {
-		ch_mhz = qdf_mem_malloc(sizeof(uint32_t) *
-				peerStateParams->peerCap.peerChanLen);
-=======
 	peer_cap = &peer_state->peer_cap;
 
 	/* peer capability info is valid only when peer state is connected */
@@ -4460,21 +4431,11 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 	if (peer_cap->peer_chanlen) {
 		ch_mhz_len = sizeof(*ch_mhz) * peer_cap->peer_chanlen;
 		ch_mhz = qdf_mem_malloc(ch_mhz_len);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		if (ch_mhz == NULL) {
 			WMA_LOGE("%s: memory allocation failed", __func__);
 			ret = -ENOMEM;
 			goto end_tdls_peer_state;
 		}
-<<<<<<< HEAD
-	}
-
-	for (i = 0; i < peerStateParams->peerCap.peerChanLen; ++i) {
-		ch_mhz[i] =
-			cds_chan_to_freq(peerStateParams->peerCap.peerChan[i].
-					 chanId);
-	}
-=======
 		for (i = 0; i < peer_cap->peer_chanlen; ++i) {
 			chan_id = peer_cap->peer_chan[i].chan_id;
 			ch_mhz[i] = cds_chan_to_freq(chan_id);
@@ -4483,7 +4444,6 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 
 	for (i = 0; i < peer_cap->peer_chanlen; ++i)
 		ch_mhz[i] = cds_chan_to_freq(peer_cap->peer_chan[i].chan_id);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Make sure that peer exists before sending peer state cmd*/
 	pdev = cds_get_context(QDF_MODULE_ID_TXRX);
@@ -4494,38 +4454,17 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 	}
 
 	peer = cdp_peer_find_by_addr(soc,
-<<<<<<< HEAD
-			pdev,
-			peerStateParams->peerMacAddr,
-			&peer_id);
-	if (!peer) {
-		WMA_LOGE("%s: Failed to get peer handle using peer mac %pM",
-				__func__, peerStateParams->peerMacAddr);
-=======
 				     pdev,
 				     peer_state->peer_macaddr,
 				     &peer_id);
 	if (!peer) {
 		WMA_LOGE("%s: Failed to get peer handle using peer mac %pM",
 			 __func__, peer_state->peer_macaddr);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		ret = -EIO;
 		goto end_tdls_peer_state;
 	}
 
 	if (wmi_unified_update_tdls_peer_state_cmd(wma_handle->wmi_handle,
-<<<<<<< HEAD
-			 (struct tdls_peer_state_params *)peerStateParams,
-			 ch_mhz)) {
-		WMA_LOGE("%s: failed to send tdls peer update state command",
-			 __func__);
-		ret = -EIO;
-		goto end_tdls_peer_state;
-	}
-
-	/* in case of teardown, remove peer from fw */
-	if (WMA_TDLS_PEER_STATE_TEARDOWN == peerStateParams->peerState) {
-=======
 						   peer_state, ch_mhz)) {
 		WMA_LOGE("%s: failed to send tdls peer update state command",
 			 __func__);
@@ -4535,7 +4474,6 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 
 	/* in case of teardown, remove peer from fw */
 	if (WMA_TDLS_PEER_STATE_TEARDOWN == peer_state->peer_state) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		peer_mac_addr = cdp_peer_get_peer_mac_addr(soc, peer);
 		if (peer_mac_addr == NULL) {
 			WMA_LOGE("peer_mac_addr is NULL");
@@ -4549,22 +4487,12 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 		WMA_LOGD("%s: calling wma_remove_peer for peer " MAC_ADDRESS_STR
 			 " vdevId: %d", __func__,
 			 MAC_ADDR_ARRAY(peer_mac_addr),
-<<<<<<< HEAD
-			 peerStateParams->vdevId);
-		qdf_status = wma_remove_peer(wma_handle, peer_mac_addr,
-				peerStateParams->vdevId, peer, false);
-		if (QDF_IS_STATUS_ERROR(qdf_status)) {
-			WMA_LOGE(FL("wma_remove_peer failed"));
-			ret = -EINVAL;
-			goto end_tdls_peer_state;
-=======
 			 peer_state->vdev_id);
 		qdf_status = wma_remove_peer(wma_handle, peer_mac_addr,
 					     peer_state->vdev_id, peer, false);
 		if (QDF_IS_STATUS_ERROR(qdf_status)) {
 			WMA_LOGE(FL("wma_remove_peer failed"));
 			ret = -EINVAL;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		}
 		cdp_peer_update_last_real_peer(soc,
 				pdev, peer, &peer_id,
@@ -4574,13 +4502,8 @@ int wma_update_tdls_peer_state(WMA_HANDLE handle,
 end_tdls_peer_state:
 	if (ch_mhz)
 		qdf_mem_free(ch_mhz);
-<<<<<<< HEAD
-	if (peerStateParams)
-		qdf_mem_free(peerStateParams);
-=======
 	if (peer_state)
 		qdf_mem_free(peer_state);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return ret;
 }
 #endif /* FEATURE_WLAN_TDLS */
@@ -5916,8 +5839,6 @@ int wma_unified_beacon_debug_stats_event_handler(void *handle,
 }
 #endif
 
-<<<<<<< HEAD
-=======
 #if defined(CLD_PM_QOS) && defined(WLAN_FEATURE_LL_MODE)
 int
 wma_vdev_bcn_latency_event_handler(void *handle,
@@ -5958,7 +5879,6 @@ wma_vdev_bcn_latency_event_handler(void *handle,
 }
 #endif
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 int wma_chan_info_event_handler(void *handle, uint8_t *event_buf,
 				uint32_t len)
 {

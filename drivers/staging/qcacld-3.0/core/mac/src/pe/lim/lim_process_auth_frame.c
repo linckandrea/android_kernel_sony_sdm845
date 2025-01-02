@@ -277,8 +277,6 @@ static void lim_process_auth_open_system_algo(tpAniSirGlobal mac_ctx,
 }
 
 #ifdef WLAN_FEATURE_SAE
-<<<<<<< HEAD
-=======
 
 /**
  * lim_external_auth_add_pre_auth_node()- Add preauth node for the peer
@@ -317,7 +315,6 @@ static void lim_external_auth_add_pre_auth_node(tpAniSirGlobal mac_ctx,
 	lim_add_pre_auth_node(mac_ctx, auth_node);
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * lim_process_sae_auth_frame()-Process SAE authentication frame
  * @mac_ctx: MAC context
@@ -332,10 +329,7 @@ static void lim_process_sae_auth_frame(tpAniSirGlobal mac_ctx,
 	tpSirMacMgmtHdr mac_hdr;
 	uint32_t frame_len;
 	uint8_t *body_ptr;
-<<<<<<< HEAD
-=======
 	enum rxmgmt_flags rx_flags = RXMGMT_FLAG_NONE;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	mac_hdr = WMA_GET_RX_MAC_HEADER(rx_pkt_info);
 	body_ptr = WMA_GET_RX_MPDU_DATA(rx_pkt_info);
@@ -344,17 +338,6 @@ static void lim_process_sae_auth_frame(tpAniSirGlobal mac_ctx,
 	pe_nofl_info("Received SAE Auth frame type %d subtype %d",
 		     mac_hdr->fc.type, mac_hdr->fc.subType);
 
-<<<<<<< HEAD
-	if (pe_session->limMlmState != eLIM_MLM_WT_SAE_AUTH_STATE)
-		pe_err("received SAE auth response in unexpected state %x",
-				pe_session->limMlmState);
-
-	lim_send_sme_mgmt_frame_ind(mac_ctx, mac_hdr->fc.subType,
-			(uint8_t *) mac_hdr,
-			frame_len + sizeof(tSirMacMgmtHdr), 0,
-			WMA_GET_RX_CH(rx_pkt_info), pe_session,
-			WMA_GET_RX_RSSI_NORMALIZED(rx_pkt_info));
-=======
 	if (LIM_IS_STA_ROLE(pe_session) &&
 	    pe_session->limMlmState != eLIM_MLM_WT_SAE_AUTH_STATE)
 		pe_err("SAE auth response for STA in unexpected state %x",
@@ -389,7 +372,6 @@ static void lim_process_sae_auth_frame(tpAniSirGlobal mac_ctx,
 				    WMA_GET_RX_CH(rx_pkt_info), pe_session,
 				    WMA_GET_RX_RSSI_NORMALIZED(rx_pkt_info),
 				    rx_flags);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 #else
 static inline void  lim_process_sae_auth_frame(tpAniSirGlobal mac_ctx,
@@ -1207,15 +1189,12 @@ lim_process_auth_frame(tpAniSirGlobal mac_ctx, uint8_t *rx_pkt_info,
 	tSirMacAuthFrameBody *rx_auth_frm_body, *rx_auth_frame, *auth_frame;
 	tpSirMacMgmtHdr mac_hdr;
 	struct tLimPreAuthNode *auth_node;
-<<<<<<< HEAD
-=======
 	int sap_sae_enabled;
 
 	if (wlan_cfg_get_int(mac_ctx, WNI_CFG_SAP_SAE_ENABLED,
 			     &sap_sae_enabled) != QDF_STATUS_SUCCESS) {
 		sap_sae_enabled = 0;
 	}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Get pointer to Authentication frame header and body */
 	mac_hdr = WMA_GET_RX_MAC_HEADER(rx_pkt_info);
@@ -1241,25 +1220,17 @@ lim_process_auth_frame(tpAniSirGlobal mac_ctx, uint8_t *rx_pkt_info,
 		(mac_hdr->seqControl.seqNumLo);
 
 	if (pe_session->prev_auth_seq_num == curr_seq_num &&
-<<<<<<< HEAD
-=======
 	    !qdf_mem_cmp(pe_session->prev_auth_mac_addr, &mac_hdr->sa,
 			 ETH_ALEN) &&
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	    mac_hdr->fc.retry) {
 		pe_debug("auth frame, seq num: %d is already processed, drop it",
 			 curr_seq_num);
 		return;
 	}
 
-<<<<<<< HEAD
-	/* save seq number in pe_session */
-	pe_session->prev_auth_seq_num = curr_seq_num;
-=======
 	/* save seq number and mac_addr in pe_session */
 	pe_session->prev_auth_seq_num = curr_seq_num;
 	qdf_mem_copy(pe_session->prev_auth_mac_addr, mac_hdr->sa, ETH_ALEN);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	body_ptr = WMA_GET_RX_MPDU_DATA(rx_pkt_info);
 
@@ -1272,11 +1243,7 @@ lim_process_auth_frame(tpAniSirGlobal mac_ctx, uint8_t *rx_pkt_info,
 	pe_nofl_info("Auth RX: vdev %d sys role %d lim_state %d from " QDF_MAC_ADDR_STR " rssi %d auth_alg %d seq %d",
 		     pe_session->smeSessionId, GET_LIM_SYSTEM_ROLE(pe_session),
 		     pe_session->limMlmState,
-<<<<<<< HEAD
-		     QDF_MAC_ADDR_ARRAY(mac_hdr->bssId),
-=======
 		     QDF_MAC_ADDR_ARRAY(mac_hdr->sa),
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		     WMA_GET_RX_RSSI_NORMALIZED(rx_pkt_info),
 		     auth_alg, curr_seq_num);
 
@@ -1513,18 +1480,11 @@ lim_process_auth_frame(tpAniSirGlobal mac_ctx, uint8_t *rx_pkt_info,
 			pe_err("failed to convert Auth Frame to structure or Auth is not valid");
 			goto free;
 		}
-<<<<<<< HEAD
-	} else if ((auth_alg ==
-		    eSIR_AUTH_TYPE_SAE) && (LIM_IS_STA_ROLE(pe_session))) {
-		lim_process_sae_auth_frame(mac_ctx,
-					rx_pkt_info, pe_session);
-=======
 	} else if (auth_alg == eSIR_AUTH_TYPE_SAE) {
 		if (LIM_IS_STA_ROLE(pe_session) ||
 		    (LIM_IS_AP_ROLE(pe_session) && sap_sae_enabled))
 			lim_process_sae_auth_frame(mac_ctx, rx_pkt_info,
 						   pe_session);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		goto free;
 	} else if ((sir_convert_auth_frame2_struct(mac_ctx, body_ptr,
 				frame_len, rx_auth_frame) != QDF_STATUS_SUCCESS)
@@ -1636,17 +1596,11 @@ bool lim_process_sae_preauth_frame(tpAniSirGlobal mac, uint8_t *rx_pkt)
 
 	lim_send_sme_mgmt_frame_ind(mac, dot11_hdr->fc.subType,
 				    (uint8_t *)dot11_hdr,
-<<<<<<< HEAD
-				    frm_len + sizeof(tSirMacMgmtHdr), 0,
-				    WMA_GET_RX_CH(rx_pkt), NULL,
-				    WMA_GET_RX_RSSI_NORMALIZED(rx_pkt));
-=======
 				    frm_len + sizeof(tSirMacMgmtHdr),
 				    SME_SESSION_ID_ANY,
 				    WMA_GET_RX_CH(rx_pkt), NULL,
 				    WMA_GET_RX_RSSI_NORMALIZED(rx_pkt),
 				    RXMGMT_FLAG_NONE);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return true;
 }
 

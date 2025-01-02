@@ -108,8 +108,6 @@ static inline void hdd_nan_populate_pmo_config(struct pmo_psoc_cfg *pmo_cfg,
  * Return: nothing
  */
 void wlan_hdd_cfg80211_nan_callback(hdd_handle_t hdd_handle, tSirNanEvent *msg);
-<<<<<<< HEAD
-=======
 
 /**
  * ucfg_nan_disable_ind_to_userspace() - Send NAN disble ind to userspace
@@ -120,7 +118,6 @@ void wlan_hdd_cfg80211_nan_callback(hdd_handle_t hdd_handle, tSirNanEvent *msg);
  * Return: QDF_STATUS
  */
 QDF_STATUS hdd_nan_disable_ind_to_userspace(struct hdd_context *hdd_ctx);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #else
 static inline bool wlan_hdd_nan_is_supported(struct hdd_context *hdd_ctx)
 {
@@ -146,13 +143,10 @@ static inline
 void wlan_hdd_cfg80211_nan_callback(hdd_handle_t hdd_handle, tSirNanEvent *msg)
 {
 }
-<<<<<<< HEAD
-=======
 
 static inline
 QDF_STATUS hdd_nan_disable_ind_to_userspace(struct hdd_context *hdd_ctx)
 {
 }
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* WLAN_FEATURE_NAN */
 #endif /* __WLAN_HDD_NAN_H */

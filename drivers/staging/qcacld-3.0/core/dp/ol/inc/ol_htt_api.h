@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011, 2014-2018 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011, 2014-2018, 2020 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -199,8 +195,6 @@ void htt_t2h_stats_print(uint8_t *stats_data, int concise);
  */
 void htt_log_rx_ring_info(htt_pdev_handle pdev);
 
-<<<<<<< HEAD
-=======
 /**
  * htt_rx_refill_failure() - During refill failure check if debt is zero
  * @pdev: handle to the HTT instance
@@ -209,7 +203,6 @@ void htt_log_rx_ring_info(htt_pdev_handle pdev);
  */
 void htt_rx_refill_failure(htt_pdev_handle pdev);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifndef HTT_DEBUG_LEVEL
 #if defined(DEBUG)
 #define HTT_DEBUG_LEVEL 10

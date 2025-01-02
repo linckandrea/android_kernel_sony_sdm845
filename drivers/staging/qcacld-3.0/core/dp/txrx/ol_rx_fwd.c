@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011, 2014-2017 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011, 2014-2017, 2021 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -209,8 +205,6 @@ ol_rx_fwd_check(struct ol_txrx_vdev_t *vdev,
 				continue;
 			}
 
-<<<<<<< HEAD
-=======
 			if (pdev->cfg.is_high_latency)
 				off = htt_rx_msdu_rx_desc_size_hl(
 								 pdev->htt_pdev,
@@ -231,7 +225,6 @@ ol_rx_fwd_check(struct ol_txrx_vdev_t *vdev,
 				continue;
 			}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			/*
 			 * This MSDU needs to be forwarded to the tx path.
 			 * Check whether it also needs to be sent to the OS

@@ -2317,8 +2317,6 @@ enum hdd_dot11_mode {
 
 /*
  * <ini>
-<<<<<<< HEAD
-=======
  * roam_data_rssi_threshold_triggers - Triggers of data rssi threshold for roam
  * @Min: 0
  * @Max: 0xffff
@@ -2347,7 +2345,6 @@ enum hdd_dot11_mode {
 
 /*
  * <ini>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * roam_bg_scan_client_bitmap - Bitmap used to identify the scan clients
  * @Min: 0
  * @Max: 0x3FF
@@ -2383,8 +2380,6 @@ enum hdd_dot11_mode {
 
 /*
  * <ini>
-<<<<<<< HEAD
-=======
  * roam_bg_scan_bad_rssi_thresh - Data RSSI threshold for background roam
  * @Min: -96
  * @Max: 0
@@ -2435,7 +2430,6 @@ enum hdd_dot11_mode {
 
 /*
  * <ini>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * min_delay_btw_roam_scans - Min duration (in sec) allowed btw two
  * consecutive roam scans
  * @Min: 0
@@ -6509,11 +6503,7 @@ enum hdd_link_speed_rpt_type {
  * gSapGetPeerInfo - Enable/Disable remote peer info query support
  * @Min: 0 - Disable remote peer info query support
  * @Max: 1 - Enable remote peer info query support
-<<<<<<< HEAD
- * @Default: 0
-=======
  * @Default: 1
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * This ini is used to enable/disable remote peer info query support
  *
@@ -6524,11 +6514,7 @@ enum hdd_link_speed_rpt_type {
 #define CFG_SAP_GET_PEER_INFO                      "gSapGetPeerInfo"
 #define CFG_SAP_GET_PEER_INFO_MIN                   (0)
 #define CFG_SAP_GET_PEER_INFO_MAX                   (1)
-<<<<<<< HEAD
-#define CFG_SAP_GET_PEER_INFO_DEFAULT               (0)
-=======
 #define CFG_SAP_GET_PEER_INFO_DEFAULT               (1)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*
  * <ini>
@@ -7024,11 +7010,7 @@ enum hdd_link_speed_rpt_type {
  * <ini>
  * gTDLSExternalControl - Enable external TDLS control.
  * @Min: 0
-<<<<<<< HEAD
- * @Max: 1
-=======
  * @Max: 2
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * @Default: 1
  *
  * This ini is used to enable/disable external TDLS control.
@@ -7036,15 +7018,12 @@ enum hdd_link_speed_rpt_type {
  * control allows a user to add a MAC address of potential TDLS peers so
  * that the CLD driver can initiate implicit TDLS setup to only those peers
  * when criteria for TDLS setup (throughput and RSSI threshold) is met.
-<<<<<<< HEAD
-=======
  * There are two flavors of external control supported. If control default
  * is set 1 it means strict external control where only for configured
  * tdls peer mac address tdls link will be established. If control default
  * is set 2 it means liberal tdls external control needed. It means
  * tdls link will be established with configured peer mac address as well
  * as any other peer which supports tdls.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Related: gEnableTDLSSupport, gEnableTDLSImplicitTrigger.
  *
@@ -7056,11 +7035,7 @@ enum hdd_link_speed_rpt_type {
  */
 #define CFG_TDLS_EXTERNAL_CONTROL                   "gTDLSExternalControl"
 #define CFG_TDLS_EXTERNAL_CONTROL_MIN               (0)
-<<<<<<< HEAD
-#define CFG_TDLS_EXTERNAL_CONTROL_MAX               (1)
-=======
 #define CFG_TDLS_EXTERNAL_CONTROL_MAX               (2)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define CFG_TDLS_EXTERNAL_CONTROL_DEFAULT           (1)
 
 /*
@@ -8623,8 +8598,6 @@ enum hdd_link_speed_rpt_type {
 
 /*
  * <ini>
-<<<<<<< HEAD
-=======
  * nan_feature_config - Bitmap to enable/disable a particular NAN/NDP feature
  *
  * @Min: 0
@@ -8654,7 +8627,6 @@ enum hdd_link_speed_rpt_type {
 
 /*
  * <ini>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * gSupportMp0Discovery - To support discovery of NAN cluster with
  * Master Preference (MP) as 0 when a new device is enabling NAN.
  *
@@ -9736,13 +9708,6 @@ enum dot11p_mode {
  * etsi13_srd_chan_in_master_mode - Enable/disable ETSI SRD channels in
  * master mode PCL and ACS functionality
  * @Min: 0
-<<<<<<< HEAD
- * @Max: 1
- * @Default: 0
- *
- * etsi13_srd_chan_in_master_mode is to enable/disable ETSI SRD channels in
- * master mode PCL and ACS functionality
-=======
  * @Max: 0xFF
  * @Default: 6
  *
@@ -9754,7 +9719,6 @@ enum dot11p_mode {
  * BIT 2:- Enable/Disable SRD channels for NAN.
  * Rest of the bits are currently reserved for future SRD channel support for
  * other vdevs.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Related: None
  *
@@ -9764,18 +9728,11 @@ enum dot11p_mode {
  *
  * </ini>
  */
-<<<<<<< HEAD
-#define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE    "etsi13_srd_chan_in_master_mode"
-#define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_DEF (0)
-#define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_MIN (0)
-#define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_MAX (1)
-=======
 
 #define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE    "etsi13_srd_chan_in_master_mode"
 #define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_DEF (6)
 #define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_MIN (0)
 #define CFG_ETSI13_SRD_CHAN_IN_MASTER_MODE_MAX (0xFF)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*
  * <ini>
@@ -10236,8 +10193,6 @@ enum dot11p_mode {
 
 /*
  * <ini>
-<<<<<<< HEAD
-=======
  * enable_dynamic_nss_chain_config - Enable/Disable dynamic nss and chain config
  * to FW.
  * @Min: 0
@@ -10259,7 +10214,6 @@ enum dot11p_mode {
 
 /*
  * <ini>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * disable_rx_mrc_5g - Config Param to disable 2 chains in 1x1 nss mode
  * @Min: 0
  * @Max: 1
@@ -10405,11 +10359,7 @@ enum dot11p_mode {
  * g_sta_sap_scc_on_lte_coex_chan - Allow STA+SAP SCC on LTE coex channel
  * @Min: 0
  * @Max: 1
-<<<<<<< HEAD
- * @Default: 0
-=======
  * @Default: 1
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * This ini is used to allow STA+SAP SCC on LTE coex channel
  * 0 - Disallow STA+SAP SCC on LTE coex channel
@@ -10426,9 +10376,6 @@ enum dot11p_mode {
 #define CFG_STA_SAP_SCC_ON_LTE_COEX_CHAN              "g_sta_sap_scc_on_lte_coex_chan"
 #define CFG_STA_SAP_SCC_ON_LTE_COEX_CHAN_MIN          (0)
 #define CFG_STA_SAP_SCC_ON_LTE_COEX_CHAN_MAX          (1)
-<<<<<<< HEAD
-#define CFG_STA_SAP_SCC_ON_LTE_COEX_CHAN_DEFAULT      (0)
-=======
 #define CFG_STA_SAP_SCC_ON_LTE_COEX_CHAN_DEFAULT      (1)
 
 /*
@@ -10451,7 +10398,6 @@ enum dot11p_mode {
 #define CFG_P2P_GO_ENABLE_FORCE_SCC_MIN          (0)
 #define CFG_P2P_GO_ENABLE_FORCE_SCC_MAX          (1)
 #define CFG_P2P_GO_ENABLE_FORCE_SCC_DEFAULT      (0)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*
  * gPNOChannelPrediction will allow user to enable/disable the
@@ -13932,11 +13878,7 @@ enum hdd_external_acs_policy {
  * sae_enabled - Enable/Disable SAE support in driver
  * @Min: 0
  * @Max: 1
-<<<<<<< HEAD
- * @Default: 0
-=======
  * @Default: 1
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * This ini is used to enable/disable SAE support in driver
  * Driver will update config to supplicant based on this config.
@@ -13955,8 +13897,6 @@ enum hdd_external_acs_policy {
 #define CFG_IS_SAE_ENABLED_MAX     (1)
 
 /*
-<<<<<<< HEAD
-=======
  * <ini>
  * enable_sae_for_sap - Enable/Disable SAE support in driver for SAP
  * channel&bandwidth in the mission mode
@@ -13981,7 +13921,6 @@ enum hdd_external_acs_policy {
 #define CFG_IS_SAP_SAE_ENABLED_MAX     (1)
 
 /*
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * Type declarations
  */
 #define CFG_CHAN_BAND_WEIGHTAGE_NAME    "chan_band_weightage"
@@ -16090,11 +16029,6 @@ enum hdd_external_acs_policy {
 #define CFG_ACTION_OUI_DISABLE_AGGRESSIVE_EDCA "gActionOUIDisableAggressiveEDCA"
 #define CFG_ACTION_OUI_DISABLE_AGGRESSIVE_EDCA_DEFAULT ""
 
-<<<<<<< HEAD
-/* End of action oui inis */
-
-
-=======
 /*
  * <ini>
  * gActionOUIReconnAssocTimeout - Used to specify action OUIs to
@@ -16126,7 +16060,6 @@ enum hdd_external_acs_policy {
 #define CFG_ACTION_OUI_RECONN_ASSOCTIMEOUT_DEFAULT "00E04C 00 01"
 /* End of action oui inis */
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /*
  * <ini>
  * gEnableUnitTestFramework - Enable/Disable unit test framework
@@ -16624,11 +16557,7 @@ enum hdd_external_acs_policy {
  * AP and roam candidate AP.
  * @Min: 0
  * @Max: 10000
-<<<<<<< HEAD
- * @Default: 1850
-=======
  * @Default: 0
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * This ini is used during CU and low rssi based roam triggers, consider
  * AP as roam candidate only if its roam score is better than connected
@@ -16649,11 +16578,7 @@ enum hdd_external_acs_policy {
  * </ini>
  */
 #define CFG_CAND_MIN_ROAM_SCORE_DELTA "min_roam_score_delta"
-<<<<<<< HEAD
-#define CFG_CAND_MIN_ROAM_SCORE_DELTA_DEFAULT 1850
-=======
 #define CFG_CAND_MIN_ROAM_SCORE_DELTA_DEFAULT 0
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define CFG_CAND_MIN_ROAM_SCORE_DELTA_MAX 10000
 #define CFG_CAND_MIN_ROAM_SCORE_DELTA_MIN 0
 
@@ -17619,11 +17544,7 @@ enum hdd_external_acs_policy {
  */
 #define CFG_SAR_SAFETY_REQ_RESP_TIMEOUT          "gSarSafetyReqRespTimeout"
 #define CFG_SAR_SAFETY_REQ_RESP_TIMEOUT_MIN      (500)
-<<<<<<< HEAD
-#define CFG_SAR_SAFETY_REQ_RESP_TIMEOUT_MAX      (3000)
-=======
 #define CFG_SAR_SAFETY_REQ_RESP_TIMEOUT_MAX      (1000)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define CFG_SAR_SAFETY_REQ_RESP_TIMEOUT_DEFAULT  (1000)
 
 /*
@@ -17649,11 +17570,7 @@ enum hdd_external_acs_policy {
  */
 #define CFG_SAR_SAFETY_REQ_RESP_RETRIES             "gSarSafetyReqRespRetry"
 #define CFG_SAR_SAFETY_REQ_RESP_RETRIES_MIN         (1)
-<<<<<<< HEAD
-#define CFG_SAR_SAFETY_REQ_RESP_RETRIES_MAX         (10)
-=======
 #define CFG_SAR_SAFETY_REQ_RESP_RETRIES_MAX         (5)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define CFG_SAR_SAFETY_REQ_RESP_RETRIES_DEFAULT     (5)
 
 /*
@@ -17800,8 +17717,6 @@ enum hdd_external_acs_policy {
 
 /*
  * <ini>
-<<<<<<< HEAD
-=======
  * nb_commands_interval - Used to rate limit nb commands from userspace
  *
  * @Min: 0
@@ -17824,7 +17739,6 @@ enum hdd_external_acs_policy {
 
 /*
  * <ini>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * enable_time_sync_ftm - Time Sync FTM feature support
  * @Min: 0
  * @Max: 1
@@ -17909,18 +17823,6 @@ enum hdd_external_acs_policy {
 #define CFG_BMISS_SKIP_FULL_SCAN_MAX           1
 #define CFG_BMISS_SKIP_FULL_SCAN_DEFAULT       0
 
-<<<<<<< HEAD
-/*
- * <ini>
- * p2p_disable_roam- Disable Roam on sta interface during P2P connection
- * @Min: 0 - Roam Enabled on sta interface during P2P connection
- * @Max: 1 - Roam Disabled on sta interface during P2P connection
- * @Default: 0
- *
- * Disable roaming on STA iface to avoid audio glitches on p2p if its connected
- *
- * Supported Feature: Disable Roam during P2P
-=======
 #ifdef WLAN_FEATURE_PERIODIC_STA_STATS
 /*
  * <ini>
@@ -17938,18 +17840,11 @@ enum hdd_external_acs_policy {
  * periodic_stats_timer_interval till the periodic_stats_timer_duration expires.
  *
  * Supported Feature: STA
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Usage: Internal
  *
  * </ini>
  */
-<<<<<<< HEAD
-#define CFG_P2P_DISABLE_ROAM            "p2p_disable_roam"
-#define CFG_P2P_DISABLE_ROAM_MIN         (0)
-#define CFG_P2P_DISABLE_ROAM_MAX         (1)
-#define CFG_P2P_DISABLE_ROAM_DEFAULT     (0)
-=======
 #define CFG_PERIODIC_STATS_TIMER_INTERVAL		"periodic_stats_timer_interval"
 #define CFG_PERIODIC_STATS_TIMER_INTERVAL_MIN		(0)
 #define CFG_PERIODIC_STATS_TIMER_INTERVAL_MAX		(10000)
@@ -18032,7 +17927,6 @@ enum hdd_external_acs_policy {
 #define CFG_DFS_CHAN_AGEOUT_TIME_MIN		(0)
 #define CFG_DFS_CHAN_AGEOUT_TIME_MAX		(8)
 #define CFG_DFS_CHAN_AGEOUT_TIME_DEFAULT	(0)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*
  * Type declarations
@@ -18387,11 +18281,7 @@ struct hdd_config {
 	uint32_t fTDLSRxFrameThreshold;
 	uint32_t fTDLSPuapsdPTIWindow;
 	uint32_t fTDLSPuapsdPTRTimeout;
-<<<<<<< HEAD
-	bool fTDLSExternalControl;
-=======
 	uint8_t fTDLSExternalControl;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint32_t fEnableTDLSOffChannel;
 	uint32_t fEnableTDLSWmmMode;
 	uint8_t fTDLSPrefOffChanNum;
@@ -18570,10 +18460,7 @@ struct hdd_config {
 	bool nan_separate_iface_support;
 	uint16_t ndp_keep_alive_period;
 	bool support_mp0_discovery;
-<<<<<<< HEAD
-=======
 	uint32_t nan_feature_config;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif
 	bool enableSelfRecovery;
 #ifdef FEATURE_WLAN_FORCE_SAP_SCC
@@ -18638,11 +18525,7 @@ struct hdd_config {
 	bool fastpath_enable;
 #endif
 	uint8_t dot11p_mode;
-<<<<<<< HEAD
-	bool etsi13_srd_chan_in_master_mode;
-=======
 	uint8_t etsi13_srd_chan_in_master_mode;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint8_t rx_mode;
 	uint32_t ce_service_max_yield_time;
 	uint8_t ce_service_max_rx_ind_flush;
@@ -18663,10 +18546,7 @@ struct hdd_config {
 	uint8_t dbs_scan_selection[CFG_DBS_SCAN_PARAM_LENGTH];
 	uint32_t sta_sap_scc_on_dfs_chan;
 	uint32_t sta_sap_scc_on_lte_coex_chan;
-<<<<<<< HEAD
-=======
 	uint32_t go_force_scc;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	bool     tx_chain_mask_cck;
 	uint8_t  tx_chain_mask_1ss;
 	bool smart_chainmask_enabled;
@@ -18704,12 +18584,9 @@ struct hdd_config {
 	uint32_t roam_dense_min_aps;
 	int8_t roam_bg_scan_bad_rssi_thresh;
 	uint8_t roam_bad_rssi_thresh_offset_2g;
-<<<<<<< HEAD
-=======
 	uint32_t roam_data_rssi_threshold_triggers;
 	int32_t roam_data_rssi_threshold;
 	uint32_t rx_data_inactivity_time;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint32_t ho_delay_for_rx;
 	uint32_t min_delay_btw_roam_scans;
 	uint32_t roam_trigger_reason_bitmask;
@@ -18958,10 +18835,7 @@ struct hdd_config {
 	uint32_t btm_offload_config;
 #ifdef WLAN_FEATURE_SAE
 	bool is_sae_enabled;
-<<<<<<< HEAD
-=======
 	bool sap_sae_enabled;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif
 	uint32_t btm_solicited_timeout;
 	uint32_t btm_max_attempt_cnt;
@@ -19031,10 +18905,7 @@ struct hdd_config {
 	bool disable_rx_mrc_2g;
 	bool disable_tx_mrc_5g;
 	bool disable_rx_mrc_5g;
-<<<<<<< HEAD
-=======
 	bool enable_dynamic_nss_chains_cfg;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	bool mac_provision;
 	uint32_t provisioned_intf_pool;
 	uint32_t derived_intf_pool;
@@ -19080,10 +18951,7 @@ struct hdd_config {
 	bool ShortGI160MhzEnable;
 	uint32_t vendor_roam_score_algorithm;
 	uint32_t dp_proto_event_bitmap;
-<<<<<<< HEAD
-=======
 	uint8_t nb_commands_interval;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 #ifdef SAR_SAFETY_FEATURE
 	uint32_t sar_safety_timeout;
@@ -19106,9 +18974,6 @@ struct hdd_config {
 	bool time_sync_ftm_mode;
 	bool time_sync_ftm_role;
 #endif
-<<<<<<< HEAD
-	bool p2p_disable_roam;
-=======
 	uint32_t sta_disable_roam;
 
 #ifdef WLAN_FEATURE_PERIODIC_STA_STATS
@@ -19118,7 +18983,6 @@ struct hdd_config {
 	uint32_t periodic_stats_timer_duration;
 #endif /* WLAN_FEATURE_PERIODIC_STA_STATS */
 	uint8_t dfs_chan_ageout_time;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 #define VAR_OFFSET(_Struct, _Var) (offsetof(_Struct, _Var))

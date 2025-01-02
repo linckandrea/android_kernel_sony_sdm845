@@ -456,8 +456,6 @@ QDF_STATUS lim_update_ext_cap_ie(tpAniSirGlobal mac_ctx,
 void lim_handle_sap_beacon(struct wlan_objmgr_pdev *pdev,
 					struct scan_cache_entry *scan_entry);
 
-<<<<<<< HEAD
-=======
 /**
  * lim_translate_rsn_oui_to_akm_type() - translate RSN OUI to AKM type
  * @auth_suite: auth suite
@@ -466,6 +464,5 @@ void lim_handle_sap_beacon(struct wlan_objmgr_pdev *pdev,
  */
 enum ani_akm_type lim_translate_rsn_oui_to_akm_type(uint8_t auth_suite[4]);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /************************************************************/
 #endif /* __LIM_API_H */

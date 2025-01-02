@@ -818,28 +818,6 @@ void pe_delete_session(tpAniSirGlobal mac_ctx, tpPESession session)
 				session->defaultAuthFailureTimeout);
 	}
 
-<<<<<<< HEAD
-	if (!session || (session && !session->valid)) {
-		pe_debug("session already deleted or not valid");
-		return;
-	}
-
-	pe_debug("Delete PE session: %d opmode: %d vdev_id: %d BSSID: "QDF_MAC_ADDR_STR,
-		 session->peSessionId, session->pePersona,
-		 session->smeSessionId,
-		 QDF_MAC_ADDR_ARRAY(session->bssId));
-
-	lim_reset_bcn_probe_filter(mac_ctx, session);
-
-	/* Restore default failure timeout */
-	if (session->defaultAuthFailureTimeout) {
-		pe_debug("Restore default failure timeout");
-		cfg_set_int(mac_ctx, WNI_CFG_AUTHENTICATE_FAILURE_TIMEOUT,
-				session->defaultAuthFailureTimeout);
-	}
-
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	for (n = 0; n < (mac_ctx->lim.maxStation + 1); n++) {
 		timer_ptr = &mac_ctx->lim.limTimers.gpLimCnfWaitTimer[n];
 		if (session->peSessionId == timer_ptr->sessionId)
@@ -936,12 +914,9 @@ void pe_delete_session(tpAniSirGlobal mac_ctx, tpPESession session)
 		session->parsedAssocReq = NULL;
 	}
 	if (NULL != session->limAssocResponseData) {
-<<<<<<< HEAD
-=======
 		assoc_rsp = (tpSirAssocRsp) session->limAssocResponseData;
 		qdf_mem_free(assoc_rsp->sha384_ft_subelem.gtk);
 		qdf_mem_free(assoc_rsp->sha384_ft_subelem.igtk);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_free(session->limAssocResponseData);
 		session->limAssocResponseData = NULL;
 	}

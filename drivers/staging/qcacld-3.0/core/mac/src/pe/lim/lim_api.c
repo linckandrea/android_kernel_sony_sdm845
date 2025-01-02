@@ -72,8 +72,6 @@
 #include <wlan_p2p_ucfg_api.h>
 #include "wlan_utility.h"
 #include "wlan_mlme_main.h"
-<<<<<<< HEAD
-=======
 #include <qdf_hang_event_notifier.h>
 #include <qdf_notifier.h>
 #include "wlan_pkt_capture_ucfg_api.h"
@@ -86,7 +84,6 @@ struct pe_hang_event_fixed_param {
 	uint8_t limsmestate;
 	uint8_t limprevsmestate;
 } qdf_packed;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 static void __lim_init_bss_vars(tpAniSirGlobal pMac)
 {
@@ -637,12 +634,8 @@ void lim_cleanup(tpAniSirGlobal pMac)
 	/* Now, finally reset the deferred message queue pointers */
 	lim_reset_deferred_msg_q(pMac);
 
-<<<<<<< HEAD
-	rrm_cleanup(pMac);
-=======
 	for (i = 0; i < MAX_MEASUREMENT_REQUEST; i++)
 		rrm_cleanup(pMac, i);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	lim_ft_cleanup_all_ft_sessions(pMac);
 
@@ -868,8 +861,6 @@ static QDF_STATUS lim_unregister_sap_bcn_callback(tpAniSirGlobal mac_ctx)
 	return status;
 }
 
-<<<<<<< HEAD
-=======
 static int pe_hang_event_notifier_call(struct notifier_block *block,
 				       unsigned long state,
 				       void *data)
@@ -915,7 +906,6 @@ static qdf_notif_block pe_hang_event_notifier = {
 	.notif_block.notifier_call = pe_hang_event_notifier_call,
 };
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /** -------------------------------------------------------------
    \fn pe_open
    \brief will be called in Open sequence from mac_open
@@ -982,12 +972,9 @@ QDF_STATUS pe_open(tpAniSirGlobal pMac, struct cds_config_info *cds_cfg)
 		pe_err("%s: Shutdown notifier register failed", __func__);
 	}
 
-<<<<<<< HEAD
-=======
 	pe_hang_event_notifier.priv_data = pMac;
 	qdf_hang_event_register_notifier(&pe_hang_event_notifier);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return status; /* status here will be QDF_STATUS_SUCCESS */
 
 pe_open_lock_fail:
@@ -1014,11 +1001,8 @@ QDF_STATUS pe_close(tpAniSirGlobal pMac)
 	if (ANI_DRIVER_TYPE(pMac) == QDF_DRIVER_TYPE_MFG)
 		return QDF_STATUS_SUCCESS;
 
-<<<<<<< HEAD
-=======
 	qdf_hang_event_unregister_notifier(&pe_hang_event_notifier);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	lim_cleanup(pMac);
 	lim_unregister_sap_bcn_callback(pMac);
 
@@ -1308,22 +1292,15 @@ static bool pe_filter_bcn_probe_frame(tpAniSirGlobal mac_ctx,
 
 		ssid_ie = wlan_get_ie_ptr_from_eid(SIR_MAC_SSID_EID,
 				body + SIR_MAC_B_PR_SSID_OFFSET,
-<<<<<<< HEAD
-				frame_len);
-=======
 				frame_len - SIR_MAC_B_PR_SSID_OFFSET);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		if (!ssid_ie)
 			return false;
 
 		bcn_ssid.length = ssid_ie[1];
-<<<<<<< HEAD
-=======
 		if (bcn_ssid.length > WLAN_SSID_MAX_LEN)
 			return false;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		qdf_mem_copy(&bcn_ssid.ssId,
 			     &ssid_ie[2],
 			     bcn_ssid.length);
@@ -1401,8 +1378,6 @@ static QDF_STATUS pe_handle_mgmt_frame(struct wlan_objmgr_psoc *psoc,
 	uint8_t *pRxPacketInfo;
 	int ret;
 
-<<<<<<< HEAD
-=======
 	/* skip offload packets */
 	if (ucfg_pkt_capture_get_mode(psoc) &&
 	    mgmt_rx_params->status & WMI_RX_OFFLOAD_MON_MODE) {
@@ -1410,7 +1385,6 @@ static QDF_STATUS pe_handle_mgmt_frame(struct wlan_objmgr_psoc *psoc,
 		return QDF_STATUS_SUCCESS;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	pMac = cds_get_context(QDF_MODULE_ID_PE);
 	if (NULL == pMac) {
 		/* cannot log a failure without a valid pMac */
@@ -3015,8 +2989,6 @@ QDF_STATUS lim_update_ext_cap_ie(tpAniSirGlobal mac_ctx,
 	(*local_ie_len) += driver_ext_cap.num_bytes;
 	return QDF_STATUS_SUCCESS;
 }
-<<<<<<< HEAD
-=======
 
 #define LIM_RSN_OUI_SIZE 4
 
@@ -3073,4 +3045,3 @@ enum ani_akm_type lim_translate_rsn_oui_to_akm_type(uint8_t auth_suite[4])
 
 	return akm_type;
 }
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af

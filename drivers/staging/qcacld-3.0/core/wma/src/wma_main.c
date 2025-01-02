@@ -92,14 +92,7 @@
 #include "init_cmd_api.h"
 #include "wma_coex.h"
 #include <ftm_time_sync_ucfg_api.h>
-<<<<<<< HEAD
-
-#ifdef WLAN_FEATURE_PKT_CAPTURE
 #include "wlan_pkt_capture_ucfg_api.h"
-#endif
-=======
-#include "wlan_pkt_capture_ucfg_api.h"
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 #define WMA_LOG_COMPLETION_TIMER 3000 /* 3 seconds */
 #define WMI_TLV_HEADROOM 128
@@ -3573,15 +3566,12 @@ QDF_STATUS wma_open(struct wlan_objmgr_psoc *psoc,
 				WMA_RX_SERIALIZER_CTX);
 #endif
 
-<<<<<<< HEAD
-=======
 #if defined(CLD_PM_QOS) && defined(WLAN_FEATURE_LL_MODE)
 	wmi_unified_register_event_handler(wma_handle->wmi_handle,
 					   wmi_vdev_bcn_latency_event_id,
 					   wma_vdev_bcn_latency_event_handler,
 					   WMA_RX_SERIALIZER_CTX);
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* register for linkspeed response event */
 	wmi_unified_register_event_handler(wma_handle->wmi_handle,
 					   wmi_peer_estimated_linkspeed_event_id,
@@ -5130,13 +5120,10 @@ static inline void wma_update_target_services(struct wmi_unified *wmi_handle,
 	if (wmi_service_enabled(wmi_handle, wmi_service_adaptive_11r_support))
 		cfg->is_adaptive_11r_roam_supported = true;
 
-<<<<<<< HEAD
-=======
 	if (wmi_service_enabled(wmi_handle,
 				wmi_service_host_scan_stop_vdev_all))
 		cfg->stop_all_host_scan_support = true;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (wmi_service_enabled(wmi_handle, wmi_service_twt_requestor))
 		cfg->twt_requestor = true;
 	if (wmi_service_enabled(wmi_handle, wmi_service_twt_responder))
@@ -5148,15 +5135,12 @@ static inline void wma_update_target_services(struct wmi_unified *wmi_handle,
 	if (wmi_service_enabled(wmi_handle,
 				wmi_roam_scan_chan_list_to_host_support))
 		cfg->is_roam_scan_ch_to_host = true;
-<<<<<<< HEAD
-=======
 	if (wmi_service_enabled(wmi_handle, wmi_service_suiteb_roam_support))
 		cfg->akm_service_bitmap |= (1 << AKM_SUITEB);
 
 	cfg->ll_stats_per_chan_rx_tx_time =
 		wmi_service_enabled(wmi_handle,
 				    wmi_service_ll_stats_per_chan_rx_tx_time);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 
 /**
@@ -5787,11 +5771,6 @@ static int wma_update_hdd_cfg(tp_wma_handle wma_handle)
 	tgt_cfg.reg_domain = wma_handle->reg_cap.eeprom_rd;
 	tgt_cfg.eeprom_rd_ext = wma_handle->reg_cap.eeprom_rd_ext;
 
-<<<<<<< HEAD
-	tgt_cfg.max_intf_count = wlan_res_cfg->num_vdevs;
-
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_mem_copy(tgt_cfg.hw_macaddr.bytes, wma_handle->hwaddr,
 		     ATH_MAC_LEN);
 
@@ -5847,15 +5826,6 @@ static int wma_update_hdd_cfg(tp_wma_handle wma_handle)
 	for (i = 0; i < tgt_hdl->info.total_mac_phy_cnt; i++)
 		wma_fill_chain_cfg(&tgt_cfg, tgt_hdl, i);
 
-<<<<<<< HEAD
-	if (wmi_service_enabled(wma_handle->wmi_handle, wmi_service_nan_vdev))
-		tgt_cfg.nan_seperate_vdev_support = true;
-
-	wlan_res_cfg->nan_separate_iface_support =
-			tgt_cfg.nan_seperate_vdev_support &&
-			wma_get_separate_iface_support(wma_handle);
-
-=======
 	/*
 	 * Firmware can accommodate maximum 4 vdevs and the ini gNumVdevs
 	 * indicates the same.
@@ -5873,7 +5843,6 @@ static int wma_update_hdd_cfg(tp_wma_handle wma_handle)
 	tgt_cfg.max_intf_count = wlan_res_cfg->num_vdevs;
 
 	WMA_LOGD("%s: num_vdevs: %u", __func__, wlan_res_cfg->num_vdevs);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	ret = wma_handle->tgt_cfg_update_cb(hdd_ctx, &tgt_cfg);
 	if (ret)
 		return -EINVAL;
@@ -7007,8 +6976,6 @@ int wma_rx_service_ready_ext_event(void *handle, uint8_t *event,
 		ucfg_ftm_time_sync_set_enable(wma_handle->psoc, false);
 	}
 
-<<<<<<< HEAD
-=======
 	if (wmi_service_enabled(wma_handle->wmi_handle, wmi_service_nan_vdev) &&
 	    wma_get_separate_iface_support(wma_handle))
 		wlan_res_cfg->nan_separate_iface_support = true;
@@ -7020,7 +6987,6 @@ int wma_rx_service_ready_ext_event(void *handle, uint8_t *event,
 	else
 		wlan_res_cfg->pktcapture_support = false;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return 0;
 }
 
@@ -7875,14 +7841,11 @@ static void wma_set_arp_req_stats(WMA_HANDLE handle,
 		return;
 	}
 
-<<<<<<< HEAD
-=======
 	if (!wma_is_vdev_up(req_buf->vdev_id)) {
 		WMA_LOGD("vdev id:%d is not started", req_buf->vdev_id);
 		return;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	arp_stats = (struct set_arp_stats *)req_buf;
 	status = wmi_unified_set_arp_stats_req(wma_handle->wmi_handle,
 					       arp_stats);
@@ -8512,12 +8475,7 @@ static QDF_STATUS wma_mc_process_msg(struct scheduler_msg *msg)
 
 #ifdef FEATURE_WLAN_TDLS
 	case WMA_UPDATE_TDLS_PEER_STATE:
-<<<<<<< HEAD
-		wma_update_tdls_peer_state(wma_handle,
-				(tTdlsPeerStateParams *) msg->bodyptr);
-=======
 		wma_update_tdls_peer_state(wma_handle, msg->bodyptr);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		break;
 	case WMA_TDLS_SET_OFFCHAN_MODE:
 		wma_set_tdls_offchan_mode(wma_handle,

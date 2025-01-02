@@ -370,8 +370,6 @@ uint8_t lim_check_rx_rsn_ie_match(tpAniSirGlobal mac_ctx,
 		return QDF_STATUS_E_FAILURE;
 	}
 
-<<<<<<< HEAD
-=======
 	/* We should have only one AKM in assoc/reassoc request */
 	if (rx_rsn_ie->akm_suite_cnt != 1) {
 		pe_debug("Invalid RX akm_suite_cnt %d",
@@ -391,7 +389,6 @@ uint8_t lim_check_rx_rsn_ie_match(tpAniSirGlobal mac_ctx,
 		return eSIR_MAC_INVALID_AKMP_STATUS;
 	}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* Check groupwise cipher suite */
 	for (i = 0; i < sizeof(rx_rsn_ie->gp_cipher_suite); i++)
 		if (rsn_ie->gp_cipher_suite[i] !=
@@ -404,21 +401,13 @@ uint8_t lim_check_rx_rsn_ie_match(tpAniSirGlobal mac_ctx,
 	 * For each Pairwise cipher suite check whether we support
 	 * received pairwise
 	 */
-<<<<<<< HEAD
-	match = 0;
-=======
 	match = false;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	for (i = 0; i < rx_rsn_ie->pwise_cipher_suite_count; i++) {
 		for (j = 0; j < rsn_ie->pwise_cipher_suite_count; j++) {
 			if (!qdf_mem_cmp(&rx_rsn_ie->pwise_cipher_suites[i],
 			    &rsn_ie->pwise_cipher_suites[j],
 			    sizeof(rsn_ie->pwise_cipher_suites[j]))) {
-<<<<<<< HEAD
-				match = 1;
-=======
 				match = true;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 				break;
 			}
 		}
@@ -1702,13 +1691,9 @@ lim_populate_peer_rate_set(tpAniSirGlobal pMac,
 {
 	tSirMacRateSet tempRateSet;
 	tSirMacRateSet tempRateSet2;
-<<<<<<< HEAD
-	uint32_t i, j, val, min, isArate = 0;
-=======
 	uint32_t i, j, val, min;
 	uint8_t aRateIndex = 0;
 	uint8_t bRateIndex = 0;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* copy operational rate set from psessionEntry */
 	if (psessionEntry->rateSet.numRates <= SIR_MAC_RATESET_EID_MAX) {
@@ -1753,25 +1738,6 @@ lim_populate_peer_rate_set(tpAniSirGlobal pMac,
 	 * Sort rates in tempRateSet (they are likely to be already sorted)
 	 * put the result in pSupportedRates
 	 */
-<<<<<<< HEAD
-	{
-		uint8_t aRateIndex = 0;
-		uint8_t bRateIndex = 0;
-
-		qdf_mem_zero((uint8_t *) pRates, sizeof(tSirSupportedRates));
-		for (i = 0; i < tempRateSet.numRates; i++) {
-			min = 0;
-			val = 0xff;
-			isArate = 0;
-			for (j = 0;
-			     (j < tempRateSet.numRates)
-			     && (j < SIR_MAC_RATESET_EID_MAX); j++) {
-				if ((uint32_t) (tempRateSet.rate[j] & 0x7f) <
-				    val) {
-					val = tempRateSet.rate[j] & 0x7f;
-					min = j;
-				}
-=======
 	qdf_mem_zero((uint8_t *)pRates, sizeof(tSirSupportedRates));
 	for (i = 0; i < tempRateSet.numRates; i++) {
 		min = 0;
@@ -1781,7 +1747,6 @@ lim_populate_peer_rate_set(tpAniSirGlobal pMac,
 			if ((uint32_t)(tempRateSet.rate[j] & 0x7f) < val) {
 				val = tempRateSet.rate[j] & 0x7f;
 				min = j;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			}
 		}
 		/*
@@ -2614,17 +2579,11 @@ lim_add_sta(tpAniSirGlobal mac_ctx,
 			assoc_req =
 			(tpSirAssocReq) session_entry->parsedAssocReq[aid];
 
-<<<<<<< HEAD
-			add_sta_params->wpa_rsn = assoc_req->rsnPresent;
-			add_sta_params->wpa_rsn |=
-				(assoc_req->wpaPresent << 1);
-=======
 			if (assoc_req) {
 				add_sta_params->wpa_rsn = assoc_req->rsnPresent;
 				add_sta_params->wpa_rsn |=
 					(assoc_req->wpaPresent << 1);
 			}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		}
 	}
 

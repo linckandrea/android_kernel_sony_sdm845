@@ -732,11 +732,7 @@ typedef struct sAniSirLim {
 	QDF_STATUS(*sme_msg_callback)
 		(tpAniSirGlobal mac, struct scheduler_msg *msg);
 	QDF_STATUS(*stop_roaming_callback)
-<<<<<<< HEAD
-		(tpAniSirGlobal mac, uint8_t session_id, uint8_t reason);
-=======
 		(tHalHandle mac, uint8_t session_id, uint8_t reason);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint8_t retry_packet_cnt;
 	uint8_t beacon_probe_rsp_cnt_per_scan;
 	wlan_scan_requester req_id;
@@ -853,10 +849,7 @@ typedef struct sAniSirGlobal {
 	uint8_t beacon_offload;
 	bool pmf_offload;
 	bool is_fils_roaming_supported;
-<<<<<<< HEAD
-=======
 	bool stop_all_host_scan_support;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	bool enable5gEBT;
 	uint8_t f_prefer_non_dfs_on_radar;
 	uint32_t fEnableDebugLog;

@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2012-2019 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2012-2020 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -208,12 +204,8 @@ void lim_update_short_slot_time(tpAniSirGlobal pMac, tSirMacAddr peerMacAddr,
 void lim_send_sme_mgmt_frame_ind(tpAniSirGlobal mac_ctx, uint8_t frame_type,
 				 uint8_t *frame, uint32_t frame_len,
 				 uint16_t session_id, uint32_t rx_channel,
-<<<<<<< HEAD
-				 tpPESession psession_entry, int8_t rx_rssi);
-=======
 				 tpPESession psession_entry, int8_t rx_rssi,
 				 enum rxmgmt_flags rx_flags);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /*
  * lim_deactivate_timers() - Function to deactivate lim timers
@@ -1167,23 +1159,16 @@ void lim_set_he_caps(tpAniSirGlobal mac, tpPESession session,
  * lim_send_he_caps_ie() - gets HE capability and send to firmware via wma
  * @mac_ctx: global mac context
  * @session: pe session. This can be NULL. In that case self cap will be sent
-<<<<<<< HEAD
-=======
  * @device_mode: VDEV op mode
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * @vdev_id: vdev for which IE is targeted
  *
  * This function gets HE capability and send to firmware via wma
  *
  * Return: QDF_STATUS
  */
-<<<<<<< HEAD
-QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx, tpPESession session,
-=======
 QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx,
 			       tpPESession session,
 			       enum QDF_OPMODE device_mode,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 			       uint8_t vdev_id);
 
 /**
@@ -1319,10 +1304,7 @@ static inline void lim_set_he_caps(tpAniSirGlobal mac, tpPESession session,
 
 static inline QDF_STATUS lim_send_he_caps_ie(tpAniSirGlobal mac_ctx,
 					     tpPESession session,
-<<<<<<< HEAD
-=======
 					     enum QDF_OPMODE device_mode,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 					     uint8_t vdev_id)
 {
 	return QDF_STATUS_SUCCESS;

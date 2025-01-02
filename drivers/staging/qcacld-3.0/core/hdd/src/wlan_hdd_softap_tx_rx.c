@@ -706,13 +706,8 @@ static void __hdd_softap_tx_timeout(struct net_device *dev)
 			  i, netif_tx_queue_stopped(txq), txq->trans_start);
 	}
 
-<<<<<<< HEAD
-	wlan_hdd_display_netif_queue_history(hdd_ctx,
-					     QDF_STATS_VERBOSITY_LEVEL_HIGH);
-=======
 	wlan_hdd_display_adapter_netif_queue_history(adapter);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	cdp_dump_flow_pool_info(cds_get_context(QDF_MODULE_ID_SOC));
 	QDF_TRACE(QDF_MODULE_ID_HDD_DATA, QDF_TRACE_LEVEL_DEBUG,
 			"carrier state: %d", netif_carrier_ok(dev));
@@ -941,8 +936,6 @@ QDF_STATUS hdd_softap_rx_packet_cbk(void *context, qdf_nbuf_t rx_buf)
 			}
 		}
 
-<<<<<<< HEAD
-=======
 		if (qdf_unlikely(qdf_nbuf_is_ipv4_eapol_pkt(skb) &&
 				 qdf_mem_cmp(qdf_nbuf_data(skb) +
 					     QDF_NBUF_DEST_MAC_OFFSET,
@@ -952,7 +945,6 @@ QDF_STATUS hdd_softap_rx_packet_cbk(void *context, qdf_nbuf_t rx_buf)
 			continue;
 		}
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		hdd_event_eapol_log(skb, QDF_RX);
 		qdf_dp_trace_log_pkt(adapter->session_id,
 				     skb, QDF_RX, QDF_TRACE_DEFAULT_PDEV_ID);
@@ -1013,10 +1005,6 @@ QDF_STATUS hdd_softap_rx_packet_cbk(void *context, qdf_nbuf_t rx_buf)
 QDF_STATUS hdd_softap_deregister_sta(struct hdd_adapter *adapter,
 				     uint8_t sta_id)
 {
-<<<<<<< HEAD
-	QDF_STATUS qdf_status = QDF_STATUS_SUCCESS;
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	struct hdd_context *hdd_ctx;
 	tSmeConfigParams *sme_config;
 
@@ -1037,21 +1025,6 @@ QDF_STATUS hdd_softap_deregister_sta(struct hdd_adapter *adapter,
 		return QDF_STATUS_E_INVAL;
 	}
 
-<<<<<<< HEAD
-	/* Clear station in TL and then update HDD data
-	 * structures. This helps to block RX frames from other
-	 * station to this station.
-	 */
-	qdf_status = cdp_clear_peer(cds_get_context(QDF_MODULE_ID_SOC),
-			(struct cdp_pdev *)cds_get_context(QDF_MODULE_ID_TXRX),
-			sta_id);
-	if (!QDF_IS_STATUS_SUCCESS(qdf_status)) {
-		hdd_debug("cdp_clear_peer failed for staID %d, Status=%d [0x%08X]",
-			  sta_id, qdf_status, qdf_status);
-	}
-
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	if (adapter->sta_info[sta_id].in_use) {
 		if (ucfg_ipa_is_enabled()) {
 			if (ucfg_ipa_wlan_evt(hdd_ctx->pdev, adapter->dev,
@@ -1083,11 +1056,7 @@ QDF_STATUS hdd_softap_deregister_sta(struct hdd_adapter *adapter,
 				   sme_config->csrConfig.oce_feature_bitmap);
 	qdf_mem_free(sme_config);
 
-<<<<<<< HEAD
-	return qdf_status;
-=======
 	return QDF_STATUS_SUCCESS;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 
 QDF_STATUS hdd_softap_register_sta(struct hdd_adapter *adapter,

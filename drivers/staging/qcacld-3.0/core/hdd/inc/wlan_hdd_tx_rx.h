@@ -216,8 +216,6 @@ void wlan_hdd_classify_pkt(struct sk_buff *skb);
 
 #ifdef MSM_PLATFORM
 void hdd_reset_tcp_delack(struct hdd_context *hdd_ctx);
-<<<<<<< HEAD
-=======
 
 /**
  * hdd_reset_tcp_adv_win_scale() - Reset tcp adv window scale value to default
@@ -228,7 +226,6 @@ void hdd_reset_tcp_delack(struct hdd_context *hdd_ctx);
  * Return: None
  */
 void hdd_reset_tcp_adv_win_scale(struct hdd_context *hdd_ctx);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef RX_PERFORMANCE
 bool hdd_is_current_high_throughput(struct hdd_context *hdd_ctx);
 #else
@@ -240,10 +237,7 @@ static inline bool hdd_is_current_high_throughput(struct hdd_context *hdd_ctx)
 #define HDD_MSM_CFG(msm_cfg)	msm_cfg
 #else
 static inline void hdd_reset_tcp_delack(struct hdd_context *hdd_ctx) {}
-<<<<<<< HEAD
-=======
 static inline void hdd_reset_tcp_adv_win_scale(struct hdd_context *hdd_ctx) {}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 static inline bool hdd_is_current_high_throughput(struct hdd_context *hdd_ctx)
 {
 	return false;

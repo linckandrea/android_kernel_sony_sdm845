@@ -50,12 +50,9 @@ typedef struct sAniSirGlobal *tpAniSirGlobal;
 #include <dot11f.h>
 #include "wlan_policy_mgr_api.h"
 
-<<<<<<< HEAD
-=======
 #define LFR3_STA_ROAM_DISABLE_BY_P2P BIT(0)
 #define LFR3_STA_ROAM_DISABLE_BY_NAN BIT(1)
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define SIR_MAX_SUPPORTED_BSS 5
 
 #define OFFSET_OF(structType, fldName)   (&((structType *)0)->fldName)
@@ -145,11 +142,7 @@ typedef uint8_t tSirVersionString[SIR_VERSION_STRING_LEN];
 /* Roam debugging related macro defines */
 #define MAX_ROAM_DEBUG_BUF_SIZE    250
 #define MAX_ROAM_EVENTS_SUPPORTED  5
-<<<<<<< HEAD
-#define ROAM_FAILURE_BUF_SIZE      40
-=======
 #define ROAM_FAILURE_BUF_SIZE      60
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define TIME_STRING_LEN            24
 
 #define ROAM_CHANNEL_BUF_SIZE      300
@@ -178,10 +171,7 @@ struct mlme_roam_debug_info {
 #define AKM_FT_FILS          2
 #define AKM_SAE              3
 #define AKM_OWE              4
-<<<<<<< HEAD
-=======
 #define AKM_SUITEB           5
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /**
  * enum sir_roam_op_code - Operation to be done by the callback.
@@ -191,10 +181,7 @@ struct mlme_roam_debug_info {
  * @SIR_ROAMING_ABORT: Firmware aborted roaming operation, still connected.
  * @SIR_ROAM_SYNCH_COMPLETE: Roam sync propagation is complete.
  * @SIR_ROAMING_INVOKE_FAIL: Firmware roaming failed.
-<<<<<<< HEAD
-=======
  * @SIR_ROAMING_DEAUTH: Firmware indicates deauth.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  */
 enum sir_roam_op_code {
 	SIR_ROAM_SYNCH_PROPAGATION = 1,
@@ -204,10 +191,7 @@ enum sir_roam_op_code {
 	SIR_ROAM_SYNCH_COMPLETE,
 	SIR_ROAM_SYNCH_NAPI_OFF,
 	SIR_ROAMING_INVOKE_FAIL,
-<<<<<<< HEAD
-=======
 	SIR_ROAMING_DEAUTH,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 /**
  * Module ID definitions.
@@ -830,10 +814,7 @@ struct bss_description {
 	uint8_t reservedPadding4;
 	uint32_t tsf_delta;
 	uint32_t adaptive_11r_ap;
-<<<<<<< HEAD
-=======
 	uint32_t mbo_oce_enabled_ap;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #if defined(WLAN_SAE_SINGLE_PMK) && defined(WLAN_FEATURE_ROAM_OFFLOAD)
 	bool sae_single_pmk_ap;
 #endif
@@ -1347,13 +1328,10 @@ typedef struct sSirSmeAssocInd {
 	tDot11fIEVHTCaps VHTCaps;
 	bool he_caps_present;
 	tSirMacCapabilityInfo capability_info;
-<<<<<<< HEAD
-=======
 	bool is_sae_authenticated;
 	const uint8_t *owe_ie;
 	uint32_t owe_ie_len;
 	uint16_t owe_status;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tSirSmeAssocInd, *tpSirSmeAssocInd;
 
 /**
@@ -2864,13 +2842,9 @@ typedef enum {
  * @bg_scan_bad_rssi_thresh:    Bad RSSI threshold to perform bg scan.
  * @bad_rssi_thresh_offset_2g:  Offset from Bad RSSI threshold for 2G to 5G Roam
  * @bg_scan_client_bitmap:      Bitmap to identify the client scans to snoop.
-<<<<<<< HEAD
- *
-=======
  * @roam_data_rssi_threshold_triggers:    Bad data RSSI threshold to roam
  * @roam_data_rssi_threshold:    Bad data RSSI threshold to roam
  * @rx_data_inactivity_time:    rx duration to check data RSSI
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * This structure holds all the key parameters related to
  * initial connection and also roaming connections.
  * */
@@ -2903,12 +2877,9 @@ struct roam_ext_params {
 	int8_t bg_scan_bad_rssi_thresh;
 	uint8_t roam_bad_rssi_thresh_offset_2g;
 	uint32_t bg_scan_client_bitmap;
-<<<<<<< HEAD
-=======
 	uint32_t roam_data_rssi_threshold_triggers;
 	int32_t roam_data_rssi_threshold;
 	uint32_t rx_data_inactivity_time;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 /**
@@ -7363,20 +7334,14 @@ struct sir_sae_info {
  * @length: message length
  * @session_id: SME session id
  * @sae_status: SAE status, 0: Success, Non-zero: Failure.
-<<<<<<< HEAD
-=======
  * @peer_mac_addr: peer MAC address
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  */
 struct sir_sae_msg {
 	uint16_t message_type;
 	uint16_t length;
 	uint16_t session_id;
 	uint8_t sae_status;
-<<<<<<< HEAD
-=======
 	tSirMacAddr peer_mac_addr;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 /**
@@ -7400,8 +7365,6 @@ struct sir_get_mws_coex_info {
 	uint32_t cmd_id;
 };
 #endif /* WLAN_MWS_INFO_DEBUGFS */
-<<<<<<< HEAD
-=======
 
 /**
  * struct sir_gen_req - Generic request to carry vdev id
@@ -7410,5 +7373,4 @@ struct sir_get_mws_coex_info {
 struct sir_gen_req {
 	uint32_t vdev_id;
 };
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* __SIR_API_H */

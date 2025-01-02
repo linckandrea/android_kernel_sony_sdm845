@@ -160,15 +160,11 @@ struct htt_host_rx_desc_base {
  *    @posted: time-stamp when HTT message is recived
  *    @recvd : 0x48545452584D5367 ('HTTRXMSG')
  */
-<<<<<<< HEAD
-#define HTT_RX_RING_BUFF_DBG_LIST          (8 * 1024)
-=======
 #ifdef CONFIG_SLUB_DEBUG_ON
 #define HTT_RX_RING_BUFF_DBG_LIST          (8 * 1024)
 #else
 #define HTT_RX_RING_BUFF_DBG_LIST          (4 * 1024)
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 struct rx_buf_debug {
 	qdf_dma_addr_t paddr;
 	qdf_nbuf_t     nbuf;
@@ -1025,11 +1021,7 @@ static inline qdf_nbuf_t
 htt_rx_in_order_netbuf_pop(htt_pdev_handle pdev, qdf_dma_addr_t paddr)
 {
 	HTT_ASSERT1(htt_rx_in_order_ring_elems(pdev) != 0);
-<<<<<<< HEAD
-	pdev->rx_ring.fill_cnt--;
-=======
 	qdf_atomic_dec(&pdev->rx_ring.fill_cnt);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	paddr = htt_paddr_trim_to_37(paddr);
 	return htt_rx_hash_list_lookup(pdev, paddr);
 }

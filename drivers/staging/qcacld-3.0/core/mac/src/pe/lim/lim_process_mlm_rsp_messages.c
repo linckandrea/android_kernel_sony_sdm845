@@ -770,10 +770,7 @@ lim_fill_assoc_ind_params(tpAniSirGlobal mac_ctx,
 		sme_assoc_ind->VHTCaps = assoc_ind->vht_caps;
 	sme_assoc_ind->capability_info = assoc_ind->capabilityInfo;
 	sme_assoc_ind->he_caps_present = assoc_ind->he_caps_present;
-<<<<<<< HEAD
-=======
 	sme_assoc_ind->is_sae_authenticated = assoc_ind->is_sae_authenticated;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 
 /**
@@ -3175,12 +3172,8 @@ void lim_process_switch_channel_rsp(tpAniSirGlobal pMac, void *body)
 			psessionEntry->send_p2p_conf_frame = true;
 		}
 
-<<<<<<< HEAD
-		ucfg_pkt_capture_record_channel();
-=======
 		if (ucfg_pkt_capture_get_pktcap_mode())
 			ucfg_pkt_capture_record_channel();
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		break;
 	case LIM_SWITCH_CHANNEL_SAP_DFS:
 	{

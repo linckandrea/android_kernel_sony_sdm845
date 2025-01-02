@@ -65,13 +65,10 @@
 #include <asm/dma-iommu.h>
 #include <linux/iommu.h>
 #endif
-<<<<<<< HEAD
-=======
 #include <qdf_hang_event_notifier.h>
 #include <qdf_notifier.h>
 #include <qwlan_version.h>
 #include <qdf_trace.h>
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /* Preprocessor Definitions and Constants */
 
 /* Preprocessor Definitions and Constants */
@@ -93,8 +90,6 @@ static struct ol_if_ops  dp_ol_if_ops = {
     /* TODO: Add any other control path calls required to OL_IF/WMA layer */
 };
 
-<<<<<<< HEAD
-=======
 struct cds_hang_event_fixed_param {
 	uint32_t tlv_header;
 	uint32_t recovery_reason;
@@ -102,7 +97,6 @@ struct cds_hang_event_fixed_param {
 	char hang_event_version[3];
 } qdf_packed;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 static void cds_trigger_recovery_work(void *param);
 
 /**
@@ -194,11 +188,7 @@ QDF_STATUS cds_init(void)
 	qdf_mc_timer_manager_init();
 	qdf_event_list_init();
 	qdf_cpuhp_init();
-<<<<<<< HEAD
-	qdf_register_self_recovery_callback(__cds_trigger_recovery);
-=======
 	qdf_register_self_recovery_callback(cds_trigger_recovery_psoc);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_register_fw_down_callback(cds_is_fw_down);
 	qdf_register_ssr_protect_callbacks(cds_ssr_protect,
 					   cds_ssr_unprotect);
@@ -467,8 +457,6 @@ cds_set_ac_specs_params(struct cds_config_info *cds_cfg)
 	}
 }
 
-<<<<<<< HEAD
-=======
 static int cds_hang_event_notifier_call(struct notifier_block *block,
 					unsigned long state,
 					void *data)
@@ -510,7 +498,6 @@ static qdf_notif_block cds_hang_event_notifier = {
 	.notif_block.notifier_call = cds_hang_event_notifier_call,
 };
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * cds_open() - open the CDS Module
  *
@@ -725,11 +712,8 @@ QDF_STATUS cds_open(struct wlan_objmgr_psoc *psoc)
 		goto deregister_modules;
 	}
 
-<<<<<<< HEAD
-=======
 	qdf_hang_event_register_notifier(&cds_hang_event_notifier);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	return QDF_STATUS_SUCCESS;
 
 deregister_modules:
@@ -1161,10 +1145,7 @@ QDF_STATUS cds_close(struct wlan_objmgr_psoc *psoc)
 {
 	QDF_STATUS qdf_status;
 
-<<<<<<< HEAD
-=======
 	qdf_hang_event_unregister_notifier(&cds_hang_event_notifier);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	qdf_status = cds_sched_close();
 	QDF_ASSERT(QDF_IS_STATUS_SUCCESS(qdf_status));
 	if (QDF_IS_STATUS_ERROR(qdf_status))
@@ -1972,8 +1953,6 @@ void __cds_trigger_recovery(enum qdf_hang_reason reason, const char *func,
 	cds_trigger_recovery_handler(func, line);
 }
 
-<<<<<<< HEAD
-=======
 void cds_trigger_recovery_psoc(void *psoc, enum qdf_hang_reason reason,
 			       const char *func, const uint32_t line)
 {
@@ -1981,7 +1960,6 @@ void cds_trigger_recovery_psoc(void *psoc, enum qdf_hang_reason reason,
 }
 
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * cds_get_recovery_reason() - get self recovery reason
  * @reason: recovery reason

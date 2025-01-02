@@ -320,10 +320,7 @@ enum {
 	WNI_CFG_TWT_REQUESTOR,
 	WNI_CFG_TWT_RESPONDER,
 	WNI_CFG_BCAST_TWT,
-<<<<<<< HEAD
-=======
 	WNI_CFG_SAP_SAE_ENABLED,
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	/* Any new items to be added should be above this strictly */
 	CFG_PARAM_MAX_NUM
 };

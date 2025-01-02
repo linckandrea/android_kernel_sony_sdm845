@@ -2892,205 +2892,8 @@ static QDF_STATUS dot11f_parse_assoc_response(tpAniSirGlobal mac_ctx,
 						 tDot11fAssocResponse *p_frm,
 						 bool append_ie)
 {
-<<<<<<< HEAD
 	uint32_t status;
 
-	status = dot11f_unpack_assoc_response(mac_ctx, p_buf,
-					      n_buf, p_frm, append_ie);
-	if (DOT11F_FAILED(status)) {
-		pe_err("Failed to parse an Association Response (0x%08x, %d bytes):",
-			status, n_buf);
-		QDF_TRACE_HEX_DUMP(QDF_MODULE_ID_PE, QDF_TRACE_LEVEL_ERROR,
-				   p_buf, n_buf);
-		return QDF_STATUS_E_FAILURE;
-	}
-
-	return QDF_STATUS_SUCCESS;
-}
-
-#ifdef WLAN_FEATURE_FILS_SK
-/**
- * fils_convert_assoc_rsp_frame2_struct() - Copy FILS IE's to Assoc rsp struct
- * @ar: frame parser Assoc response struct
- * @pAssocRsp: LIM Assoc response
- *
- * Return: None
- */
-static void fils_convert_assoc_rsp_frame2_struct(tDot11fAssocResponse *ar,
-						 tpSirAssocRsp pAssocRsp)
-{
-	if (ar->fils_session.present) {
-		pe_debug("fils session IE present");
-		pAssocRsp->fils_session.present = true;
-		qdf_mem_copy(pAssocRsp->fils_session.session,
-				ar->fils_session.session,
-				DOT11F_IE_FILS_SESSION_MAX_LEN);
-	}
-
-	if (ar->fils_key_confirmation.present) {
-		pe_debug("fils key conf IE present");
-		pAssocRsp->fils_key_auth.num_key_auth =
-			ar->fils_key_confirmation.num_key_auth;
-		qdf_mem_copy(pAssocRsp->fils_key_auth.key_auth,
-				ar->fils_key_confirmation.key_auth,
-				pAssocRsp->fils_key_auth.num_key_auth);
-	}
-
-	if (ar->fils_kde.present) {
-		pe_debug("fils kde IE present %d",
-				ar->fils_kde.num_kde_list);
-		pAssocRsp->fils_kde.num_kde_list =
-			ar->fils_kde.num_kde_list;
-		qdf_mem_copy(pAssocRsp->fils_kde.key_rsc,
-				ar->fils_kde.key_rsc, KEY_RSC_LEN);
-		qdf_mem_copy(&pAssocRsp->fils_kde.kde_list,
-				&ar->fils_kde.kde_list,
-				pAssocRsp->fils_kde.num_kde_list);
-	}
-
-	if (ar->fils_hlp_container.present) {
-		pe_debug("FILS HLP container IE present");
-		sir_copy_mac_addr(pAssocRsp->dst_mac.bytes,
-				ar->fils_hlp_container.dest_mac);
-		sir_copy_mac_addr(pAssocRsp->src_mac.bytes,
-				ar->fils_hlp_container.src_mac);
-		pAssocRsp->hlp_data_len = ar->fils_hlp_container.num_hlp_packet;
-		qdf_mem_copy(pAssocRsp->hlp_data,
-				ar->fils_hlp_container.hlp_packet,
-				pAssocRsp->hlp_data_len);
-
-		if (ar->fragment_ie.present) {
-			pe_debug("FILS fragment ie present");
-			qdf_mem_copy(pAssocRsp->hlp_data +
-					pAssocRsp->hlp_data_len,
-					ar->fragment_ie.data,
-					ar->fragment_ie.num_data);
-			pAssocRsp->hlp_data_len += ar->fragment_ie.num_data;
-		}
-	}
-}
-#else
-static inline void fils_convert_assoc_rsp_frame2_struct(tDot11fAssocResponse
-							*ar, tpSirAssocRsp
-							pAssocRsp)
-{ }
-#endif
-
-QDF_STATUS wlan_parse_ftie_sha384(uint8_t *frame, uint32_t frame_len,
-				  struct sSirAssocRsp *assoc_rsp)
-{
-	const uint8_t *ie, *ie_end, *pos;
-	uint8_t ie_len;
-	struct wlan_sha384_ftinfo_subelem *ft_subelem;
-
-	ie = wlan_get_ie_ptr_from_eid(DOT11F_EID_FTINFO, frame, frame_len);
-	if (!ie) {
-		pe_err("FT IE not present");
-		return QDF_STATUS_E_FAILURE;
-	}
-
-	if (!ie[1]) {
-		pe_err("FT IE length is zero");
-		return QDF_STATUS_E_FAILURE;
-	}
-
-	ie_len = ie[1];
-	if (ie_len < sizeof(struct wlan_sha384_ftinfo)) {
-		pe_err("Invalid FTIE len:%d", ie_len);
-		return QDF_STATUS_E_FAILURE;
-	}
-
-	pos = ie + 2;
-	qdf_mem_copy(&assoc_rsp->sha384_ft_info, pos,
-		     sizeof(struct wlan_sha384_ftinfo));
-	ie_end = ie + ie_len;
-	pos += sizeof(struct wlan_sha384_ftinfo);
-	ft_subelem = &assoc_rsp->sha384_ft_subelem;
-	qdf_mem_zero(ft_subelem, sizeof(*ft_subelem));
-
-	while (ie_end - pos >= 2) {
-		uint8_t id, len;
-
-		id = *pos++;
-		len = *pos++;
-		if (len < 1) {
-			pe_err("Invalid FT subelem length");
-			return QDF_STATUS_E_FAILURE;
-		}
-
-		switch (id) {
-		case FTIE_SUBELEM_R1KH_ID:
-			if (len != FTIE_R1KH_LEN) {
-				pe_err("Invalid R1KH-ID length: %d", len);
-				return QDF_STATUS_E_FAILURE;
-			}
-			ft_subelem->r1kh_id.present = 1;
-			qdf_mem_copy(ft_subelem->r1kh_id.PMK_R1_ID,
-				     pos, FTIE_R1KH_LEN);
-			break;
-		case FTIE_SUBELEM_GTK:
-			if (ft_subelem->gtk) {
-				qdf_mem_zero(ft_subelem->gtk,
-					     ft_subelem->gtk_len);
-				ft_subelem->gtk_len = 0;
-				qdf_mem_free(ft_subelem->gtk);
-			}
-
-			ft_subelem->gtk = qdf_mem_malloc(len);
-			if (!ft_subelem->gtk)
-				return QDF_STATUS_E_NOMEM;
-
-			qdf_mem_copy(ft_subelem->gtk, pos, len);
-			ft_subelem->gtk_len = len;
-			break;
-		case FTIE_SUBELEM_R0KH_ID:
-			if (len < 1 || len > FTIE_R0KH_MAX_LEN) {
-				pe_err("Invalid R0KH-ID length: %d", len);
-				return QDF_STATUS_E_FAILURE;
-			}
-			ft_subelem->r0kh_id.present = 1;
-			ft_subelem->r0kh_id.num_PMK_R0_ID = len;
-			qdf_mem_copy(ft_subelem->r0kh_id.PMK_R0_ID,
-				     pos, len);
-			break;
-		case FTIE_SUBELEM_IGTK:
-			if (ft_subelem->igtk) {
-				qdf_mem_zero(ft_subelem->igtk,
-					     ft_subelem->igtk_len);
-				ft_subelem->igtk_len = 0;
-				qdf_mem_free(ft_subelem->igtk);
-			}
-			ft_subelem->igtk = qdf_mem_malloc(len);
-			if (!ft_subelem->igtk)
-				return QDF_STATUS_E_NOMEM;
-
-			qdf_mem_copy(ft_subelem->igtk, pos, len);
-			ft_subelem->igtk_len = len;
-			break;
-		default:
-			pe_debug("Unknown subelem id %d len:%d",
-				 id, len);
-			break;
-		}
-		pos += len;
-	}
-
-	return QDF_STATUS_SUCCESS;
-}
-
-QDF_STATUS
-sir_convert_assoc_resp_frame2_struct(tpAniSirGlobal pMac,
-		tpPESession session_entry,
-		uint8_t *pFrame, uint32_t nFrame,
-		tpSirAssocRsp pAssocRsp)
-{
-	tDot11fAssocResponse *ar;
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
-	uint32_t status;
-
-<<<<<<< HEAD
-=======
 	status = dot11f_unpack_assoc_response(mac_ctx, p_buf,
 					      n_buf, p_frm, append_ie);
 	if (DOT11F_FAILED(status)) {
@@ -3298,32 +3101,10 @@ sir_convert_assoc_resp_frame2_struct(tpAniSirGlobal pMac,
 	bool sha384_akm;
 	u8 *ie_ptr;
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	ar = qdf_mem_malloc(sizeof(*ar));
 	if (!ar) {
 		pe_err("Assoc rsp mem alloc fails");
 		return QDF_STATUS_E_FAILURE;
-<<<<<<< HEAD
-	}
-
-	/* decrypt the cipher text using AEAD decryption */
-	if (lim_is_fils_connection(session_entry)) {
-		status = aead_decrypt_assoc_rsp(pMac, session_entry,
-						ar, pFrame, &nFrame);
-		if (!QDF_IS_STATUS_SUCCESS(status)) {
-			pe_err("FILS assoc rsp AEAD decrypt fails");
-			qdf_mem_free(ar);
-			return QDF_STATUS_E_FAILURE;
-		}
-	}
-
-	status = dot11f_parse_assoc_response(pMac, pFrame, nFrame, ar, false);
-	if (QDF_STATUS_SUCCESS != status) {
-		qdf_mem_free(ar);
-		return status;
-	}
-
-=======
 	}
 
 	/* decrypt the cipher text using AEAD decryption */
@@ -3342,7 +3123,6 @@ sir_convert_assoc_resp_frame2_struct(tpAniSirGlobal pMac,
 		qdf_mem_free(ar);
 		return status;
 	}
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	/* Capabilities */
 	pAssocRsp->capabilityInfo.ess = ar->Capabilities.ess;
@@ -3428,15 +3208,6 @@ sir_convert_assoc_resp_frame2_struct(tpAniSirGlobal pMac,
 			(unsigned int)pAssocRsp->mdie[2]);
 	}
 
-<<<<<<< HEAD
-	if (ar->FTInfo.present) {
-		pe_debug("FT Info present %d %d %d",
-			ar->FTInfo.R0KH_ID.num_PMK_R0_ID,
-			ar->FTInfo.R0KH_ID.present, ar->FTInfo.R1KH_ID.present);
-		pAssocRsp->ftinfoPresent = 1;
-		qdf_mem_copy(&pAssocRsp->FTInfo, &ar->FTInfo,
-				sizeof(tDot11fIEFTInfo));
-=======
 	/*
 	 * If the connection is based on SHA384 AKM suite,
 	 * then the length of MIC is 24 bytes, but frame parser
@@ -3471,7 +3242,6 @@ sir_convert_assoc_resp_frame2_struct(tpAniSirGlobal pMac,
 		pAssocRsp->ftinfoPresent = 1;
 		qdf_mem_copy(&pAssocRsp->FTInfo, &ar->FTInfo,
 			     sizeof(tDot11fIEFTInfo));
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	}
 
 	if (ar->num_RICDataDesc && ar->num_RICDataDesc <= 2) {

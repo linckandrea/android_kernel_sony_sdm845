@@ -272,13 +272,10 @@ typedef struct tLimPreAuthNode {
 	TX_TIMER timer;
 	uint16_t seq_num;
 	unsigned long timestamp;
-<<<<<<< HEAD
-=======
 	/* keeping copy of association request received, this is
 	 * to defer the association request processing
 	 */
 	struct lim_assoc_data assoc_req;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tLimPreAuthNode, *tpLimPreAuthNode;
 
 /* Pre-authentication table definition */

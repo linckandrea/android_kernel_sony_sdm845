@@ -41,9 +41,6 @@ uint8_t rrm_get_min_of_max_tx_power(tpAniSirGlobal pMac, int8_t regMax,
 
 QDF_STATUS rrm_initialize(tpAniSirGlobal pMac);
 
-<<<<<<< HEAD
-QDF_STATUS rrm_cleanup(tpAniSirGlobal pMac);
-=======
 /**
  * rrm_cleanup  - cleanup RRM measurement related data for the measurement
  * index
@@ -53,7 +50,6 @@ QDF_STATUS rrm_cleanup(tpAniSirGlobal pMac);
  * Return: None
  */
 void rrm_cleanup(tpAniSirGlobal mac, uint8_t idx);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 QDF_STATUS rrm_process_link_measurement_request(tpAniSirGlobal pMac,
 						uint8_t *pRxPacketInfo,
@@ -105,8 +101,6 @@ rrm_process_beacon_report_xmit(tpAniSirGlobal pMac,
 
 void lim_update_rrm_capability(tpAniSirGlobal mac_ctx,
 			       tpSirSmeJoinReq join_req);
-<<<<<<< HEAD
-=======
 /**
  * rrm_reject_req - Reject rrm request
  * @radiomes_report: radio measurement report
@@ -125,5 +119,4 @@ QDF_STATUS rrm_reject_req(tpSirMacRadioMeasureReport *radiomes_report,
 			  uint8_t *num_report, uint8_t index,
 			  uint8_t measurement_type);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif

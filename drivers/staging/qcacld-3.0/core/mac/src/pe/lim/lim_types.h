@@ -275,10 +275,7 @@ typedef struct sLimMlmAssocInd {
 	tDot11fIEHTCaps ht_caps;
 	tDot11fIEVHTCaps vht_caps;
 	bool he_caps_present;
-<<<<<<< HEAD
-=======
 	bool is_sae_authenticated;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tLimMlmAssocInd, *tpLimMlmAssocInd;
 
 typedef struct sLimMlmReassocReq {
@@ -1159,8 +1156,6 @@ void lim_process_assoc_failure_timeout(tpAniSirGlobal mac_ctx,
 void lim_send_mgmt_frame_tx(tpAniSirGlobal mac_ctx,
 		struct scheduler_msg *msg);
 
-<<<<<<< HEAD
-=======
 /**
  * lim_process_assoc_cleanup() - frees up resources used in function
  * lim_process_assoc_req_frame()
@@ -1205,5 +1200,4 @@ bool lim_send_assoc_ind_to_sme(tpAniSirGlobal mac_ctx,
 			       bool pmf_connection,
 			       bool *assoc_req_copied,
 			       bool dup_entry);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* __LIM_TYPES_H */

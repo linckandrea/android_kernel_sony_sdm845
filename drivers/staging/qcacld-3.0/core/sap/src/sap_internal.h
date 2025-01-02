@@ -223,11 +223,8 @@ struct sap_context {
 	 * on a DFS channel and a RADAR is detected on the channel.
 	 */
 	tAll5GChannelList SapAllChnlList;
-<<<<<<< HEAD
-=======
 	uint32_t chan_id_before_switch_band;
 	enum phy_ch_width chan_width_before_switch_band;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint32_t auto_channel_select_weight;
 	tSapAcsChannelInfo acsBestChannelInfo;
 	bool enableOverLapCh;
@@ -281,10 +278,7 @@ struct sap_context {
 	bool dfs_cac_offload;
 	bool is_chan_change_inprogress;
 	bool stop_bss_in_progress;
-<<<<<<< HEAD
-=======
 	qdf_list_t owe_pending_assoc_ind_list;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 /*----------------------------------------------------------------------------

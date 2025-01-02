@@ -47,12 +47,9 @@
 #include <linux/netdevice.h>
 #include <linux/skbuff.h>
 #include <net/cfg80211.h>
-<<<<<<< HEAD
-=======
 #ifdef CLD_PM_QOS
 #include <linux/pm_qos.h>
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #include <linux/ieee80211.h>
 #include <qdf_list.h>
 #include <qdf_types.h>
@@ -141,8 +138,6 @@ struct hdd_apf_context {
 #define NUM_TX_QUEUES 4
 #endif
 
-<<<<<<< HEAD
-=======
 /* HDD_IS_RATE_LIMIT_REQ: Macro helper to implement rate limiting
  * @flag: The flag to determine if limiting is required or not
  * @rate: The number of seconds within which if multiple commands come, the
@@ -166,7 +161,6 @@ struct hdd_apf_context {
 			} \
 	} while (0)
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /*
  * API in_compat_syscall() is introduced in 4.6 kernel to check whether we're
  * in a compat syscall or not. It is a new way to query the syscall type, which
@@ -292,11 +286,8 @@ enum hdd_driver_flags {
 /* rcpi request timeout in milli seconds */
 #define WLAN_WAIT_TIME_RCPI 500
 
-<<<<<<< HEAD
-=======
 #define WLAN_WAIT_PEER_CLEANUP 5000
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #define MAX_CFG_STRING_LEN  255
 
 /* Maximum time(ms) to wait for external acs response */
@@ -1542,8 +1533,6 @@ struct hdd_adapter {
 	struct hdd_debugfs_file_info csr_file[HDD_DEBUGFS_FILE_ID_MAX];
 #endif /* WLAN_DEBUGFS */
 	enum qca_disconnect_reason_codes last_disconnect_reason;
-<<<<<<< HEAD
-=======
 
 #ifdef WLAN_FEATURE_PERIODIC_STA_STATS
 	/* Indicate whether to display sta periodic stats */
@@ -1558,7 +1547,6 @@ struct hdd_adapter {
 	void *cookie;
 	bool response_expected;
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 #define WLAN_HDD_GET_STATION_CTX_PTR(adapter) (&(adapter)->session.station)
@@ -2040,10 +2028,7 @@ struct hdd_context {
 	int radio_index;
 	qdf_work_t sap_pre_cac_work;
 	bool hbw_requested;
-<<<<<<< HEAD
-=======
 	bool llm_enabled;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	uint32_t last_nil_scan_bug_report_timestamp;
 	enum RX_OFFLOAD ol_enable;
 #ifdef WLAN_FEATURE_NAN_DATAPATH
@@ -2147,10 +2132,6 @@ struct hdd_context {
 	qdf_mc_timer_t sar_safety_timer;
 	qdf_mc_timer_t sar_safety_unsolicited_timer;
 	qdf_event_t sar_safety_req_resp_event;
-<<<<<<< HEAD
-#endif
-	bool roam_ch_from_fw_supported;
-=======
 	qdf_atomic_t sar_safety_req_resp_event_in_progress;
 #endif
 	bool roam_ch_from_fw_supported;
@@ -2159,7 +2140,6 @@ struct hdd_context {
 	struct pm_qos_request pm_qos_req;
 #endif
 	bool ll_stats_per_chan_rx_tx_time;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 /**
@@ -2786,10 +2766,7 @@ void hdd_deinit(void);
 int hdd_wlan_startup(struct device *dev);
 void __hdd_wlan_exit(void);
 int hdd_wlan_notify_modem_power_state(int state);
-<<<<<<< HEAD
-=======
 void hdd_context_destroy(struct hdd_context *hdd_ctx);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef QCA_HT_2040_COEX
 /**
  * hdd_wlan_set_ht2040_mode() - notify FW with HT20/HT40 mode
@@ -3058,17 +3035,11 @@ void wlan_hdd_txrx_pause_cb(uint8_t vdev_id,
 	enum netif_action_type action, enum netif_reason_type reason);
 
 int hdd_wlan_dump_stats(struct hdd_adapter *adapter, int value);
-<<<<<<< HEAD
-void wlan_hdd_deinit_tx_rx_histogram(struct hdd_context *hdd_ctx);
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 void wlan_hdd_display_tx_rx_histogram(struct hdd_context *hdd_ctx);
 void wlan_hdd_clear_tx_rx_histogram(struct hdd_context *hdd_ctx);
 void
 wlan_hdd_display_netif_queue_history(struct hdd_context *hdd_ctx,
 				     enum qdf_stats_verbosity_level verb_lvl);
-<<<<<<< HEAD
-=======
 
 /**
  * wlan_hdd_display_adapter_netif_queue_history() - display adapter based netif
@@ -3080,7 +3051,6 @@ wlan_hdd_display_netif_queue_history(struct hdd_context *hdd_ctx,
 void
 wlan_hdd_display_adapter_netif_queue_history(struct hdd_adapter *adapter);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 void wlan_hdd_clear_netif_queue_history(struct hdd_context *hdd_ctx);
 const char *hdd_get_fwpath(void);
 void hdd_indicate_mgmt_frame(tSirSmeMgmtFrameInd *frame_ind);
@@ -4114,10 +4084,6 @@ bool wlan_hdd_check_mon_concurrency(void);
  * wlan_hdd_add_monitor_check() - check for monitor intf and add if needed
  * @hdd_ctx: pointer to hdd context
  * @adapter: output pointer to hold created monitor adapter
-<<<<<<< HEAD
- * @type: type of the interface
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  * @name: name of the interface
  * @rtnl_held: True if RTNL lock is held
  * @name_assign_type: the name of assign type of the netdev
@@ -4127,13 +4093,8 @@ bool wlan_hdd_check_mon_concurrency(void);
  */
 int wlan_hdd_add_monitor_check(struct hdd_context *hdd_ctx,
 			       struct hdd_adapter **adapter,
-<<<<<<< HEAD
-			       enum nl80211_iftype type, const char *name,
-			       bool rtnl_held, unsigned char name_assign_type);
-=======
 			       const char *name, bool rtnl_held,
 			       unsigned char name_assign_type);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 /**
  * wlan_hdd_del_monitor() - delete monitor interface
@@ -4163,13 +4124,8 @@ bool wlan_hdd_check_mon_concurrency(void)
 static inline
 int wlan_hdd_add_monitor_check(struct hdd_context *hdd_ctx,
 			       struct hdd_adapter **adapter,
-<<<<<<< HEAD
-			       enum nl80211_iftype type, const char *name,
-			       bool rtnl_held, unsigned char name_assign_type)
-=======
 			       const char *name, bool rtnl_held,
 			       unsigned char name_assign_type)
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 {
 	return 0;
 }
@@ -4180,8 +4136,6 @@ void wlan_hdd_del_monitor(struct hdd_context *hdd_ctx,
 {
 }
 #endif /* WLAN_FEATURE_PKT_CAPTURE */
-<<<<<<< HEAD
-=======
 
 /**
  * hdd_send_update_owe_info_event - Send update OWE info event
@@ -4222,5 +4176,4 @@ static inline void hdd_beacon_latency_event_cb(uint32_t latency_level)
 }
 #endif
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* end #if !defined(WLAN_HDD_MAIN_H) */

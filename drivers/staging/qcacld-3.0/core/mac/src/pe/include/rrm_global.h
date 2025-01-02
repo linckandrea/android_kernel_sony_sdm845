@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * Copyright (c) 2011-2012, 2014-2018 The Linux Foundation. All rights reserved.
-=======
  * Copyright (c) 2011-2012, 2014-2018, 2020 The Linux Foundation. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -223,13 +219,9 @@ typedef struct sRrmPEContext {
 	/* Dialog token for the request initiated from station. */
 	uint8_t DialogToken;
 	uint16_t prev_rrm_report_seq_num;
-<<<<<<< HEAD
-	tpRRMReq pCurrentReq;
-=======
 	tpRRMReq pCurrentReq[MAX_MEASUREMENT_REQUEST];
 	uint8_t beacon_rpt_chan_list[MAX_NUM_CHANNELS];
 	uint8_t beacon_rpt_chan_num;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tRrmPEContext, *tpRrmPEContext;
 
 /* 2008 11k spec reference: 18.4.8.5 RCPI Measurement */

@@ -3415,8 +3415,6 @@ static void csr_check_sae_auth(tpAniSirGlobal mac_ctx,
 }
 #endif
 
-<<<<<<< HEAD
-=======
 bool csr_is_pmkid_found_for_peer(tpAniSirGlobal mac,
 				 struct csr_roam_session *session,
 				 tSirMacAddr peer_mac_addr,
@@ -3444,7 +3442,6 @@ bool csr_is_pmkid_found_for_peer(tpAniSirGlobal mac,
 	return false;
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * csr_get_rsn_information() - to get RSN information
  * @mac_ctx: pointer to global MAC context

@@ -741,26 +741,18 @@ QDF_STATUS sme_get_wcnss_hardware_version(tHalHandle hHal,
 /**
  * sme_oem_data_cmd() - the wrapper to send oem data cmd to wma
  * @mac_handle: Opaque handle to the global MAC context.
-<<<<<<< HEAD
- * @oem_data: the pointer of oem data
-=======
  * @@oem_data_event_handler_cb: callback to be registered
  * @oem_data: the pointer of oem data
  * @vdev id: vdev id to fetch adapter
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * Return: QDF_STATUS
  */
 QDF_STATUS sme_oem_data_cmd(mac_handle_t mac_handle,
-<<<<<<< HEAD
-			    struct oem_data *oem_data);
-=======
 			    void (*oem_data_event_handler_cb)
 			    (const struct oem_data *oem_event_data,
 			     uint8_t vdev_id),
 			     struct oem_data *oem_data,
 			     uint8_t vdev_id);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif
 
 #ifdef FEATURE_OEM_DATA_SUPPORT
@@ -1072,11 +1064,8 @@ uint8_t sme_get_roam_bmiss_final_bcnt(tHalHandle hHal);
 QDF_STATUS sme_set_roam_beacon_rssi_weight(tHalHandle hHal, uint8_t sessionId,
 		const uint8_t nRoamBeaconRssiWeight);
 uint8_t sme_get_roam_beacon_rssi_weight(tHalHandle hHal);
-<<<<<<< HEAD
-=======
 void sme_free_blacklist(tHalHandle mac_handle);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * sme_get_roam_rssi_diff() - get Roam rssi diff
  * @mac_handle: The handle returned by mac_open
@@ -2111,8 +2100,6 @@ QDF_STATUS sme_get_beacon_frm(tHalHandle hal, struct csr_roam_profile *profile,
 			      int *channel);
 
 #ifdef WLAN_FEATURE_ROAM_OFFLOAD
-<<<<<<< HEAD
-=======
 
 /**
  * sme_is_fast_reassoc_allowed  - API to check if roam invoke is
@@ -2125,7 +2112,6 @@ QDF_STATUS sme_get_beacon_frm(tHalHandle hal, struct csr_roam_profile *profile,
  */
 bool sme_is_fast_reassoc_allowed(mac_handle_t mac_handle, uint8_t vdev_id);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * sme_fast_reassoc() - invokes FAST REASSOC command
  * @hal: handle returned by mac_open
@@ -2140,15 +2126,12 @@ bool sme_is_fast_reassoc_allowed(mac_handle_t mac_handle, uint8_t vdev_id);
 QDF_STATUS sme_fast_reassoc(tHalHandle hal, struct csr_roam_profile *profile,
 			    const tSirMacAddr bssid, int channel,
 			    uint8_t vdev_id, const tSirMacAddr connected_bssid);
-<<<<<<< HEAD
-=======
 #else
 static inline
 bool sme_is_fast_reassoc_allowed(mac_handle_t mac_handle, uint8_t vdev_id)
 {
 	return true;
 }
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif
 /**
  * sme_congestion_register_callback() - registers congestion callback
@@ -3207,47 +3190,6 @@ QDF_STATUS sme_get_ani_level(mac_handle_t mac_handle, uint32_t *freqs,
 			     void *context), void *context);
 #endif /* FEATURE_ANI_LEVEL_REQUEST */
 
-<<<<<<< HEAD
-#ifdef FEATURE_OEM_DATA
-/**
- * sme_set_oem_data_event_handler_cb() - Register oem data event handler
- * callback
- * @mac_handle: Opaque handle to the MAC context
- * @oem_data_event_handler_cb: callback to be registered
- *
- * Return: QDF_STATUS
- */
-QDF_STATUS sme_set_oem_data_event_handler_cb(
-			mac_handle_t mac_handle,
-			void (*oem_data_event_handler_cb)
-				(const struct oem_data *oem_event_data));
-
-/**
- * sme_reset_oem_data_event_handler_cb() - De-register oem data event handler
- * @mac_handle: Handler return by mac_open
- *
- * This function De-registers the OEM data event handler callback to SME
- *
- * Return: None
- */
-void sme_reset_oem_data_event_handler_cb(mac_handle_t  mac_handle);
-#else
-static inline QDF_STATUS sme_set_oem_data_event_handler_cb(
-			mac_handle_t mac_handle,
-			void (*oem_data_event_handler_cb)
-				(void *oem_event_data))
-{
-	return QDF_STATUS_SUCCESS;
-}
-
-static inline void sme_reset_oem_data_event_handler_cb(mac_handle_t  mac_handle)
-{
-}
-
-#endif
-
-=======
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * sme_get_prev_connected_bss_ies() - Get the previous connected AP IEs
  * @mac_handle: The handle returned by mac_open.
@@ -3263,8 +3205,6 @@ static inline void sme_reset_oem_data_event_handler_cb(mac_handle_t  mac_handle)
 QDF_STATUS sme_get_prev_connected_bss_ies(mac_handle_t mac_handle,
 					  uint8_t vdev_id,
 					  uint8_t **ies, uint32_t *ie_len);
-<<<<<<< HEAD
-=======
 
 /**
  * sme_handle_peer_cleanup() - Cleanup all peers on the given vdev
@@ -3309,5 +3249,4 @@ sme_set_beacon_latency_event_cb(mac_handle_t mac_handle,
 }
 #endif
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif /* #if !defined( __SME_API_H ) */

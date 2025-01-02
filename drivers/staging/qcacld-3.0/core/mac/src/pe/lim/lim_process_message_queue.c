@@ -66,8 +66,6 @@ static void lim_process_normal_hdd_msg(tpAniSirGlobal mac_ctx,
 	struct scheduler_msg *msg, uint8_t rsp_reqd);
 
 #ifdef WLAN_FEATURE_SAE
-<<<<<<< HEAD
-=======
 
 /**
  * lim_process_sae_msg_sta() - Process SAE message for STA
@@ -179,7 +177,6 @@ static void lim_process_sae_msg_ap(tpAniSirGlobal mac,
 	}
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * lim_process_sae_msg() - Process SAE message
  * @mac: Global MAC pointer
@@ -204,47 +201,13 @@ static void lim_process_sae_msg(tpAniSirGlobal mac, struct sir_sae_msg *body)
 		return;
 	}
 
-<<<<<<< HEAD
-	if (session->pePersona != QDF_STA_MODE) {
-=======
 	if (session->pePersona != QDF_STA_MODE &&
 	    session->pePersona != QDF_SAP_MODE) {
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		pe_err("SAE:Not supported in this mode %d",
 				session->pePersona);
 		return;
 	}
 
-<<<<<<< HEAD
-	pe_debug("SAE:status %d limMlmState %d pePersona %d",
-		sae_msg->sae_status, session->limMlmState,
-		session->pePersona);
-	switch (session->limMlmState) {
-	case eLIM_MLM_WT_SAE_AUTH_STATE:
-		/* SAE authentication is completed. Restore from auth state */
-		if (tx_timer_running(&mac->lim.limTimers.sae_auth_timer))
-			lim_deactivate_and_change_timer(mac,
-				eLIM_AUTH_SAE_TIMER);
-		/* success */
-		if (sae_msg->sae_status == IEEE80211_STATUS_SUCCESS)
-			lim_restore_from_auth_state(mac,
-				eSIR_SME_SUCCESS,
-				eSIR_MAC_SUCCESS_STATUS,
-				session);
-		else
-			lim_restore_from_auth_state(mac,
-				eSIR_SME_AUTH_REFUSED,
-				eSIR_MAC_UNSPEC_FAILURE_STATUS,
-				session);
-		break;
-	default:
-		/* SAE msg is received in unexpected state */
-		pe_err("received SAE msg in state %X",
-			session->limMlmState);
-		lim_print_mlm_state(mac, LOGE, session->limMlmState);
-		break;
-	}
-=======
 	pe_debug("SAE:status %d limMlmState %d pePersona %d peer: "
 		 QDF_MAC_ADDR_STR, sae_msg->sae_status,
 		 session->limMlmState, session->pePersona,
@@ -255,7 +218,6 @@ static void lim_process_sae_msg(tpAniSirGlobal mac, struct sir_sae_msg *body)
 		lim_process_sae_msg_ap(mac, session, sae_msg);
 	else
 		pe_debug("SAE message on unsupported interface");
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 }
 #else
 static inline void lim_process_sae_msg(tpAniSirGlobal mac, void *body)
@@ -1201,12 +1163,8 @@ lim_check_mgmt_registered_frames(tpAniSirGlobal mac_ctx, uint8_t *buff_desc,
 	if (match) {
 		QDF_TRACE(QDF_MODULE_ID_PE, QDF_TRACE_LEVEL_DEBUG,
 			FL("rcvd frame match with registered frame params"));
-<<<<<<< HEAD
-		if (mac_ctx->roam.configParam.p2p_disable_roam &&
-=======
 		if ((mac_ctx->roam.configParam.sta_disable_roam &
 		    LFR3_STA_ROAM_DISABLE_BY_P2P) &&
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		    session_entry && LIM_IS_STA_ROLE(session_entry) &&
 		    (policy_mgr_mode_specific_connection_count(mac_ctx->psoc,
 						PM_P2P_CLIENT_MODE, NULL) ||
@@ -1234,12 +1192,8 @@ lim_check_mgmt_registered_frames(tpAniSirGlobal mac_ctx, uint8_t *buff_desc,
 			WMA_GET_RX_PAYLOAD_LEN(buff_desc) +
 			sizeof(tSirMacMgmtHdr), mgmt_frame->sessionId,
 			WMA_GET_RX_CH(buff_desc), session_entry,
-<<<<<<< HEAD
-			WMA_GET_RX_RSSI_NORMALIZED(buff_desc));
-=======
 			WMA_GET_RX_RSSI_NORMALIZED(buff_desc),
 			RXMGMT_FLAG_NONE);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		if ((type == SIR_MAC_MGMT_FRAME)
 		    && (fc.type == SIR_MAC_MGMT_FRAME)
@@ -1638,8 +1592,6 @@ static void lim_process_sme_obss_scan_ind(tpAniSirGlobal mac_ctx,
 	return;
 }
 
-<<<<<<< HEAD
-=======
 /**
  * lim_process_peer_cleanup() - Delete peers on the given vdev
  * @mac: Pointer to the Global Mac Context.
@@ -1673,7 +1625,6 @@ lim_process_peer_cleanup(tpAniSirGlobal mac, struct sir_gen_req *msg)
 	}
 }
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 /**
  * lim_process_messages() - Process messages from upper layers.
  *
@@ -1887,10 +1838,7 @@ static void lim_process_messages(tpAniSirGlobal mac_ctx,
 	case eWNI_SME_ROAM_INVOKE:
 		/* fall through */
 	case eWNI_SME_ROAM_SCAN_OFFLOAD_REQ:
-<<<<<<< HEAD
-=======
 	case eWNI_SME_ROAM_SEND_PER_REQ:
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	case eWNI_SME_SET_ADDBA_ACCEPT:
 	case eWNI_SME_UPDATE_EDCA_PROFILE:
 	case WNI_SME_REGISTER_BCN_REPORT_SEND_CB:
@@ -2300,14 +2248,11 @@ static void lim_process_messages(tpAniSirGlobal mac_ctx,
 					  (struct roam_blacklist_event *)
 					  msg->bodyptr);
 		qdf_mem_free((void *)msg->bodyptr);
-<<<<<<< HEAD
-=======
 		msg->bodyptr = NULL;
 		break;
 	case eWNI_SME_PEER_CLEANUP:
 		lim_process_peer_cleanup(mac_ctx, msg->bodyptr);
 		qdf_mem_free((void *)msg->bodyptr);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 		msg->bodyptr = NULL;
 		break;
 	default:

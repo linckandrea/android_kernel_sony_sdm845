@@ -1066,11 +1066,6 @@ static void csr_neighbor_roam_info_ctx_init(
 		} else
 #endif
 		{
-<<<<<<< HEAD
-			csr_roam_offload_scan(pMac, session_id,
-				ROAM_SCAN_OFFLOAD_START,
-				REASON_CTX_INIT);
-=======
 			if (!ngbr_roam_info->b_roam_scan_offload_started)
 				csr_roam_offload_scan(pMac, session_id,
 					ROAM_SCAN_OFFLOAD_START,
@@ -1079,7 +1074,6 @@ static void csr_neighbor_roam_info_ctx_init(
 				csr_roam_offload_scan(pMac, session_id,
 					ROAM_SCAN_OFFLOAD_UPDATE_CFG,
 					REASON_CONNECT);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 			if (roam_profile &&
 				roam_profile->supplicant_disabled_roaming) {

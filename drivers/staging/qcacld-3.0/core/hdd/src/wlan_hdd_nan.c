@@ -110,28 +110,11 @@ int wlan_hdd_cfg80211_nan_request(struct wiphy *wiphy,
 	return ret;
 }
 
-<<<<<<< HEAD
-void wlan_hdd_cfg80211_nan_callback(hdd_handle_t hdd_handle, tSirNanEvent *msg)
-{
-	struct hdd_context *hdd_ctx = hdd_handle_to_context(hdd_handle);
-	struct sk_buff *vendor_event;
-	int status;
-
-	if (!msg) {
-		hdd_err("msg received here is null");
-		return;
-	}
-
-	status = wlan_hdd_validate_context(hdd_ctx);
-	if (status)
-		return;
-=======
 static void
 wlan_hdd_cfg80211_send_nan_msg(struct hdd_context *hdd_ctx,
 			       tSirNanEvent *msg)
 {
 	struct sk_buff *vendor_event;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	vendor_event =
 		cfg80211_vendor_event_alloc(hdd_ctx->wiphy,
@@ -152,8 +135,6 @@ wlan_hdd_cfg80211_send_nan_msg(struct hdd_context *hdd_ctx,
 	}
 	cfg80211_vendor_event(vendor_event, GFP_KERNEL);
 }
-<<<<<<< HEAD
-=======
 
 void wlan_hdd_cfg80211_nan_callback(hdd_handle_t hdd_handle, tSirNanEvent *msg)
 {
@@ -195,4 +176,3 @@ QDF_STATUS hdd_nan_disable_ind_to_userspace(struct hdd_context *hdd_ctx)
 
 	return QDF_STATUS_SUCCESS;
 }
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af

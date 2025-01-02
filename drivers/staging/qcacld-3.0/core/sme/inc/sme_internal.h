@@ -349,24 +349,17 @@ typedef struct tagSmeStruct {
 #endif
 #ifdef FEATURE_OEM_DATA
 	void (*oem_data_event_handler_cb)
-<<<<<<< HEAD
-			(const struct oem_data *oem_event_data);
-=======
 			(const struct oem_data *oem_event_data,
 			 uint8_t vdev_id);
 	uint8_t oem_data_vdev_id;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #endif
 #ifdef WLAN_FEATURE_ROAM_OFFLOAD
 	sme_get_raom_scan_ch_Callback roam_scan_ch_callback;
 	void *roam_scan_ch_get_context;
 #endif
-<<<<<<< HEAD
-=======
 #if defined(CLD_PM_QOS) && defined(WLAN_FEATURE_LL_MODE)
 	void (*beacon_latency_event_cb)(uint32_t latency_level);
 #endif
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tSmeStruct, *tpSmeStruct;
 
 #endif /* #if !defined( __SMEINTERNAL_H ) */

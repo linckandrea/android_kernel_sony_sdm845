@@ -2200,11 +2200,7 @@ void lim_handle_csa_offload_msg(tpAniSirGlobal mac_ctx,
 
 	/* Send RSO Stop to FW before triggering the vdev restart for CSA */
 	if (mac_ctx->lim.stop_roaming_callback)
-<<<<<<< HEAD
-		mac_ctx->lim.stop_roaming_callback(mac_ctx,
-=======
 		mac_ctx->lim.stop_roaming_callback(MAC_HANDLE(mac_ctx),
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 						   session_entry->smeSessionId,
 						   ecsr_driver_disabled);
 

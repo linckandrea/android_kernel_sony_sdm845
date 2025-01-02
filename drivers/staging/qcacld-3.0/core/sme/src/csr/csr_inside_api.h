@@ -147,10 +147,7 @@ struct tag_csrscan_result {
 	/* Preferred auth type that matched with the profile. */
 	eCsrAuthType authType;
 	int  bss_score;
-<<<<<<< HEAD
-=======
 	uint8_t retry_count;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 	tCsrScanResultInfo Result;
 	/*
@@ -362,16 +359,10 @@ QDF_STATUS csr_send_mb_disassoc_cnf_msg(tpAniSirGlobal pMac,
 					tpSirSmeDisassocInd pDisassocInd);
 QDF_STATUS csr_send_mb_deauth_cnf_msg(tpAniSirGlobal pMac,
 				      tpSirSmeDeauthInd pDeauthInd);
-<<<<<<< HEAD
-QDF_STATUS csr_send_assoc_cnf_msg(tpAniSirGlobal pMac, tpSirSmeAssocInd
-				pAssocInd,
-				  QDF_STATUS status);
-=======
 QDF_STATUS csr_send_assoc_cnf_msg(tpAniSirGlobal pMac,
 				  tpSirSmeAssocInd pAssocInd,
 				  QDF_STATUS status,
 				  tSirMacStatusCodes mac_status_code);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 QDF_STATUS csr_send_assoc_ind_to_upper_layer_cnf_msg(tpAniSirGlobal pMac,
 						     tpSirSmeAssocInd pAssocInd,
 						     QDF_STATUS Halstatus,
@@ -1010,12 +1001,9 @@ QDF_STATUS csr_roam_del_pmkid_from_cache(tpAniSirGlobal pMac,
 					 tPmkidCacheInfo *pmksa,
 					 bool flush_cache);
 
-<<<<<<< HEAD
-=======
 void csr_roam_del_pmk_cache_entry(struct csr_roam_session *session,
 				  tPmkidCacheInfo *cached_pmksa, u32 del_idx);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #if defined(WLAN_SAE_SINGLE_PMK) && defined(WLAN_FEATURE_ROAM_OFFLOAD)
 /**
  * csr_clear_sae_single_pmk - API to clear single_pmk_info cache
@@ -1036,8 +1024,6 @@ csr_clear_sae_single_pmk(tpAniSirGlobal pMac, uint8_t vdev_id,
 }
 #endif
 
-<<<<<<< HEAD
-=======
 /**
  * csr_update_pmk_cache_ft - API to update MDID in PMKSA cache entry
  * @mac_ctx: Mac context
@@ -1050,7 +1036,6 @@ csr_clear_sae_single_pmk(tpAniSirGlobal pMac, uint8_t vdev_id,
 void csr_update_pmk_cache_ft(tpAniSirGlobal mac_ctx,
 			     uint32_t vdev_id, uint8_t *cache_id);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 bool csr_elected_country_info(tpAniSirGlobal pMac);
 void csr_add_vote_for_country_info(tpAniSirGlobal pMac, uint8_t *pCountryCode);
 void csr_clear_votes_for_country_info(tpAniSirGlobal pMac);
@@ -1144,8 +1129,6 @@ bool csr_lookup_pmkid_using_bssid(tpAniSirGlobal mac,
 					struct csr_roam_session *session,
 					tPmkidCacheInfo *pmk_cache,
 					uint32_t *index);
-<<<<<<< HEAD
-=======
 
 /**
  * csr_is_pmkid_found_for_peer() - check if pmkid sent by peer is present
@@ -1162,7 +1145,6 @@ bool csr_is_pmkid_found_for_peer(tpAniSirGlobal mac,
 				 struct csr_roam_session *session,
 				 tSirMacAddr peer_mac_addr,
 				 uint8_t *pmkid, uint16_t pmkid_count);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef WLAN_FEATURE_11AX
 void csr_update_session_he_cap(tpAniSirGlobal mac_ctx,
 			struct csr_roam_session *session);

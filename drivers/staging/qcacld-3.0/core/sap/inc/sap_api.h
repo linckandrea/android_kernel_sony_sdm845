@@ -258,11 +258,8 @@ typedef struct sap_StationAssocIndication_s {
 	eCsrEncryptionType negotiatedMCEncryptionType;
 	bool fAuthRequired;
 	uint8_t ecsa_capable;
-<<<<<<< HEAD
-=======
 	uint32_t owe_ie_len;
 	uint8_t *owe_ie;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tSap_StationAssocIndication;
 
 typedef struct sap_StationAssocReassocCompleteEvent_s {
@@ -574,10 +571,7 @@ enum  sap_acs_dfs_mode {
  * @CSA_REASON_UNSAFE_CHANNEL: Unsafe channel.
  * @CSA_REASON_LTE_COEX: LTE coex.
  * @CSA_REASON_CONCURRENT_NAN_EVENT: NAN concurrency.
-<<<<<<< HEAD
-=======
  * @CSA_REASON_BAND_RESTRICTED: band disabled or re-enabled
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  */
 enum sap_csa_reason_code {
@@ -589,12 +583,8 @@ enum sap_csa_reason_code {
 	CSA_REASON_CONCURRENT_STA_CHANGED_CHANNEL,
 	CSA_REASON_UNSAFE_CHANNEL,
 	CSA_REASON_LTE_COEX,
-<<<<<<< HEAD
-	CSA_REASON_CONCURRENT_NAN_EVENT
-=======
 	CSA_REASON_CONCURRENT_NAN_EVENT,
 	CSA_REASON_BAND_RESTRICTED
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 };
 
 typedef struct sap_config {
@@ -624,10 +614,7 @@ typedef struct sap_config {
 	uint8_t RSNEncryptType;
 	uint8_t mcRSNEncryptType;
 	eSapAuthType authType;
-<<<<<<< HEAD
-=======
 	tCsrAuthList akm_list;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 	bool privacy;
 	bool UapsdEnable;
 	bool fwdWPSPBCProbeReq;
@@ -793,11 +780,7 @@ typedef struct tagSapStruct {
 #endif /* FEATURE_AP_MCC_CH_AVOIDANCE */
 	bool acs_with_more_param;
 	bool enable_dfs_phy_error_logs;
-<<<<<<< HEAD
-	bool enable_etsi13_srd_chan_support;
-=======
 	uint8_t enable_etsi13_srd_chan_support;
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 } tSapStruct, *tpSapStruct;
 
 typedef struct sap_SoftapStats_s {
@@ -1578,8 +1561,6 @@ wlansap_get_safe_channel_from_pcl_and_acs_range(struct sap_context *sap_ctx);
  */
 void sap_dump_acs_channel(struct sap_acs_cfg *acs_cfg);
 
-<<<<<<< HEAD
-=======
 /*
  * wlansap_set_band_csa() -  sap channel switch for band change
  * wlansap_get_chan_band_restrict() -  get new chan for band change
@@ -1611,7 +1592,6 @@ QDF_STATUS wlansap_update_owe_info(struct sap_context *sap_ctx,
 				   uint8_t *peer, const uint8_t *ie,
 				   uint32_t ie_len, uint16_t owe_status);
 
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 #ifdef __cplusplus
 }
 #endif
