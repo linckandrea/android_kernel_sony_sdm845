@@ -1635,18 +1635,12 @@ bool udp_sk_rx_dst_set(struct sock *sk, struct dst_entry *dst)
 {
 	struct dst_entry *old;
 
-<<<<<<< HEAD
 	if (dst_hold_safe(dst)) {
-		old = xchg(&sk->sk_rx_dst, dst);
+		old = xchg((__force struct dst_entry **)&sk->sk_rx_dst, dst);
 		dst_release(old);
 		return old != dst;
 	}
 	return false;
-=======
-	dst_hold(dst);
-	old = xchg((__force struct dst_entry **)&sk->sk_rx_dst, dst);
-	dst_release(old);
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 }
 EXPORT_SYMBOL(udp_sk_rx_dst_set);
 
