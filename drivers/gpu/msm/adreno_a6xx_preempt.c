@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-=======
 /* Copyright (c) 2017-2018,2020, The Linux Foundation. All rights reserved.
  * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -550,13 +546,7 @@ unsigned int a6xx_preemption_pre_ibsubmit(
 		struct kgsl_device *device = KGSL_DEVICE(adreno_dev);
 		struct adreno_context *drawctxt = ADRENO_CONTEXT(context);
 		struct adreno_ringbuffer *rb = drawctxt->rb;
-<<<<<<< HEAD
-		uint64_t dest =
-			SCRATCH_PREEMPTION_CTXT_RESTORE_GPU_ADDR(device,
-			rb->id);
-=======
 		uint64_t dest = PREEMPT_SCRATCH_ADDR(adreno_dev, rb->id);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		*cmds++ = cp_mem_packet(adreno_dev, CP_MEM_WRITE, 2, 2);
 		cmds += cp_gpuaddr(adreno_dev, cmds, dest);
@@ -589,13 +579,7 @@ unsigned int a6xx_preemption_post_ibsubmit(struct adreno_device *adreno_dev,
 	struct adreno_ringbuffer *rb = adreno_dev->cur_rb;
 
 	if (rb) {
-<<<<<<< HEAD
-		struct kgsl_device *device = KGSL_DEVICE(adreno_dev);
-		uint64_t dest = SCRATCH_PREEMPTION_CTXT_RESTORE_GPU_ADDR(device,
-			rb->id);
-=======
 		uint64_t dest = PREEMPT_SCRATCH_ADDR(adreno_dev, rb->id);
->>>>>>> 8dfe28be640ace963c0bd8c3ca9c73d320ed34af
 
 		*cmds++ = cp_mem_packet(adreno_dev, CP_MEM_WRITE, 2, 2);
 		cmds += cp_gpuaddr(adreno_dev, cmds, dest);
