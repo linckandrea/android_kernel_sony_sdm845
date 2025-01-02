@@ -23,13 +23,11 @@
 #include <asm/cpu.h>
 #include <asm/cputype.h>
 #include <asm/cpufeature.h>
-<<<<<<< HEAD
+#include <asm/vectors.h>
 #include <uapi/linux/psci.h>
 #include <linux/arm-smccc.h>
 #include <linux/psci.h>
-=======
-#include <asm/vectors.h>
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
+
 
 static bool __maybe_unused
 is_affected_midr_range(const struct arm64_cpu_capabilities *entry, int scope)
@@ -503,15 +501,9 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 	/* Cortex-A57 r0p0 - r1p2 */
 		.desc = "ARM erratum 832075",
 		.capability = ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE,
-<<<<<<< HEAD
-		MIDR_RANGE(MIDR_CORTEX_A57,
-			   MIDR_CPU_VAR_REV(0, 0),
-			   MIDR_CPU_VAR_REV(1, 2)),
-=======
 		ERRATA_MIDR_RANGE(MIDR_CORTEX_A57,
 				  0, 0,
 				  1, 2),
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	},
 #endif
 #ifdef CONFIG_ARM64_ERRATUM_834220
@@ -519,15 +511,9 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 	/* Cortex-A57 r0p0 - r1p2 */
 		.desc = "ARM erratum 834220",
 		.capability = ARM64_WORKAROUND_834220,
-<<<<<<< HEAD
-		MIDR_RANGE(MIDR_CORTEX_A57,
-			   MIDR_CPU_VAR_REV(0, 0),
-			   MIDR_CPU_VAR_REV(1, 2)),
-=======
 		ERRATA_MIDR_RANGE(MIDR_CORTEX_A57,
 				  0, 0,
 				  1, 2),
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	},
 #endif
 #ifdef CONFIG_ARM64_ERRATUM_845719
@@ -551,15 +537,9 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 	/* Cavium ThunderX, T88 pass 1.x - 2.1 */
 		.desc = "Cavium erratum 27456",
 		.capability = ARM64_WORKAROUND_CAVIUM_27456,
-<<<<<<< HEAD
-		MIDR_RANGE(MIDR_THUNDERX,
-			   MIDR_CPU_VAR_REV(0, 0),
-			   MIDR_CPU_VAR_REV(1, 1)),
-=======
 		ERRATA_MIDR_RANGE(MIDR_THUNDERX,
 				  0, 0,
 				  1, 1),
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 	},
 	{
 	/* Cavium ThunderX, T81 pass 1.0 */
@@ -585,56 +565,17 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 #ifdef CONFIG_HARDEN_BRANCH_PREDICTOR
 	{
 		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-<<<<<<< HEAD
-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A57),
-		.enable = enable_smccc_arch_workaround_1,
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
-		.enable = enable_smccc_arch_workaround_1,
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A73),
-		.enable = enable_smccc_arch_workaround_1,
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_CORTEX_A75),
-		.enable = enable_smccc_arch_workaround_1,
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_KRYO3G),
-#ifdef CONFIG_PSCI_BP_HARDENING
-		.enable = enable_psci_bp_hardening,
-#else
-		.enable = enable_smccc_arch_workaround_1,
-#endif
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_KRYO2XX_GOLD),
-#ifdef CONFIG_PSCI_BP_HARDENING
-		.enable = enable_psci_bp_hardening,
-#else
-		.enable = enable_smccc_arch_workaround_1,
-#endif
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_BRCM_VULCAN),
-		.enable = enable_smccc_arch_workaround_1,
-	},
-	{
-		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
-		MIDR_ALL_VERSIONS(MIDR_CAVIUM_THUNDERX2),
-		.enable = enable_smccc_arch_workaround_1,
-=======
 		ERRATA_MIDR_RANGE_LIST(arm64_bp_harden_smccc_cpus),
 		.cpu_enable = enable_smccc_arch_workaround_1,
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
+	},
+	{
+		.capability = ARM64_HARDEN_BRANCH_PREDICTOR,
+		ERRATA_MIDR_RANGE_LIST(arm64_bp_harden_smccc_cpus_qti),
+#ifdef CONFIG_PSCI_BP_HARDENING
+		.cpu_enable = enable_psci_bp_hardening,
+#else
+		.cpu_enable = enable_smccc_arch_workaround_1,
+#endif
 	},
 #endif
 #ifdef CONFIG_ARM64_SSBD
