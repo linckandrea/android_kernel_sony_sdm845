@@ -154,14 +154,14 @@ void debug_rt_mutex_proxy_unlock(struct rt_mutex *lock)
 
 void debug_rt_mutex_init_waiter(struct rt_mutex_waiter *waiter)
 {
-	memset(waiter, MUTEX_WAITER_DEBUG_INIT, sizeof(*waiter));
+	memset(waiter, 0x11, sizeof(*waiter));
 	waiter->deadlock_task_pid = NULL;
 }
 
 void debug_rt_mutex_free_waiter(struct rt_mutex_waiter *waiter)
 {
 	put_pid(waiter->deadlock_task_pid);
-	memset(waiter, MUTEX_WAITER_DEBUG_FREE, sizeof(*waiter));
+	memset(waiter, 0x22, sizeof(*waiter));
 }
 
 void debug_rt_mutex_init(struct rt_mutex *lock, const char *name)
@@ -171,14 +171,5 @@ void debug_rt_mutex_init(struct rt_mutex *lock, const char *name)
 	 */
 	debug_check_no_locks_freed((void *)lock, sizeof(*lock));
 	lock->name = name;
-}
-
-void
-rt_mutex_deadlock_account_lock(struct rt_mutex *lock, struct task_struct *task)
-{
-}
-
-void rt_mutex_deadlock_account_unlock(struct task_struct *task)
-{
 }
 
