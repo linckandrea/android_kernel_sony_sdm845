@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /* Copyright (c) 2008-2021, The Linux Foundation. All rights reserved.
  * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+=======
+/* Copyright (c) 2008-2019, The Linux Foundation. All rights reserved.
+>>>>>>> parent of 76518d99f872 (msm: kgsl: Mark the scratch buffer as privileged)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and

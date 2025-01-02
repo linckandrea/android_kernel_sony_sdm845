@@ -546,7 +546,9 @@ unsigned int a6xx_preemption_pre_ibsubmit(
 		struct kgsl_device *device = KGSL_DEVICE(adreno_dev);
 		struct adreno_context *drawctxt = ADRENO_CONTEXT(context);
 		struct adreno_ringbuffer *rb = drawctxt->rb;
-		uint64_t dest = PREEMPT_SCRATCH_ADDR(adreno_dev, rb->id);
+		uint64_t dest =
+			SCRATCH_PREEMPTION_CTXT_RESTORE_GPU_ADDR(device,
+			rb->id);
 
 		*cmds++ = cp_mem_packet(adreno_dev, CP_MEM_WRITE, 2, 2);
 		cmds += cp_gpuaddr(adreno_dev, cmds, dest);
@@ -579,7 +581,9 @@ unsigned int a6xx_preemption_post_ibsubmit(struct adreno_device *adreno_dev,
 	struct adreno_ringbuffer *rb = adreno_dev->cur_rb;
 
 	if (rb) {
-		uint64_t dest = PREEMPT_SCRATCH_ADDR(adreno_dev, rb->id);
+		struct kgsl_device *device = KGSL_DEVICE(adreno_dev);
+		uint64_t dest = SCRATCH_PREEMPTION_CTXT_RESTORE_GPU_ADDR(device,
+			rb->id);
 
 		*cmds++ = cp_mem_packet(adreno_dev, CP_MEM_WRITE, 2, 2);
 		cmds += cp_gpuaddr(adreno_dev, cmds, dest);
