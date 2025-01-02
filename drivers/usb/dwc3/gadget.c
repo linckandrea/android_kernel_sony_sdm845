@@ -1108,16 +1108,11 @@ static u32 dwc3_calc_trbs_left(struct dwc3_ep *dep)
 	 * pending to be processed by the driver.
 	 */
 	if (dep->trb_enqueue == dep->trb_dequeue) {
-<<<<<<< HEAD
-		tmp = dwc3_ep_prev_trb(dep, dep->trb_enqueue);
-		if (!tmp || tmp->ctrl & DWC3_TRB_CTRL_HWO)
-=======
 		/*
 		 * If there is any request remained in the started_list at
 		 * this point, that means there is no TRB available.
 		 */
 		if (!list_empty(&dep->started_list))
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 			return 0;
 
 		return DWC3_TRB_NUM - 1;
@@ -3752,14 +3747,12 @@ static irqreturn_t dwc3_process_event_buf(struct dwc3 *dwc)
 	reg &= ~DWC3_GEVNTSIZ_INTMASK;
 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0), reg);
 
-<<<<<<< HEAD
 	if (dwc->imod_interval)
 		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0),
 				DWC3_GEVNTCOUNT_EHB);
-=======
+
 	/* Keep the clearing of DWC3_EVENT_PENDING at the end */
 	evt->flags &= ~DWC3_EVENT_PENDING;
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 	return ret;
 }

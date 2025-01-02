@@ -537,12 +537,10 @@ alternative_endif
 .Ldone\@:
 	.endm
 
-<<<<<<< HEAD
 	.macro	pte_to_phys, phys, pte
 	and	\phys, \pte, #(((1 << (48 - PAGE_SHIFT)) - 1) << PAGE_SHIFT)
 	.endm
 
-=======
 	.macro __mitigate_spectre_bhb_loop      tmp
 #ifdef CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY
 alternative_cb  spectre_bhb_patch_loop_iter
@@ -570,5 +568,4 @@ alternative_cb_end
 	ldp	x0, x1, [sp], #16
 #endif /* CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY */
 	.endm
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 #endif	/* __ASM_ASSEMBLER_H */

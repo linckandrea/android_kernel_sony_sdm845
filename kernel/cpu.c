@@ -26,11 +26,8 @@
 #include <linux/smpboot.h>
 #include <linux/relay.h>
 #include <linux/slab.h>
-<<<<<<< HEAD
 #include <linux/highmem.h>
-=======
 #include <linux/random.h>
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 
 #include <trace/events/power.h>
 #define CREATE_TRACE_POINTS
