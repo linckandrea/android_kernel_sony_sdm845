@@ -28,7 +28,6 @@
 #include <linux/arm-smccc.h>
 #include <linux/psci.h>
 
-
 static bool __maybe_unused
 is_affected_midr_range(const struct arm64_cpu_capabilities *entry, int scope)
 {
@@ -173,16 +172,13 @@ static void  install_bp_hardening_cb(const struct arm64_cpu_capabilities *entry,
 }
 
 #ifdef CONFIG_PSCI_BP_HARDENING
-static int enable_psci_bp_hardening(void *data)
+static void enable_psci_bp_hardening(const struct arm64_cpu_capabilities *entry)
 {
-	const struct arm64_cpu_capabilities *entry = data;
-
 	if (psci_ops.get_version)
 		install_bp_hardening_cb(entry,
 				       (bp_hardening_cb_t)psci_ops.get_version,
 				       __psci_hyp_bp_inval_start,
 				       __psci_hyp_bp_inval_end);
-	return 0;
 }
 #endif
 
@@ -465,6 +461,12 @@ static const struct midr_range arm64_bp_harden_smccc_cpus[] = {
 	{},
 };
 
+static const struct midr_range arm64_bp_harden_smccc_cpus_qti[] = {
+	MIDR_ALL_VERSIONS(MIDR_KRYO3G),
+	MIDR_ALL_VERSIONS(MIDR_KRYO2XX_GOLD),
+	{},
+};
+
 #endif
 
 #ifdef CONFIG_ARM64_ERRATUM_1742098
@@ -740,6 +742,8 @@ static bool is_spectre_bhb_fw_affected(int scope)
 	static const struct midr_range spectre_bhb_firmware_mitigated_list[] = {
 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A73),
 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A75),
+		MIDR_ALL_VERSIONS(MIDR_KRYO3G),
+		MIDR_ALL_VERSIONS(MIDR_KRYO2XX_GOLD),
 		{},
 	};
 	bool cpu_in_list = is_midr_in_range_list(read_cpuid_id(),
@@ -875,8 +879,16 @@ static void kvm_setup_bhb_slot(const char *hyp_vecs_start) { };
 
 static bool is_spectrev2_safe(void)
 {
+	static const struct midr_range arm64_psci_bp_harden_cpus[] = {
+		MIDR_ALL_VERSIONS(MIDR_KRYO3G),
+		MIDR_ALL_VERSIONS(MIDR_KRYO2XX_GOLD),
+		{},
+	};
+
 	return !is_midr_in_range_list(read_cpuid_id(),
-				      arm64_bp_harden_smccc_cpus);
+				      arm64_psci_bp_harden_cpus) &&
+			!is_midr_in_range_list(read_cpuid_id(),
+				               arm64_bp_harden_smccc_cpus);
 }
 
 void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *entry)

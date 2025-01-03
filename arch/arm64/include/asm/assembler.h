@@ -568,5 +568,4 @@ alternative_cb_end
 	ldp	x0, x1, [sp], #16
 #endif /* CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY */
 	.endm
->>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 #endif	/* __ASM_ASSEMBLER_H */
