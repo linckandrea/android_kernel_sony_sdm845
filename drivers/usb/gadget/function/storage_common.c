@@ -298,7 +298,14 @@ EXPORT_SYMBOL_GPL(fsg_lun_fsync_sub);
 void store_cdrom_address(u8 *dest, int msf, u32 addr)
 {
 	if (msf) {
+<<<<<<< HEAD
 		/* Convert to Minutes-Seconds-Frames */
+=======
+		/*
+		 * Convert to Minutes-Seconds-Frames.
+		 * Sector size is already set to 2048 bytes.
+		 */
+>>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 		addr += 2*75;		/* Lead-in occupies 2 seconds */
 		dest[3] = addr % 75;	/* Frames */
 		addr /= 75;
