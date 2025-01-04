@@ -551,7 +551,10 @@ void sysfs_remove_bin_file(struct kobject *kobj,
 }
 EXPORT_SYMBOL_GPL(sysfs_remove_bin_file);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 /**
  *	sysfs_emit - scnprintf equivalent, aware of PAGE_SIZE buffer.
  *	@buf:	start of PAGE_SIZE buffer.
@@ -566,8 +569,12 @@ int sysfs_emit(char *buf, const char *fmt, ...)
 	va_list args;
 	int len;
 
+<<<<<<< HEAD
 	if (WARN(!buf || offset_in_page(buf),
 		 "invalid sysfs_emit: buf:%p\n", buf))
+=======
+	if (WARN(!buf, "invalid sysfs_emit: buf:%p\n", buf))
+>>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
 		return 0;
 
 	va_start(args, fmt);
@@ -604,4 +611,8 @@ int sysfs_emit_at(char *buf, int at, const char *fmt, ...)
 
 	return len;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(sysfs_emit_at);
+=======
+EXPORT_SYMBOL_GPL(sysfs_emit_at);
+>>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
