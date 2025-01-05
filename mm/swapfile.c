@@ -2600,10 +2600,9 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 		}
 	}
 
-<<<<<<< HEAD
 	if (p->bdev && blk_queue_fast(bdev_get_queue(p->bdev)))
 		p->flags |= SWP_FAST;
-=======
+
 	/*
 	 * Flush any pending IO and dirty mappings before we start using this
 	 * swap device.
@@ -2614,7 +2613,6 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 		inode->i_flags &= ~S_SWAPFILE;
 		goto bad_swap_unlock_inode;
 	}
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 
 	mutex_lock(&swapon_mutex);
 	prio = -1;

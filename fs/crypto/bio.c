@@ -32,20 +32,12 @@ static void __fscrypt_decrypt_bio(struct bio *bio, bool done)
 
 	bio_for_each_segment_all(bv, bio, i) {
 		struct page *page = bv->bv_page;
-<<<<<<< HEAD
 
 		if (fscrypt_using_hardware_encryption(page->mapping->host)) {
-=======
-		int ret = fscrypt_decrypt_pagecache_blocks(page, bv->bv_len,
-							   bv->bv_offset);
-		if (ret)
-			SetPageError(page);
-		else if (done)
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 			SetPageUptodate(page);
 		} else {
-			int ret = fscrypt_decrypt_page(page->mapping->host,
-				page, PAGE_SIZE, 0, page->index);
+			int ret = fscrypt_decrypt_pagecache_blocks(page, bv->bv_len,
+								   bv->bv_offset);
 			if (ret) {
 				SetPageError(page);
 			} else if (done) {
@@ -107,19 +99,10 @@ int fscrypt_zeroout_range(const struct inode *inode, pgoff_t lblk,
 			goto errout;
 		}
 		bio->bi_bdev = inode->i_sb->s_bdev;
-<<<<<<< HEAD
-		bio->bi_iter.bi_sector =
-			pblk << (inode->i_sb->s_blocksize_bits - 9);
-		bio_set_op_attrs(bio, REQ_OP_WRITE, REQ_NOENCRYPT);
-		ret = bio_add_page(bio, ciphertext_page,
-					inode->i_sb->s_blocksize, 0);
-		if (ret != inode->i_sb->s_blocksize) {
-=======
 		bio->bi_iter.bi_sector = pblk << (blockbits - 9);
-		bio_set_op_attrs(bio, REQ_OP_WRITE, 0);
+		bio_set_op_attrs(bio, REQ_OP_WRITE, REQ_NOENCRYPT);
 		ret = bio_add_page(bio, ciphertext_page, blocksize, 0);
 		if (WARN_ON(ret != blocksize)) {
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 			/* should never happen! */
 			bio_put(bio);
 			err = -EIO;

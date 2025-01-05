@@ -334,21 +334,14 @@ void f2fs_drop_inmem_pages(struct inode *inode)
 	}
 
 	fi->i_gc_failures[GC_FAILURE_ATOMIC] = 0;
-<<<<<<< HEAD
-	stat_dec_atomic_write(inode);
-=======
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 
 	spin_lock(&sbi->inode_lock[ATOMIC_FILE]);
 	if (!list_empty(&fi->inmem_ilist))
 		list_del_init(&fi->inmem_ilist);
-<<<<<<< HEAD
-=======
 	if (f2fs_is_atomic_file(inode)) {
 		clear_inode_flag(inode, FI_ATOMIC_FILE);
 		sbi->atomic_files--;
 	}
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 	spin_unlock(&sbi->inode_lock[ATOMIC_FILE]);
 }
 

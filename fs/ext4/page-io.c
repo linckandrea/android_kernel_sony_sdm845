@@ -471,12 +471,11 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 		if (io->io_bio)
 			gfp_flags = GFP_NOWAIT | __GFP_NOWARN;
 	retry_encrypt:
-<<<<<<< HEAD
 		if (!fscrypt_using_hardware_encryption(inode)) {
-			data_page = fscrypt_encrypt_page(inode, page,
-				 PAGE_SIZE, 0, page->index, gfp_flags);
-			if (IS_ERR(data_page)) {
-				ret = PTR_ERR(data_page);
+			bounce_page = fscrypt_encrypt_pagecache_blocks(page, PAGE_SIZE,
+				 0, gfp_flags);
+			if (IS_ERR(bounce_page)) {
+				ret = PTR_ERR(bounce_page);
 				if (ret == -ENOMEM && (io->io_bio ||
 					wbc->sync_mode == WB_SYNC_ALL)) {
 					gfp_flags = GFP_NOFS;
@@ -484,26 +483,12 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 						ext4_io_submit(io);
 					else
 						gfp_flags |= __GFP_NOFAIL;
-=======
-		bounce_page = fscrypt_encrypt_pagecache_blocks(page, PAGE_SIZE,
-							       0, gfp_flags);
-		if (IS_ERR(bounce_page)) {
-			ret = PTR_ERR(bounce_page);
-			if (ret == -ENOMEM && wbc->sync_mode == WB_SYNC_ALL) {
-				if (io->io_bio) {
-					ext4_io_submit(io);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 					congestion_wait(BLK_RW_ASYNC, HZ/50);
 					goto retry_encrypt;
 				}
-				data_page = NULL;
+				bounce_page = NULL;
 				goto out;
 			}
-<<<<<<< HEAD
-=======
-			bounce_page = NULL;
-			goto out;
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 		}
 	}
 
@@ -511,14 +496,9 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 	do {
 		if (!buffer_async_write(bh))
 			continue;
-<<<<<<< HEAD
-		if (data_page)
+		if (bounce_page)
 			io->io_flags |= EXT4_IO_ENCRYPTED;
-		ret = io_submit_add_bh(io, inode,
-				       data_page ? data_page : page, bh);
-=======
 		ret = io_submit_add_bh(io, inode, bounce_page ?: page, bh);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 		if (ret) {
 			/*
 			 * We only get here on ENOMEM.  Not much else

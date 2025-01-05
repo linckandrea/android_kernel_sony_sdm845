@@ -707,7 +707,17 @@ static inline int fscrypt_encrypt_symlink(struct inode *inode,
 	return 0;
 }
 
-<<<<<<< HEAD
+/* If *pagep is a bounce page, free it and set *pagep to the pagecache page */
+static inline void fscrypt_finalize_bounce_page(struct page **pagep)
+{
+	struct page *page = *pagep;
+
+	if (fscrypt_is_bounce_page(page)) {
+		*pagep = fscrypt_pagecache_page(page);
+		fscrypt_free_bounce_page(page);
+	}
+}
+
 /* fscrypt_ice.c */
 #ifdef CONFIG_PFK
 extern int fscrypt_using_hardware_encryption(const struct inode *inode);
@@ -739,17 +749,4 @@ static inline bool fscrypt_mergeable_bio(struct bio *bio,
 }
 #endif
 
-=======
-/* If *pagep is a bounce page, free it and set *pagep to the pagecache page */
-static inline void fscrypt_finalize_bounce_page(struct page **pagep)
-{
-	struct page *page = *pagep;
-
-	if (fscrypt_is_bounce_page(page)) {
-		*pagep = fscrypt_pagecache_page(page);
-		fscrypt_free_bounce_page(page);
-	}
-}
-
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 #endif	/* _LINUX_FSCRYPT_H */

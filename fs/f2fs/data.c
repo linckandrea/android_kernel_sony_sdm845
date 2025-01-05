@@ -185,17 +185,11 @@ static bool f2fs_bio_post_read_required(struct bio *bio)
 
 static void f2fs_read_end_io(struct bio *bio)
 {
-<<<<<<< HEAD
 	struct page *first_page = bio->bi_io_vec[0].bv_page;
-
-	if (time_to_inject(F2FS_P_SB(bio->bi_io_vec->bv_page), FAULT_READ_IO)) {
-		f2fs_show_injection_info(FAULT_READ_IO);
-=======
 	struct f2fs_sb_info *sbi = F2FS_P_SB(bio->bi_io_vec->bv_page);
 
 	if (time_to_inject(sbi, FAULT_READ_IO)) {
 		f2fs_show_injection_info(sbi, FAULT_READ_IO);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 		bio->bi_error = -EIO;
 	}
 
@@ -748,42 +742,28 @@ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
 	trace_f2fs_submit_page_bio(page, fio);
 	f2fs_trace_ios(fio, 0);
 
-<<<<<<< HEAD
 	inode = fio->page->mapping->host;
 	dun = PG_DUN(inode, fio->page);
 	bi_crypt_skip = fio->encrypted_page ? 1 : 0;
 	bio_encrypted = f2fs_may_encrypt_bio(inode, fio);
 	fio->op_flags |= fio->encrypted_page ? REQ_NOENCRYPT : 0;
 
-	if (bio && (*fio->last_block + 1 != fio->new_blkaddr ||
-			!__same_bdev(fio->sbi, fio->new_blkaddr, bio))) {
-		__submit_bio(fio->sbi, bio, fio->type);
-		bio = NULL;
-	}
-	/* ICE support */
-	if (bio && !fscrypt_mergeable_bio(bio, dun,
-				bio_encrypted, bi_crypt_skip)) {
-		__submit_bio(fio->sbi, bio, fio->type);
-		bio = NULL;
-	}
-=======
 	if (bio && !page_is_mergeable(fio->sbi, bio, *fio->last_block,
 						fio->new_blkaddr))
 		f2fs_submit_merged_ipu_write(fio->sbi, &bio, NULL);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
+	/* ICE support */
+	if (bio && !fscrypt_mergeable_bio(bio, dun,
+				bio_encrypted, bi_crypt_skip))
+		f2fs_submit_merged_ipu_write(fio->sbi, &bio, NULL);
 alloc_new:
 	if (!bio) {
 		bio = __bio_alloc(fio, BIO_MAX_PAGES);
 		bio_set_op_attrs(bio, fio->op, fio->op_flags);
-<<<<<<< HEAD
+		add_bio_entry(fio->sbi, bio, page, fio->temp);
+
 		if (bio_encrypted)
 			fscrypt_set_ice_dun(inode, bio, dun);
 		fscrypt_set_ice_skip(bio, bi_crypt_skip);
-	}
-=======
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
-
-		add_bio_entry(fio->sbi, bio, page, fio->temp);
 	} else {
 		if (add_ipu_page(fio->sbi, &bio, page))
 			goto alloc_new;
@@ -859,16 +839,10 @@ alloc_new:
 			fio->retry = true;
 			goto skip;
 		}
-<<<<<<< HEAD
-		io->bio = __bio_alloc(sbi, fio->new_blkaddr, fio->io_wbc,
-						BIO_MAX_PAGES, false,
-						fio->type, fio->temp);
+		io->bio = __bio_alloc(fio, BIO_MAX_PAGES);
 		if (bio_encrypted)
 			fscrypt_set_ice_dun(inode, io->bio, dun);
 		fscrypt_set_ice_skip(io->bio, bi_crypt_skip);
-=======
-		io->bio = __bio_alloc(fio, BIO_MAX_PAGES);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 		io->fio = *fio;
 	}
 
@@ -2074,17 +2048,12 @@ static int encrypt_one_page(struct f2fs_io_info *fio)
 	f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
 
 retry_encrypt:
-<<<<<<< HEAD
 	if (fscrypt_using_hardware_encryption(inode))
 		return 0;
 
-	fio->encrypted_page = fscrypt_encrypt_page(inode, fio->page,
-			PAGE_SIZE, 0, fio->page->index, gfp_flags);
-=======
 	fio->encrypted_page = fscrypt_encrypt_pagecache_blocks(fio->page,
 							       PAGE_SIZE, 0,
 							       gfp_flags);
->>>>>>> dead1f52f936cc27b91c23a78092765f004bf85e
 	if (IS_ERR(fio->encrypted_page)) {
 		/* flush pending IOs and wait for a while in the ENOMEM case */
 		if (PTR_ERR(fio->encrypted_page) == -ENOMEM) {
