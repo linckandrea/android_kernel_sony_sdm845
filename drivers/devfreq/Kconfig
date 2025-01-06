@@ -265,6 +265,7 @@ config DEVFREQ_BOOST
 	  frequencies. The goal of this driver is to provide an interface to
 	  achieve optimal device performance by requesting boosts on key events,
 	  such as when a frame is ready to rendered to the display.
+	default y
 
 if DEVFREQ_BOOST
 
@@ -276,13 +277,13 @@ config DEVFREQ_INPUT_BOOST_DURATION_MS
 
 config DEVFREQ_WAKE_BOOST_DURATION_MS
 	int "Wake boost duration"
-	default "1000"
+	default "2500"
 	help
 	  Wake boost duration in milliseconds for all boostable devices.
 
 config DEVFREQ_MSM_CPUBW_BOOST_FREQ
 	int "Boost freq for cpubw device"
-	default "0"
+	default "4577"
 	help
 	  Boost frequency for the MSM DDR bus.
 
