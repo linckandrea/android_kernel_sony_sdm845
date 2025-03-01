@@ -415,4 +415,15 @@ void wma_wmi_stop(void);
  */
 uint8_t wma_get_mcs_idx(uint16_t max_rate, uint8_t rate_flags,
 			uint8_t *nss, uint8_t *mcs_rate_flag);
+<<<<<<< HEAD
+=======
+
+/**
+ * wma_get_vdev_chan_roam_enabled() -get roam enabled vdev channel.
+ * @wma_handle:	pointer to wma handle.
+ *
+ * Return: roam enabled vdev channel
+ */
+uint8_t wma_get_vdev_chan_roam_enabled(WMA_HANDLE wma_handle);
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #endif

@@ -6,5 +6,8 @@ header-y += devdep_params.h
 header-y += msmcal-hwdep.h
 header-y += wcd-dsp-glink.h
 header-y += voice_params.h
+<<<<<<< HEAD
 header-y += sony-hweffect.h
 header-y += sony-hweffect-params.h
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a

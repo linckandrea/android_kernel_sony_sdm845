@@ -868,6 +868,7 @@ static int lan78xx_read_otp(struct lan78xx_net *dev, u32 offset,
 
 	if (ret == 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (sig != OTP_INDICATOR_1) {
 			if (sig == OTP_INDICATOR_2)
 				offset += 0x100;
@@ -876,11 +877,16 @@ static int lan78xx_read_otp(struct lan78xx_net *dev, u32 offset,
 		}
 
 =======
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 		if (sig == OTP_INDICATOR_2)
 			offset += 0x100;
 		else if (sig != OTP_INDICATOR_1)
 			ret = -EINVAL;
+<<<<<<< HEAD
 >>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 		if (!ret)
 			ret = lan78xx_read_raw_otp(dev, offset, length, data);
 	}

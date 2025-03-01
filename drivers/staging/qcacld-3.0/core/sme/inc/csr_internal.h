@@ -655,7 +655,11 @@ struct csr_config {
 #endif
 	bool enable_pending_list_req;
 	bool disable_4way_hs_offload;
+<<<<<<< HEAD
 	bool p2p_disable_roam;
+=======
+	uint32_t sta_disable_roam;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 };
 
 struct csr_channel_powerinfo {
@@ -1017,7 +1021,11 @@ struct csr_roam_session {
 	bool nss_forced_1x1;
 	bool disable_hi_rssi;
 	bool dhcp_done;
+<<<<<<< HEAD
 	uint8_t disconnect_reason;
+=======
+	tSirMacReasonCodes disconnect_reason;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	uint8_t uapsd_mask;
 	struct scan_cmd_info scan_info;
 	qdf_mc_timer_t roaming_offload_timer;

@@ -480,7 +480,11 @@
 	};
 
 	chosen {
+<<<<<<< HEAD
 		bootargs = "quiet rcupdate.rcu_normal_after_boot=1 noirqdebug rcu_nocbs=0-7";
+=======
+		bootargs = "rcupdate.rcu_expedited=1 cgroup.memory=nokmem,nosocket";
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	};
 
 	soc: soc { };

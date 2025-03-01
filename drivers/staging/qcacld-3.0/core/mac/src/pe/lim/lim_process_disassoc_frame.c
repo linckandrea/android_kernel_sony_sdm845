@@ -348,6 +348,10 @@ void lim_perform_disassoc(tpAniSirGlobal mac_ctx, int32_t frame_rssi,
 	tLimMlmDisassocInd mlmDisassocInd;
 	uint16_t aid;
 	tpDphHashNode sta_ds;
+<<<<<<< HEAD
+=======
+	tpSirAssocRsp assoc_rsp;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 
 	sta_ds = dph_lookup_hash_entry(mac_ctx, addr, &aid,
 				       &pe_session->dph.dphHashTable);
@@ -378,6 +382,13 @@ void lim_perform_disassoc(tpAniSirGlobal mac_ctx, int32_t frame_rssi,
 		pe_debug("received Disassoc from AP while waiting for Reassoc Rsp");
 
 		if (pe_session->limAssocResponseData) {
+<<<<<<< HEAD
+=======
+			assoc_rsp = (tpSirAssocRsp) pe_session->
+						limAssocResponseData;
+			qdf_mem_free(assoc_rsp->sha384_ft_subelem.gtk);
+			qdf_mem_free(assoc_rsp->sha384_ft_subelem.igtk);
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 			qdf_mem_free(pe_session->limAssocResponseData);
 			pe_session->limAssocResponseData = NULL;
 		}

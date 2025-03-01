@@ -2,8 +2,11 @@ comment "Qualcomm Atheros CLD WLAN module"
 
 config QCA_CLD_WLAN
 	tristate "Qualcomm Atheros CLD WLAN module"
+<<<<<<< HEAD
 	select WIRELESS_EXT
 	select WEXT_PRIV
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	default n
 	help
 	  Add support for the Qualcomm Atheros CLD WLAN module

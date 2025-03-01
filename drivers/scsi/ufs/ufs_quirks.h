@@ -24,7 +24,10 @@
 #define MAX_MODEL_LEN 16
 #define MAX_REVISION_LEN 8
 
+<<<<<<< HEAD
 #define UFS_VENDOR_MICRON      0x12C
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #define UFS_VENDOR_TOSHIBA     0x198
 #define UFS_VENDOR_SAMSUNG     0x1CE
 #define UFS_VENDOR_SKHYNIX     0x1AD

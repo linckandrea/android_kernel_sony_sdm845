@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2012-2018 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2012-2018, 2020 The Linux Foundation. All rights reserved.
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -77,6 +81,15 @@ ol_tx_desc_pool_size_hl(struct cdp_cfg *ctrl_pdev);
 #define TXRX_HL_TX_DESC_HI_PRIO_RESERVED 20
 #endif
 
+<<<<<<< HEAD
+=======
+struct peer_hang_data {
+	uint32_t tlv_header;
+	uint8_t peer_mac_addr[QDF_MAC_ADDR_SIZE];
+	uint16_t peer_timeout_bitmask;
+} qdf_packed;
+
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #if defined(CONFIG_HL_SUPPORT) && defined(FEATURE_WLAN_TDLS)
 
 void

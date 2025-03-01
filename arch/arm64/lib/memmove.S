@@ -59,7 +59,10 @@ D_h	.req	x14
 
 ENTRY(__memmove)
 WEAK(memmove)
+<<<<<<< HEAD
 	prfm    pldl1strm, [src, #L1_CACHE_BYTES]
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	cmp	dstin, src
 	b.lo	__memcpy
 	add	tmp1, src, count

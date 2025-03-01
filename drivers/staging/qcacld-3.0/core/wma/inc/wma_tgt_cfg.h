@@ -45,6 +45,10 @@
  * @akm_service_bitmap: bitmap of FT akm supported by firmware
  * @is_adaptive_11r_roam_supported: Adaptive 11r target capability
  * @is_roam_scan_ch_to_host: Firmware support for roam scan ch query
+<<<<<<< HEAD
+=======
+ * @ll_stats_per_chan_rx_tx_time: Per channel tx and rx time support in ll stats
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
  */
 struct wma_tgt_services {
 	uint32_t sta_power_save;
@@ -78,7 +82,13 @@ struct wma_tgt_services {
 	bool bcn_reception_stats;
 	uint32_t akm_service_bitmap;
 	bool is_adaptive_11r_roam_supported;
+<<<<<<< HEAD
 	bool is_roam_scan_ch_to_host;
+=======
+	bool stop_all_host_scan_support;
+	bool is_roam_scan_ch_to_host;
+	bool ll_stats_per_chan_rx_tx_time;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 };
 
 /**

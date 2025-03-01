@@ -340,8 +340,11 @@ struct dwc3_msm {
 	dma_addr_t		dummy_gsi_db_dma;
 	u64			*dummy_gevntcnt;
 	dma_addr_t		dummy_gevntcnt_dma;
+<<<<<<< HEAD
 
 	bool			send_vbus_drop_ue;
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	bool usb_data_enabled;
 };
 
@@ -4757,7 +4760,10 @@ static void dwc3_otg_sm_work(struct work_struct *w)
 			mdwc->drd_state = DRD_STATE_PERIPHERAL;
 			work = 1;
 		} else {
+<<<<<<< HEAD
 			mdwc->send_vbus_drop_ue = false;
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 			if (mdwc->usb_data_enabled)
 				dwc3_msm_gadget_vbus_draw(mdwc, 0);
 			dev_dbg(mdwc->dev, "Cable disconnected\n");

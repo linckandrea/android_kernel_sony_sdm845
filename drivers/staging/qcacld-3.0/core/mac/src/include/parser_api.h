@@ -359,6 +359,10 @@ typedef struct sSirAssocReq {
 	tDot11fIEvendor_vht_ie vendor_vht_ie;
 	tDot11fIEhs20vendor_ie hs20vendor_ie;
 	tDot11fIEhe_cap he_cap;
+<<<<<<< HEAD
+=======
+	bool is_sae_authenticated;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 } tSirAssocReq, *tpSirAssocReq;
 
 #define FTIE_SUBELEM_R1KH_ID 1

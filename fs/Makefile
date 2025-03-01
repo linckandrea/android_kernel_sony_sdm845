@@ -78,7 +78,11 @@ obj-$(CONFIG_HUGETLBFS)		+= hugetlbfs/
 obj-$(CONFIG_CODA_FS)		+= coda/
 obj-$(CONFIG_MINIX_FS)		+= minix/
 obj-$(CONFIG_FAT_FS)		+= fat/
+<<<<<<< HEAD
 obj-$(CONFIG_SDFAT_FS)		+= sdfat/
+=======
+obj-$(CONFIG_EXFAT_FS)		+= exfat/
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 obj-$(CONFIG_BFS_FS)		+= bfs/
 obj-$(CONFIG_ISO9660_FS)	+= isofs/
 obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/ # Before hfs to find wrapped HFS+

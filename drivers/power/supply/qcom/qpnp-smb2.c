@@ -1308,9 +1308,12 @@ static int smb2_init_dc_psy(struct smb2 *chip)
 
 static enum power_supply_property smb2_batt_props[] = {
 	POWER_SUPPLY_PROP_CHARGING_ENABLED,
+<<<<<<< HEAD
 #if defined(CONFIG_SOMC_CHARGER_EXTENSION)
 	POWER_SUPPLY_PROP_SKIN_TEMP,
 #endif
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	POWER_SUPPLY_PROP_INPUT_SUSPEND,
 	POWER_SUPPLY_PROP_STATUS,
 	POWER_SUPPLY_PROP_HEALTH,

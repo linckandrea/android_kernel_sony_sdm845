@@ -166,7 +166,11 @@ sch_append_addn_ie(tpAniSirGlobal mac_ctx, tpPESession session,
 
 /**
  * sch_get_csa_ecsa_count_offset() - get the offset of Switch count field
+<<<<<<< HEAD
  * @ie: pointer to the beggining of IEs in the beacon frame buffer
+=======
+ * @ie: pointer to the beginning of IEs in the beacon frame buffer
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
  * @ie_len: length of the IEs in the buffer
  * @csa_count_offset: pointer to the csa_count_offset variable in the caller
  * @ecsa_count_offset: pointer to the ecsa_count_offset variable in the caller
@@ -205,6 +209,12 @@ static void sch_get_csa_ecsa_count_offset(uint8_t *ie, uint32_t ie_len,
 			*ecsa_count_offset = offset +
 					SCH_ECSA_SWITCH_COUNT_OFFSET;
 
+<<<<<<< HEAD
+=======
+		if (ie_len < elem_len)
+			return;
+
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 		ie_len -= elem_len;
 		offset += elem_len;
 		ptr += (elem_len + 2);
@@ -433,7 +443,11 @@ sch_set_fixed_beacon_fields(tpAniSirGlobal mac_ctx, tpPESession session)
 			}
 		}
 	}
+<<<<<<< HEAD
 	if (mac_ctx->rrm.rrmSmeContext.rrmConfig.rrm_enabled)
+=======
+	if (mac_ctx->rrm.rrmConfig.rrm_enabled)
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 		populate_dot11f_rrm_ie(mac_ctx, &bcn_2->RRMEnabledCap,
 			session);
 

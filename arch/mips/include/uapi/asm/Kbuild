@@ -3,6 +3,7 @@ include include/uapi/asm-generic/Kbuild.asm
 
 generic-y += ipcbuf.h
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 header-y += auxvec.h
@@ -45,3 +46,5 @@ header-y += hwcap.h
 header-y += reg.h
 header-y += ucontext.h
 >>>>>>> f9b8314c64640cd10c7b14ce9d2a11a0dc02a941
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a

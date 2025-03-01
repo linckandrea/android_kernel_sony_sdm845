@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2012-2018 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2012-2018,2020 The Linux Foundation. All rights reserved.
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -33,10 +37,13 @@
 #ifdef CNSS_GENL
 #include <net/cnss_nl.h>
 #include <wlan_cfg80211.h>
+<<<<<<< HEAD
 #else
 
 /** ptt Process ID */
 static int32_t ptt_pid = INVALID_PID;
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #endif
 
 #define PTT_SOCK_DEBUG
@@ -169,6 +176,7 @@ int ptt_sock_send_msg_to_app(tAniHdr *wmsg, int radio, int src_mod, int pid)
 	return err;
 }
 
+<<<<<<< HEAD
 #ifndef CNSS_GENL
 /*
  * Process tregisteration request and send registration response messages
@@ -247,6 +255,8 @@ static int ptt_sock_rx_nlink_msg(struct sk_buff *skb)
 }
 #endif
 
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #ifdef CNSS_GENL
 /**
  * ptt_cmd_handler() - Handler function for PTT commands
@@ -327,6 +337,7 @@ void ptt_sock_deactivate_svc(void)
 	deregister_cld_cmd_cb(ANI_NL_MSG_PTT);
 	deregister_cld_cmd_cb(ANI_NL_MSG_PUMAC);
 }
+<<<<<<< HEAD
 #else
 
 void ptt_sock_activate_svc(void)
@@ -342,5 +353,7 @@ void ptt_sock_deactivate_svc(void)
 	nl_srv_unregister(ANI_NL_MSG_PUMAC, ptt_sock_rx_nlink_msg);
 	ptt_pid = INVALID_PID;
 }
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 #endif
 #endif /* PTT_SOCK_SVC_ENABLE */

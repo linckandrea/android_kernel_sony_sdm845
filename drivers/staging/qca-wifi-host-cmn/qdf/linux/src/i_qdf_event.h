@@ -30,11 +30,19 @@
  * qdf_event_t - manages events
  * @complete: instance to completion
  * @cookie: unsigned int
+<<<<<<< HEAD
+=======
+ * @done: indicate completion
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
  * @force_set: indicate forceful completion
  */
 typedef struct qdf_evt {
 	struct completion complete;
 	uint32_t cookie;
+<<<<<<< HEAD
+=======
+	bool done;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	bool force_set;
 } __qdf_event_t;
 

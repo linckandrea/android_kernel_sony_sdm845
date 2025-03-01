@@ -774,7 +774,16 @@ QDF_STATUS sme_ps_disable_auto_ps_timer(tHalHandle hal_ctx,
 {
 	tpAniSirGlobal mac_ctx = PMAC_STRUCT(hal_ctx);
 	struct ps_global_info *ps_global_info = &mac_ctx->sme.ps_global_info;
+<<<<<<< HEAD
 	struct ps_params *ps_param = &ps_global_info->ps_params[session_id];
+=======
+	struct ps_params *ps_param;
+
+	if (!sme_is_session_id_valid(hal_ctx, session_id))
+		return QDF_STATUS_SUCCESS;
+
+	ps_param = &ps_global_info->ps_params[session_id];
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	/*
 	 * Stop the auto ps entry timer if runnin
 	 */

@@ -952,15 +952,24 @@ static int cam_jpeg_mgr_release_hw(void *hw_mgr_priv, void *release_hw_args)
 		cam_cdm_release(hw_mgr->cdm_info[dev_type][0].cdm_handle);
 	}
 
+<<<<<<< HEAD
 	mutex_unlock(&hw_mgr->hw_mgr_mutex);
 
 release_ctx:
+=======
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	rc = cam_jpeg_mgr_release_ctx(hw_mgr, ctx_data);
 	if (rc) {
 		mutex_unlock(&hw_mgr->hw_mgr_mutex);
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+=======
+	mutex_unlock(&hw_mgr->hw_mgr_mutex);
+	kfree(ctx_data->cdm_cmd);
+	ctx_data->cdm_cmd = NULL;
+>>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	CAM_DBG(CAM_JPEG, "handle %llu", ctx_data);
 
 	return rc;
