@@ -353,11 +353,7 @@ static struct avc_xperms_decision_node
 	struct extended_perms_decision *xpd;
 
 	xpd_node = kmem_cache_zalloc(avc_xperms_decision_cachep,
-<<<<<<< HEAD
-				     GFP_NOWAIT | __GFP_NOWARN);
-=======
 			GFP_NOWAIT | __GFP_NOWARN);
->>>>>>> 95bd01d3ca0acae09a638ed372314970cfbd3e8a
 	if (!xpd_node)
 		return NULL;
 
